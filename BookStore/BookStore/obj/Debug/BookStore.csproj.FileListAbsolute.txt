@@ -1,0 +1,17 @@
+C:\Users\ASUS\source\repos\BookStore\BookStore\bin\Debug\BookStore.exe.config
+C:\Users\ASUS\source\repos\BookStore\BookStore\bin\Debug\BookStore.exe
+C:\Users\ASUS\source\repos\BookStore\BookStore\bin\Debug\BookStore.pdb
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.csprojAssemblyReference.cache
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\MainWindow.g.cs
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\App.g.cs
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore_MarkupCompile.cache
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore_MarkupCompile.lref
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\MainWindow.baml
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.g.resources
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.Properties.Resources.resources
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.csproj.GenerateResource.cache
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.csproj.CoreCompileInputs.cache
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.exe
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\BookStore.pdb
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\Welcome.g.cs
+C:\Users\ASUS\source\repos\BookStore\BookStore\obj\Debug\Welcome.baml
