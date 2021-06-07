@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Data;
 
 namespace BookStore
 {
@@ -24,42 +23,6 @@ namespace BookStore
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (Username.Text != "")
-                tbUsername.Text = "";
-            else
-                tbUsername.Text = "Username";
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (Pass.Password != "")
-                tbPass.Text = "";
-            else
-                tbPass.Text = "Password";
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            DataSet1TableAdapters.ACCOUNTTableAdapter adp = new DataSet1TableAdapters.ACCOUNTTableAdapter();
-            DataTable table = adp.GetData();
-            string user = null;
-            string pass = null;
-            foreach (DataRow row in table.Rows)
-            {
-                user = row["USERNAME"].ToString();
-                pass = row["PASSWORD"].ToString();
-                if (user == Username.Text && pass == Pass.Password.ToString())
-                {
-                    Welcome welcome = new Welcome();
-                    welcome.Show();
-                    this.Close();
-                }
-            }
-            
         }
     }
 }
