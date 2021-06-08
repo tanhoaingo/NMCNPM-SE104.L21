@@ -16,6 +16,10 @@
         Title="MainWindow" Height="450" Width="800"
         DataContext="{StaticResource MainVM}">
     <Grid>
-        
+        <Button
+            Content="Invoice"
+            Command="{Binding InvoiceClick}"
+            Width="200" Margin="37,54,555,333">
+        </Button>
     </Grid>
 </Window>
