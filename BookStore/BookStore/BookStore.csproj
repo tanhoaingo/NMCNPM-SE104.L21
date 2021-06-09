@@ -72,9 +72,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="InvoiceWindow.xaml.cs">
-      <DependentUpon>InvoiceWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\BAOCAOCONGNO.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
@@ -145,13 +142,31 @@
     <Compile Include="Model\THELOAI.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BaocaoPage.xaml.cs">
+      <DependentUpon>BaocaoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InvoicePage.xaml.cs">
+      <DependentUpon>InvoicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NhapSachPage.xaml.cs">
+      <DependentUpon>NhapSachPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ThayDoiPage.xaml.cs">
+      <DependentUpon>ThayDoiPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ThuTienPage.xaml.cs">
+      <DependentUpon>ThuTienPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TraCuuPage.xaml.cs">
+      <DependentUpon>TraCuuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\Window.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Page Include="InvoiceWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -164,9 +179,49 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\BaocaoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\InvoicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\NhapSachPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ThayDoiPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ThuTienPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TraCuuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceXAML\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ResourceXAML\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ResourceXAML\MainResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +254,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Source\Fonts\segmdl2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -215,6 +271,16 @@
       <DependentUpon>EntityModel.edmx</DependentUpon>
       <LastGenOutput>EntityModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Source\Image\bill.png" />
+    <Resource Include="Source\Image\bill2.png" />
+    <Resource Include="Source\Image\bill3.png" />
+    <Resource Include="Source\Image\book.png" />
+    <Resource Include="Source\Image\change.png" />
+    <Resource Include="Source\Image\exit.png" />
+    <Resource Include="Source\Image\folder.png" />
+    <Resource Include="Source\Image\money.png" />
+    <Resource Include="Source\Image\report.png" />
+    <Resource Include="Source\Image\search.png" />
     <Resource Include="Source\Image\Hoadon.png" />
   </ItemGroup>
   <ItemGroup>

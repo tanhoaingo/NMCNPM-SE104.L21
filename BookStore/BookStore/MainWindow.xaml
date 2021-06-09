@@ -13,13 +13,21 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="450" Width="800"
-        DataContext="{StaticResource MainVM}">
-    <Grid>
-        <Button
-            Content="Invoice"
-            Command="{Binding InvoiceClick}"
-            Width="200" Margin="37,54,555,333">
-        </Button>
+        DataContext="{StaticResource MainVM}"
+        MinHeight="768"
+        MinWidth="1024"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="Quản lý nhà sách" 
+        Height="1000" Width="1400"
+        Style="{StaticResource {x:Type Window}}">
+
+
+    <Grid Height="1000" Width="1400">
+        <Frame
+            x:Name="MainFrame"
+            Source="Pages/HomePage.xaml"
+            NavigationUIVisibility="Hidden"/>
     </Grid>
+
 </Window>

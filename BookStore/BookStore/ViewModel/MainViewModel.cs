@@ -13,10 +13,6 @@ namespace BookStore.ViewModel
         public ICommand InvoiceClick { get; set; }
         public MainViewModel()
         {
-            InvoiceClick = new RelayCommand<object>((p) => { return true; }, (p) => {
-                InvoiceWindow test = new InvoiceWindow();
-                test.ShowDialog();
-            });
         }
 
 

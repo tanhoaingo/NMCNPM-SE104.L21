@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Anh Tu\Desktop\New folder\NMCNPM-SE104.L21\BookStore\BookStore\App.xaml
-3-1323313147
+12-911661957
 2205066950
-31-425409761
+38-732648849
 20-1658679023
-InvoiceWindow.xaml;MainWindow.xaml;ResourceXAML\MainResource.xaml;
+MainWindow.xaml;Pages\BaocaoPage.xaml;Pages\InvoicePage.xaml;Pages\HomePage.xaml;Pages\NhapSachPage.xaml;Pages\ThayDoiPage.xaml;Pages\ThuTienPage.xaml;Pages\TraCuuPage.xaml;ResourceXAML\Colors.xaml;ResourceXAML\Fonts.xaml;ResourceXAML\MainResource.xaml;Themes\Window.xaml;
 
 False
 
