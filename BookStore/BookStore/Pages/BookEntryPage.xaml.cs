@@ -18,9 +18,9 @@ namespace BookStore.Pages
     /// <summary>
     /// Interaction logic for NhapSachPage.xaml
     /// </summary>
-    public partial class NhapSachPage : Page
+    public partial class BookEntryPage : Page
     {
-        public NhapSachPage()
+        public BookEntryPage()
         {
             InitializeComponent();
         }

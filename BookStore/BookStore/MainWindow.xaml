@@ -19,15 +19,15 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Title="Quản lý nhà sách" 
-        Height="1000" Width="1400"
+        Height="1000" Width="1600"
         Style="{StaticResource {x:Type Window}}">
 
 
-    <Grid Height="1000" Width="1400">
+    <Grid Height="1000" Width="1600">
         <Frame
             x:Name="MainFrame"
             Source="Pages/HomePage.xaml"
-            NavigationUIVisibility="Hidden"/>
+            NavigationUIVisibility="Hidden" />
     </Grid>
 
 </Window>

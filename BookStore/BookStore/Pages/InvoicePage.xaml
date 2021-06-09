@@ -8,16 +8,16 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="HomePage"   
-     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-     TextElement.FontWeight="Regular"
-     TextElement.FontSize="13"
-     TextOptions.TextFormattingMode="Ideal"
-     TextOptions.TextRenderingMode="Auto"
-     Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}" 
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      Background="{DynamicResource MaterialDesignPaper}"
+      FontFamily="{DynamicResource MaterialDesignFont}" 
       DataContext="{StaticResource InvoiceVM}" 
       Height="1000"
-      Width="1400">
+      Width="1600">
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
@@ -41,7 +41,7 @@
         <Button
             Background="#66ff33"
             Grid.Row="2"
-            Height="50" Margin="1028,37,78,107">
+            Height="50" Margin="1028,53,303,122">
             <StackPanel
                 Orientation="Horizontal"
                 Width="150">
@@ -61,7 +61,7 @@
         <Button
             Background="Red"
             Grid.Row="2"
-            Height="50" Margin="1028,132,78,8">
+            Height="50" Margin="1028,150,303,26">
             <StackPanel
                 Orientation="Horizontal"
                 Width="150">
@@ -79,13 +79,15 @@
         <TextBox
             materialDesign:HintAssist.Hint="Họ tên khách hàng"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            VerticalAlignment="Center" Margin="304,99,732,43" Height="58"/>
+            FontSize="30"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Center" Margin="304,79,898,31" Height="91"/>
 
 
 
         <DatePicker
             materialDesign:HintAssist.Hint="Pick Date"
-            Margin="688,91,348,43" Height="66" 
+            Margin="871,89,429,21" Height="91" 
             Style="{DynamicResource MaterialDesignDatePicker_re}"  >
             <DatePicker.Resources>
                 <Style x:Key="MaterialDesignDatePicker_re" TargetType="{x:Type DatePicker}">
@@ -120,11 +122,12 @@
                                 <Grid x:Name="PART_Root">
                                     <DatePickerTextBox
                                         x:Name="PART_TextBox"
+                                        FontSize="30"
                                         Grid.Column="0"
                                         Grid.Row="0"
                                         Focusable="{TemplateBinding Focusable}"
                                         Style="{DynamicResource MaterialDesignDatePickerTextBox}"
-                                        VerticalContentAlignment="Center"
+                                        VerticalContentAlignment="Top"
                                         HorizontalAlignment="Stretch"
                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -258,7 +261,7 @@
             Grid.Row="2" 
             VerticalAlignment="Center"
             Text="Tổng tiền: " FontSize="25" 
-            Margin="50,79,1097,112">
+            Margin="50,82,1303,115">
         </TextBlock>
 
         <TextBlock
@@ -266,7 +269,7 @@
             Grid.Row="2" 
             VerticalAlignment="Center"
             Text="Số tiền trả: " FontSize="25" 
-            Margin="50,126,1098,64">
+            Margin="50,130,1304,67">
         </TextBlock>
 
         <TextBlock
@@ -274,7 +277,7 @@
             Grid.Row="2" 
             VerticalAlignment="Center"
             Text="Còn lại: " FontSize="25" 
-            Margin="51,176,1097,16">
+            Margin="51,178,1303,19">
         </TextBlock>
 
         <materialDesign:Card

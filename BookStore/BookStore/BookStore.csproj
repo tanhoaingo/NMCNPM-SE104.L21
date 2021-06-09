@@ -151,8 +151,8 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\NhapSachPage.xaml.cs">
-      <DependentUpon>NhapSachPage.xaml</DependentUpon>
+    <Compile Include="Pages\BookEntryPage.xaml.cs">
+      <DependentUpon>BookEntryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ThayDoiPage.xaml.cs">
       <DependentUpon>ThayDoiPage.xaml</DependentUpon>
@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="Themes\Window.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\BookEntryViewModel.cs" />
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -191,7 +192,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\NhapSachPage.xaml">
+    <Page Include="Pages\BookEntryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

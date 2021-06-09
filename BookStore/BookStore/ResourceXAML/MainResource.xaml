@@ -4,4 +4,5 @@
                     xmlns:local="clr-namespace:BookStore">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:InvoiceViewModel x:Key="InvoiceVM"></viewmodel:InvoiceViewModel>
+    <viewmodel:BookEntryViewModel x:Key="BookEntryVM"></viewmodel:BookEntryViewModel>
 </ResourceDictionary>
