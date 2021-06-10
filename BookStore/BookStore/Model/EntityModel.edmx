@@ -89,6 +89,7 @@
           <Property Name="TongTien" Type="money" />
           <Property Name="SoTienTra" Type="money" />
           <Property Name="ConLai" Type="money" />
+          <Property Name="MaNguoiLap" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="KHACHHANG">
           <Key>
@@ -302,6 +303,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HOADON_NGUOIDUNG">
+          <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOIDUNG">
+              <PropertyRef Name="MaNguoiDung" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MaNguoiLap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NGUOIDUNG_NHOMNGUOIDUNG">
           <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
           <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="*" />
@@ -447,6 +460,10 @@
             <End Role="KHACHHANG" EntitySet="KHACHHANG" />
             <End Role="HOADON" EntitySet="HOADON" />
           </AssociationSet>
+          <AssociationSet Name="FK_HOADON_NGUOIDUNG" Association="Self.FK_HOADON_NGUOIDUNG">
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
+            <End Role="HOADON" EntitySet="HOADON" />
+          </AssociationSet>
           <AssociationSet Name="FK_NGUOIDUNG_NHOMNGUOIDUNG" Association="Self.FK_NGUOIDUNG_NHOMNGUOIDUNG">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
             <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
@@ -559,6 +576,10 @@
             <End Role="DAUSACH" EntitySet="DAUSACHes" />
             <End Role="TACGIA" EntitySet="TACGIAs" />
           </AssociationSet>
+          <AssociationSet Name="FK_HOADON_NGUOIDUNG" Association="MYDATABASEModel.FK_HOADON_NGUOIDUNG">
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
+            <End Role="HOADON" EntitySet="HOADONs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BAOCAOCONGNO">
           <Key>
@@ -660,6 +681,8 @@
           <Property Name="ConLai" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="CT_HD" Relationship="MYDATABASEModel.FK_CT_HD_HOADON" FromRole="HOADON" ToRole="CT_HD" />
           <NavigationProperty Name="KHACHHANG" Relationship="MYDATABASEModel.FK_HOADON_KHACHHANG" FromRole="HOADON" ToRole="KHACHHANG" />
+          <Property Name="MaNguoiLap" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NGUOIDUNG" Relationship="MYDATABASEModel.FK_HOADON_NGUOIDUNG" FromRole="HOADON" ToRole="NGUOIDUNG" />
         </EntityType>
         <EntityType Name="KHACHHANG">
           <Key>
@@ -684,6 +707,7 @@
           <Property Name="MatKhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MaNhom" Type="Int32" Nullable="false" />
           <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
+          <NavigationProperty Name="HOADONs" Relationship="MYDATABASEModel.FK_HOADON_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="HOADON" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -915,6 +939,18 @@
           <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
           <End Type="MYDATABASEModel.TACGIA" Role="TACGIA" Multiplicity="*" />
         </Association>
+        <Association Name="FK_HOADON_NGUOIDUNG">
+          <End Type="MYDATABASEModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="1" />
+          <End Type="MYDATABASEModel.HOADON" Role="HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOIDUNG">
+              <PropertyRef Name="MaNguoiDung" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MaNguoiLap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1006,6 +1042,7 @@
           <EntitySetMapping Name="HOADONs">
             <EntityTypeMapping TypeName="MYDATABASEModel.HOADON">
               <MappingFragment StoreEntitySet="HOADON">
+                <ScalarProperty Name="MaNguoiLap" ColumnName="MaNguoiLap" />
                 <ScalarProperty Name="ConLai" ColumnName="ConLai" />
                 <ScalarProperty Name="SoTienTra" ColumnName="SoTienTra" />
                 <ScalarProperty Name="TongTien" ColumnName="TongTien" />

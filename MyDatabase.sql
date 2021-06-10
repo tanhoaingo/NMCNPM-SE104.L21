@@ -149,6 +149,8 @@ CREATE TABLE HOADON(
 	ConLai MONEY,
 )
 
+ALTER TABLE HOADON ADD MaNguoiLap INT NOT NULL
+
 ALTER TABLE HOADON
 ADD CONSTRAINT PK_HOADON
 PRIMARY KEY (MaHoaDon)
@@ -156,6 +158,10 @@ PRIMARY KEY (MaHoaDon)
 ALTER TABLE HOADON
 ADD CONSTRAINT FK_HOADON_KHACHHANG
 FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG (MaKhachHang)
+
+ALTER TABLE HOADON
+ADD CONSTRAINT FK_HOADON_NGUOIDUNG
+FOREIGN KEY (MaNguoiLap) REFERENCES NGUOIDUNG (MaNguoiDung)
 
 /*=============================================================================*/
 
@@ -322,5 +328,10 @@ PRIMARY KEY (MaNguoiDung)
 ALTER TABLE NGUOIDUNG
 ADD CONSTRAINT FK_NGUOIDUNG_NHOMNGUOIDUNG
 FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
+
+/*=============================================================================*/
+
+INSERT INTO NHOMNGUOIDUNG VALUES('admin')
+INSERT INTO NGUOIDUNG VALUES ('admin','1',1)
 
 /*=============================================================================*/

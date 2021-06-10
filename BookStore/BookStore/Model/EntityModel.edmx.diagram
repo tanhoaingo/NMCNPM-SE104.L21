@@ -38,6 +38,7 @@
         <AssociationConnector Association="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG" />
         <AssociationConnector Association="MYDATABASEModel.PHANQUYEN" />
         <AssociationConnector Association="MYDATABASEModel.TT_TG" />
+        <AssociationConnector Association="MYDATABASEModel.FK_HOADON_NGUOIDUNG" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
