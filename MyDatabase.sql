@@ -1,5 +1,6 @@
-CREATE DATABASE MYDATABASE
+﻿CREATE DATABASE MYDATABASE
 USE MYDATABASE
+SET DATEFORMAT DMY
 
 /*=============================================================================*/
 
@@ -309,7 +310,7 @@ ADD CONSTRAINT FK_PHANQUYEN_NHOMNGUOIDUNG
 FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
 
 ALTER TABLE PHANQUYEN 
-ADD CONSTRAINT FK_PHANQUYEN_CHUCNANG
+ADD CONS12TRAINT FK_PHANQUYEN_CHUCNANG
 FOREIGN KEY (MaChucNang) REFERENCES CHUCNANG (MaChucNang)
 
 /*=============================================================================*/
@@ -333,5 +334,17 @@ FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
 
 INSERT INTO NHOMNGUOIDUNG VALUES('admin')
 INSERT INTO NGUOIDUNG VALUES ('admin','1',1)
+INSERT INTO THELOAI VALUES(N'Khoa học viễn tưởng'),(N'Hài hước'),(N'Kinh dị'),(N'Trinh thám'),(N'Cổ tích'),('Anime')
+INSERT INTO DAUSACH(MaTheLoai,TenSach,LuongTon) VALUES
+	(12,'One Piece',0),
+	(12,'Naruto',0),
+	(9,'Dracula',0)
+INSERT INTO PHIEUNHAPSACH VALUES ('11/6/2021')
+INSERT INTO SACH(MaDauSach, LuongTon) VALUES
+	(2,0),
+	(1,0)
+INSERT INTO CT_PNS(MaPhieuNhapSach,MaSach,SoLuong,DonGiaNhap) VALUES
+	(1,1,100,35000),
+	(1,2,50,75000)
 
 /*=============================================================================*/

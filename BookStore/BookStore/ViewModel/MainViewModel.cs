@@ -19,7 +19,7 @@ namespace BookStore.ViewModel
                 Isloaded = true;
                 if (p == null)
                     return;
-                p.Hide();
+                /*p.Hide();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
 
@@ -37,7 +37,7 @@ namespace BookStore.ViewModel
                 {
 
                     p.Close();
-                }
+                }*/
             }
               );
         }

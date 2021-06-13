@@ -24,10 +24,9 @@ namespace BookStore.Model
         public int MaDauSach { get; set; }
         public int MaTheLoai { get; set; }
         public string TenSach { get; set; }
-        public string TheLoai { get; set; }
         public Nullable<int> LuongTon { get; set; }
     
-        public virtual THELOAI THELOAI1 { get; set; }
+        public virtual THELOAI THELOAI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SACH> SACHes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -31,7 +31,7 @@ namespace BookStore.Pages
             {
                 var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
                 grid.Width = 1600;
-                grid.Height = 1000;
+                grid.Height = 950;
                 ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
                     new Uri("../Pages/BookEntryPage.xaml", UriKind.RelativeOrAbsolute));
             }
@@ -41,7 +41,7 @@ namespace BookStore.Pages
         {
             var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
             grid.Width = 1600;
-            grid.Height = 1000;
+            grid.Height = 950;
             ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
                 new Uri("../Pages/InvoicePage.xaml", UriKind.RelativeOrAbsolute));
         }

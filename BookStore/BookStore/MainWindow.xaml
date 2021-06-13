@@ -31,7 +31,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid Height="1000" Width="1600">
+    <Grid Height="410" Width="610">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="307*"/>

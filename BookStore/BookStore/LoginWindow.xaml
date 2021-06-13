@@ -123,6 +123,7 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button
+                        IsDefault="True"
                         Grid.Column="0"
                         Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Width="120"
