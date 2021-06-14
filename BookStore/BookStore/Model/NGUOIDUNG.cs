@@ -14,11 +14,19 @@ namespace BookStore.Model
     
     public partial class NGUOIDUNG
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public NGUOIDUNG()
+        {
+            this.HOADONs = new HashSet<HOADON>();
+        }
+    
         public int MaNguoiDung { get; set; }
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
         public int MaNhom { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<HOADON> HOADONs { get; set; }
         public virtual NHOMNGUOIDUNG NHOMNGUOIDUNG { get; set; }
     }
 }

@@ -76,7 +76,6 @@
           <Property Name="MaDauSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaTheLoai" Type="int" Nullable="false" />
           <Property Name="TenSach" Type="nvarchar" MaxLength="50" />
-          <Property Name="TheLoai" Type="nvarchar" MaxLength="50" />
           <Property Name="LuongTon" Type="int" />
         </EntityType>
         <EntityType Name="HOADON">
@@ -89,6 +88,7 @@
           <Property Name="TongTien" Type="money" />
           <Property Name="SoTienTra" Type="money" />
           <Property Name="ConLai" Type="money" />
+          <Property Name="MaNguoiLap" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="KHACHHANG">
           <Key>
@@ -302,6 +302,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HOADON_NGUOIDUNG">
+          <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="1" />
+          <End Role="HOADON" Type="Self.HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOIDUNG">
+              <PropertyRef Name="MaNguoiDung" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MaNguoiLap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NGUOIDUNG_NHOMNGUOIDUNG">
           <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="1" />
           <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="*" />
@@ -447,6 +459,10 @@
             <End Role="KHACHHANG" EntitySet="KHACHHANG" />
             <End Role="HOADON" EntitySet="HOADON" />
           </AssociationSet>
+          <AssociationSet Name="FK_HOADON_NGUOIDUNG" Association="Self.FK_HOADON_NGUOIDUNG">
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
+            <End Role="HOADON" EntitySet="HOADON" />
+          </AssociationSet>
           <AssociationSet Name="FK_NGUOIDUNG_NHOMNGUOIDUNG" Association="Self.FK_NGUOIDUNG_NHOMNGUOIDUNG">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
             <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
@@ -541,6 +557,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_HOADON_KHACHHANG" Association="MYDATABASEModel.FK_HOADON_KHACHHANG">
             <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="HOADON" EntitySet="HOADONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOADON_NGUOIDUNG" Association="MYDATABASEModel.FK_HOADON_NGUOIDUNG">
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
             <End Role="HOADON" EntitySet="HOADONs" />
           </AssociationSet>
           <AssociationSet Name="FK_PHIEUTHUTIEN_KHACHHANG" Association="MYDATABASEModel.FK_PHIEUTHUTIEN_KHACHHANG">
@@ -642,9 +662,8 @@
           <Property Name="MaDauSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaTheLoai" Type="Int32" Nullable="false" />
           <Property Name="TenSach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LuongTon" Type="Int32" />
-          <NavigationProperty Name="THELOAI1" Relationship="MYDATABASEModel.FK_DAUSACH_THELOAI" FromRole="DAUSACH" ToRole="THELOAI" />
+          <NavigationProperty Name="THELOAI" Relationship="MYDATABASEModel.FK_DAUSACH_THELOAI" FromRole="DAUSACH" ToRole="THELOAI" />
           <NavigationProperty Name="SACHes" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="MYDATABASEModel.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
         </EntityType>
@@ -658,8 +677,10 @@
           <Property Name="TongTien" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SoTienTra" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ConLai" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MaNguoiLap" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CT_HD" Relationship="MYDATABASEModel.FK_CT_HD_HOADON" FromRole="HOADON" ToRole="CT_HD" />
           <NavigationProperty Name="KHACHHANG" Relationship="MYDATABASEModel.FK_HOADON_KHACHHANG" FromRole="HOADON" ToRole="KHACHHANG" />
+          <NavigationProperty Name="NGUOIDUNG" Relationship="MYDATABASEModel.FK_HOADON_NGUOIDUNG" FromRole="HOADON" ToRole="NGUOIDUNG" />
         </EntityType>
         <EntityType Name="KHACHHANG">
           <Key>
@@ -683,6 +704,7 @@
           <Property Name="TenDangNhap" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MatKhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="HOADONs" Relationship="MYDATABASEModel.FK_HOADON_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="HOADON" />
           <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
@@ -883,6 +905,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HOADON_NGUOIDUNG">
+          <End Type="MYDATABASEModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="1" />
+          <End Type="MYDATABASEModel.HOADON" Role="HOADON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOIDUNG">
+              <PropertyRef Name="MaNguoiDung" />
+            </Principal>
+            <Dependent Role="HOADON">
+              <PropertyRef Name="MaNguoiLap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PHIEUTHUTIEN_KHACHHANG">
           <End Type="MYDATABASEModel.KHACHHANG" Role="KHACHHANG" Multiplicity="1" />
           <End Type="MYDATABASEModel.PHIEUTHUTIEN" Role="PHIEUTHUTIEN" Multiplicity="*" />
@@ -996,7 +1030,6 @@
             <EntityTypeMapping TypeName="MYDATABASEModel.DAUSACH">
               <MappingFragment StoreEntitySet="DAUSACH">
                 <ScalarProperty Name="LuongTon" ColumnName="LuongTon" />
-                <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
                 <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
                 <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
@@ -1006,6 +1039,7 @@
           <EntitySetMapping Name="HOADONs">
             <EntityTypeMapping TypeName="MYDATABASEModel.HOADON">
               <MappingFragment StoreEntitySet="HOADON">
+                <ScalarProperty Name="MaNguoiLap" ColumnName="MaNguoiLap" />
                 <ScalarProperty Name="ConLai" ColumnName="ConLai" />
                 <ScalarProperty Name="SoTienTra" ColumnName="SoTienTra" />
                 <ScalarProperty Name="TongTien" ColumnName="TongTien" />

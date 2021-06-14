@@ -26,9 +26,11 @@ namespace BookStore.Model
         public Nullable<decimal> TongTien { get; set; }
         public Nullable<decimal> SoTienTra { get; set; }
         public Nullable<decimal> ConLai { get; set; }
+        public int MaNguoiLap { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_HD> CT_HD { get; set; }
         public virtual KHACHHANG KHACHHANG { get; set; }
+        public virtual NGUOIDUNG NGUOIDUNG { get; set; }
     }
 }
