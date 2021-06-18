@@ -29,19 +29,26 @@ namespace BookStore.ViewModel
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount(); });
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailButtonNeed(); }, (p) => { DeleteDetail(); UpdateResultAMount(); });
-            CancelButtonClickCommand = new RelayCommand<Page>((p) => { return true; }, (p) => CloseInvoice(p));
+            CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => CloseInvoice(p));
+            SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook());
+            ExitButtonClickCommand= new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
 
         }
 
-        private void CloseInvoice(Page p)
+        private void ExitWindow(Window p)
         {
-            if (Application.Current.MainWindow != null)
-            {
-                var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-                grid.Width = 610;
-                grid.Height = 410;
-                ((MainWindow)Application.Current.MainWindow).MainFrame.GoBack();
-            }
+            p.Close();
+        }
+
+        private void SearchBook()
+        {
+            var tmp = new ListBookWindow {};
+            tmp.ShowDialog();
+        }
+
+        private void CloseInvoice(Window p)
+        {
+            p.Close();
         }
 
 
@@ -193,6 +200,8 @@ namespace BookStore.ViewModel
         public ICommand EditDetailClickCommand { get; set; }
         public ICommand DeleteDetailClickCommand { get; set; }
         public ICommand CancelButtonClickCommand { get; set; }
+        public ICommand SearchButtonClickCommand { get; set; }
+        public ICommand ExitButtonClickCommand { get; set; }
 
 
         private ObservableCollection<Item_CT_HD> _Items;

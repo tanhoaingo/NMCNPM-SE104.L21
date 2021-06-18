@@ -82,6 +82,12 @@
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RowToIndexConverter.cs" />
+    <Compile Include="InvoiceWindow.xaml.cs">
+      <DependentUpon>InvoiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ListBookWindow.xaml.cs">
+      <DependentUpon>ListBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -160,9 +166,6 @@
     <Compile Include="Pages\BaocaoPage.xaml.cs">
       <DependentUpon>BaocaoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\InvoicePage.xaml.cs">
-      <DependentUpon>InvoicePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -185,9 +188,18 @@
     <Compile Include="ViewModel\BookEntryViewModel.cs" />
     <Compile Include="ViewModel\Icommand.cs" />
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
+    <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="AddCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InvoiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,10 +220,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\BaocaoPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\InvoicePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
