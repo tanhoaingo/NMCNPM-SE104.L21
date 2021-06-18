@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BookStore.Pages
 {
@@ -39,11 +28,8 @@ namespace BookStore.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 1600;
-            grid.Height = 950;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                new Uri("../Pages/InvoicePage.xaml", UriKind.RelativeOrAbsolute));
+            var tmp = new InvoiceWindow();
+            tmp.ShowDialog();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

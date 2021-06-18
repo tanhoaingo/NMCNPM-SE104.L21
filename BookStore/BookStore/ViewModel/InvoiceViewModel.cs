@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BookStore.Model;
+using BookStore.Tools;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BookStore.Model;
-using BookStore.Tools;
 
 namespace BookStore.ViewModel
 {
-    public class InvoiceViewModel :BaseViewModel
+    public class InvoiceViewModel : BaseViewModel
     {
-        
+
 
         public InvoiceViewModel()
         {
@@ -23,42 +20,71 @@ namespace BookStore.ViewModel
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
 
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
-            AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => {  });
+            AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
             AddCustomerClick = new RelayCommand<Object>((p) => { return true; }, (p) => { CreateNewCustomer(); });
             NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
             BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); });
             PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AmountTextChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
-            EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount();});
+            EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount(); });
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailButtonNeed(); }, (p) => { DeleteDetail(); UpdateResultAMount(); });
-            CancelButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { /*do close create invoice*/ });
+            CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => CloseInvoice(p));
+            SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook());
+            ExitButtonClickCommand= new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
 
         }
 
+        private void ExitWindow(Window p)
+        {
+            p.Close();
+        }
+
+        private void SearchBook()
+        {
+            var tmp = new ListBookWindow {};
+            tmp.ShowDialog();
+        }
+
+        private void CloseInvoice(Window p)
+        {
+            p.Close();
+        }
+
+
+
         private void SaveInvoice()
         {
+            if (!SaveInvoiceNeed())
+            {
+                MessageBox.Show("Vui lòng hoàn thành hóa đơn!");
+                return;
+            }
+
             var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 5, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAMount, TongTien = SumAmount };
             DataProvider.Ins.DB.HOADONs.Add(HoaDon);
             DataProvider.Ins.DB.SaveChanges();
 
-            foreach(var v in Items)
+            foreach (var v in Items)
             {
 
                 var CTHD = new CT_HD() { DonGiaBan = SelectedPriceOfBook.DonGiaNhap, MaHoaDon = HoaDon.MaHoaDon, SoLuong = int.Parse(v.Amount), MaSach = SelectedPriceOfBook.MaSach };
+                DataProvider.Ins.DB.CT_HD.Add(CTHD);
+                DataProvider.Ins.DB.SaveChanges();
+                v.IDinDataBase = CTHD.MaCT_HD;
             }
         }
 
-        private bool DeleteDetailButtonNeed()
+        private bool SaveInvoiceNeed()
         {
-            if(SelectedItem == null)
+            if (SelectedCustomer == null || InvoiceDate == null || Items.Count == 0)
             {
                 return false;
             }
             return true;
         }
 
-        private bool EditDetailButtonNeed()
+        private bool DeleteDetailButtonNeed()
         {
             if (SelectedItem == null)
             {
@@ -67,14 +93,26 @@ namespace BookStore.ViewModel
             return true;
         }
 
+        private bool EditDetailButtonNeed()
+        {
+            if (SelectedItem == null || SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         private void DeleteDetail()
         {
-            //do delete selectedItem
+            Items.Remove(SelectedItem);
         }
 
         private void EditDetail()
         {
-            //do edit selectedItem
+            SelectedItem.DauSach = SelectedBook;
+            SelectedItem.Amount = Amount;
+            SelectedItem.CTPNS = SelectedPriceOfBook;
+            SelectedItem.IntoMoney = IntoMoney;
         }
 
         private void UpdateResultAMount()
@@ -86,7 +124,7 @@ namespace BookStore.ViewModel
             {
                 return;
             }
-            foreach(var v in Items)
+            foreach (var v in Items)
             {
                 SumAmount += v.IntoMoney;
             }
@@ -95,13 +133,13 @@ namespace BookStore.ViewModel
 
         private void AddDetail()
         {
-            var CT_HD = new Item_CT_HD() { BookName = SelectedBook.TenSach, ID = ListBook.Count() + 1,Category = SelectedBook.THELOAI.TenTheLoai, Amount = Amount,Price = Rules.Instance.ConvertDecimal_nullToInt64(SelectedPriceOfBook.DonGiaNhap), IntoMoney = IntoMoney };
+            var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, CTPNS = SelectedPriceOfBook, IntoMoney = IntoMoney };
             Items.Add(CT_HD);
         }
 
         private bool AddDetailButtonNeed()
         {
-            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null )
+            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null)
             {
                 return false;
             }
@@ -110,12 +148,17 @@ namespace BookStore.ViewModel
 
         private void UpdateIntoMoneyValue()
         {
+            if (SelectedPriceOfBook == null)
+            {
+                IntoMoney = 0;
+                return;
+            }
             IntoMoney = Rules.Instance.ConvertStringAmountToInt64(Amount) * Rules.Instance.ConvertDecimal_nullToInt64(SelectedPriceOfBook.DonGiaNhap);
         }
 
         private void UpdateListPriceOfBook()
         {
-            if(ListPriceOfBook ==null)
+            if (ListPriceOfBook == null)
             {
                 ListPriceOfBook = new ObservableCollection<CT_PNS>();
             }
@@ -125,8 +168,8 @@ namespace BookStore.ViewModel
             }
             var tmp = DataProvider.Ins.DB.CT_PNS.Where(x => x.SACH.DAUSACH.TenSach == SelectedBook.TenSach).ToList();
             if (tmp == null)
-            { 
-                return; 
+            {
+                return;
             }
             foreach (var vv in tmp)
             {
@@ -157,6 +200,8 @@ namespace BookStore.ViewModel
         public ICommand EditDetailClickCommand { get; set; }
         public ICommand DeleteDetailClickCommand { get; set; }
         public ICommand CancelButtonClickCommand { get; set; }
+        public ICommand SearchButtonClickCommand { get; set; }
+        public ICommand ExitButtonClickCommand { get; set; }
 
 
         private ObservableCollection<Item_CT_HD> _Items;
@@ -176,13 +221,13 @@ namespace BookStore.ViewModel
         private DateTime? _InvoiceDate;
 
         public ObservableCollection<Item_CT_HD> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
-        
-        public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; } } 
-        
+
+        public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; } }
+
         public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set => _ListCustomer = value; }
-        
+
         public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
-        
+
         public KHACHHANG SelectedCustomer_2 { get => _SelectedCustomer_2; set { _SelectedCustomer_2 = value; OnPropertyChanged(); } }
 
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
@@ -201,8 +246,21 @@ namespace BookStore.ViewModel
 
         public long LeftAMount { get => _LeftAMount; set { _LeftAMount = value; OnPropertyChanged(); } }
 
-        public Item_CT_HD SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
+        public Item_CT_HD SelectedItem
+        {
+            get => _SelectedItem; set
+            {
+                _SelectedItem = value; OnPropertyChanged();
+                if (SelectedItem != null)
+                {
+                    SelectedBook = SelectedItem.DauSach;
+                    SelectedPriceOfBook = SelectedItem.CTPNS;
+                    Amount = SelectedItem.Amount;
+                    IntoMoney = SelectedItem.IntoMoney;
+                }
+            }
+        }
 
-        public DateTime? InvoiceDate { get => _InvoiceDate; set => _InvoiceDate = value; }
+        public DateTime? InvoiceDate { get => _InvoiceDate; set { _InvoiceDate = value; OnPropertyChanged(); } }
     }
 }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookStore.Tools
 {
@@ -10,15 +6,15 @@ namespace BookStore.Tools
     {
         private static Rules _Instance;
 
-        public static Rules Instance 
+        public static Rules Instance
         {
-            get { if (_Instance == null) _Instance = new Rules();return _Instance; }
-            set { _Instance = value; } 
+            get { if (_Instance == null) _Instance = new Rules(); return _Instance; }
+            set { _Instance = value; }
         }
 
         public Int64 ConvertStringAmountToInt64(string amount)
         {
-            if(amount==null || amount == "")
+            if (amount == null || amount == "")
             {
                 return 0;
             }
@@ -26,6 +22,10 @@ namespace BookStore.Tools
         }
         public long ConvertDecimal_nullToInt64(decimal? number)
         {
+            if (number == null)
+            {
+                return 0;
+            }
             decimal tmp = number ?? 0;
             return Convert.ToInt64(tmp);
         }

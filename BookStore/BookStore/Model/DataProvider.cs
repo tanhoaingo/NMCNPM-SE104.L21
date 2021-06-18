@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookStore.Model
+﻿namespace BookStore.Model
 {
     public class DataProvider
     {
@@ -27,5 +21,5 @@ namespace BookStore.Model
         {
             DB = new MYDATABASE_Entities();
         }
-    }   
+    }
 }

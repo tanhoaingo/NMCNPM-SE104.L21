@@ -346,5 +346,7 @@ INSERT INTO SACH(MaDauSach, LuongTon) VALUES
 INSERT INTO CT_PNS(MaPhieuNhapSach,MaSach,SoLuong,DonGiaNhap) VALUES
 	(1,1,100,35000),
 	(1,2,50,75000)
+INSERT INTO TACGIA(TenTacGia) VALUES ('Oda Eiichiro'), ('Kishimoto Masashi')
+INSERT INTO TT_TG(MaDauSach, MaTacGia) VALUES (1,1) , (2,2)
 
 /*=============================================================================*/
