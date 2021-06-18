@@ -43,11 +43,8 @@ namespace BookStore.Pages
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 1600;
-            grid.Height = 1000;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                new Uri("../Pages/ThuTienPage.xaml", UriKind.RelativeOrAbsolute));
+            var tmp = new BillWindow();
+            tmp.ShowDialog();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
