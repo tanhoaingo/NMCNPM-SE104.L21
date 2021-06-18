@@ -121,7 +121,7 @@
                     <StackPanel
                         Grid.Row="1"
                         Margin="8 24 8 0">
-                        <Button Click="Button_Click_3">
+                        <Button Click="Button_Click_3" HorizontalAlignment="Left" Width="184">
                             <TextBlock
                                 FontWeight="Bold"
                                 TextAlignment="Center"

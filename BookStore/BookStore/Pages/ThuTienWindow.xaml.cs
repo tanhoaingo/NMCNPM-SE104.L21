@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookStore.Pages
 {
     /// <summary>
-    /// Interaction logic for ThayDoiPage.xaml
+    /// Interaction logic for ThuTienWindow.xaml
     /// </summary>
-    public partial class ThayDoiPage : Page
+    public partial class ThuTienWindow : Window
     {
-        public ThayDoiPage()
+        public ThuTienWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 610;
-            grid.Height = 410;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.GoBack();
         }
     }
 }

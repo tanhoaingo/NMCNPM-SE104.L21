@@ -86,78 +86,78 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BAOCAOCONGNO.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\BAOCAOTON.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CHUCNANG.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CT_BCCN.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CT_BCT.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CT_HD.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CT_PNS.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\DAUSACH.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EntityModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EntityModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\EntityModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\HOADON.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Item_CT_HD.cs" />
     <Compile Include="Model\KHACHHANG.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelEntity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEntity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelEntity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ModelEntity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelEntity.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\NGUOIDUNG.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NHOMNGUOIDUNG.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PHIEUNHAPSACH.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PHIEUTHUTIEN.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SACH.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TACGIA.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\THAMSO.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\THELOAI.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
+      <DependentUpon>ModelEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Pages\BaocaoPage.xaml.cs">
-      <DependentUpon>BaocaoPage.xaml</DependentUpon>
+    <Compile Include="Pages\BaoCaoWindow.xaml.cs">
+      <DependentUpon>BaoCaoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InvoicePage.xaml.cs">
       <DependentUpon>InvoicePage.xaml</DependentUpon>
@@ -165,17 +165,17 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\BookEntryPage.xaml.cs">
-      <DependentUpon>BookEntryPage.xaml</DependentUpon>
+    <Compile Include="Pages\NhapSachWindow.xaml.cs">
+      <DependentUpon>NhapSachWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ThayDoiPage.xaml.cs">
-      <DependentUpon>ThayDoiPage.xaml</DependentUpon>
+    <Compile Include="Pages\ThayDoiWindow.xaml.cs">
+      <DependentUpon>ThayDoiWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ThuTienPage.xaml.cs">
-      <DependentUpon>ThuTienPage.xaml</DependentUpon>
+    <Compile Include="Pages\ThuTienWindow.xaml.cs">
+      <DependentUpon>ThuTienWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TraCuuPage.xaml.cs">
-      <DependentUpon>TraCuuPage.xaml</DependentUpon>
+    <Compile Include="Pages\TraCuuWindow.xaml.cs">
+      <DependentUpon>TraCuuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Themes\Window.cs" />
     <Compile Include="Tools\Rules.cs" />
@@ -185,6 +185,7 @@
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ThuTienViewModel.cs" />
     <Page Include="AddCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,9 +206,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\BaocaoPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\BaoCaoWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\InvoicePage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -217,21 +218,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\BookEntryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\NhapSachWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ThayDoiPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\ThayDoiWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ThuTienPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\ThuTienWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TraCuuPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Pages\TraCuuWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceXAML\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -268,12 +269,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\EntityModel.edmx">
+    <EntityDeploy Include="Model\ModelEntity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>ModelEntity.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\EntityModel.edmx.diagram">
-      <DependentUpon>EntityModel.edmx</DependentUpon>
+    <None Include="Model\ModelEntity.edmx.diagram">
+      <DependentUpon>ModelEntity.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -285,18 +286,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Model\EntityModel.Context.tt">
+    <Content Include="Model\ModelEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>EntityModel.Context.cs</LastGenOutput>
-      <DependentUpon>EntityModel.edmx</DependentUpon>
+      <DependentUpon>ModelEntity.edmx</DependentUpon>
+      <LastGenOutput>ModelEntity.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Model\EntityModel.tt">
+    <Content Include="Model\ModelEntity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EntityModel.edmx</DependentUpon>
-      <LastGenOutput>EntityModel.cs</LastGenOutput>
+      <DependentUpon>ModelEntity.edmx</DependentUpon>
+      <LastGenOutput>ModelEntity.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Source\Image\bill.png" />
     <Resource Include="Source\Image\bill2.png" />
     <Resource Include="Source\Image\bill3.png" />

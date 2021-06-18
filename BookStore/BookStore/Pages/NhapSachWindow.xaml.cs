@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookStore.Pages
 {
     /// <summary>
-    /// Interaction logic for TraCuuPage.xaml
+    /// Interaction logic for NhapSachWindow.xaml
     /// </summary>
-    public partial class TraCuuPage : Page
+    public partial class NhapSachWindow : Window
     {
-        public TraCuuPage()
+        public NhapSachWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 610;
-            grid.Height = 410;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.GoBack();
         }
     }
 }

@@ -27,14 +27,14 @@ namespace BookStore.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if ((Application.Current.MainWindow != null))
-            {
-                var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-                grid.Width = 1600;
-                grid.Height = 950;
-                ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                    new Uri("../Pages/BookEntryPage.xaml", UriKind.RelativeOrAbsolute));
-            }
+            var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
+            var parGrid = grid.Parent as Grid;
+            var border = parGrid.Parent as Border;
+            Window window = border.Parent as Window;
+            NhapSachWindow thuTienWindow = new NhapSachWindow();
+            window.Hide();
+            thuTienWindow.ShowDialog();
+            window.Show();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -49,37 +49,49 @@ namespace BookStore.Pages
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 1600;
-            grid.Height = 1000;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                new Uri("../Pages/TraCuuPage.xaml", UriKind.RelativeOrAbsolute));
+            var parGrid = grid.Parent as Grid;
+            var border = parGrid.Parent as Border;
+            Window window = border.Parent as Window;
+            TraCuuWindow thuTienWindow = new TraCuuWindow();
+            window.Hide();
+            thuTienWindow.ShowDialog();
+            window.Show();
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 1600;
-            grid.Height = 1000;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                new Uri("../Pages/ThuTienPage.xaml", UriKind.RelativeOrAbsolute));
+            var parGrid = grid.Parent as Grid;
+            var border = parGrid.Parent as Border;
+            Window window = border.Parent as Window;
+            ThuTienWindow thuTienWindow = new ThuTienWindow();
+            window.Hide();
+            thuTienWindow.ShowDialog();
+            window.Show();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 1600;
-            grid.Height = 1000;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                new Uri("../Pages/BaoCaoPage.xaml", UriKind.RelativeOrAbsolute));
+            var parGrid = grid.Parent as Grid;
+            var border = parGrid.Parent as Border;
+            Window window = border.Parent as Window;
+            BaoCaoWindow thuTienWindow = new BaoCaoWindow();
+            window.Hide();
+            thuTienWindow.ShowDialog();
+            window.Show();
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
             var grid = ((MainWindow)Application.Current.MainWindow).MainFrame.Parent as Grid;
-            grid.Width = 1600;
-            grid.Height = 1000;
-            ((MainWindow)Application.Current.MainWindow).MainFrame.Navigate(
-                new Uri("../Pages/ThayDoiPage.xaml", UriKind.RelativeOrAbsolute));
+            var parGrid = grid.Parent as Grid;
+            var border = parGrid.Parent as Border;
+            Window window = border.Parent as Window;
+            ThayDoiWindow thuTienWindow = new ThayDoiWindow();
+            window.Hide();
+            thuTienWindow.ShowDialog();
+            window.Show();
         }
     }
 }

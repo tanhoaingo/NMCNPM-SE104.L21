@@ -12,6 +12,9 @@ using BookStore.Tools;
 
 namespace BookStore.ViewModel
 {
+
+
+
     public class InvoiceViewModel :BaseViewModel
     {
         
@@ -21,7 +24,7 @@ namespace BookStore.ViewModel
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
             Items = CreateData();
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
-
+            
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => {  });
             AddCustomerClick = new RelayCommand<Object>((p) => { return true; }, (p) => { CreateNewCustomer(); });
@@ -95,7 +98,7 @@ namespace BookStore.ViewModel
 
         private void AddDetail()
         {
-            var CT_HD = new Item_CT_HD() { BookName = SelectedBook.TenSach, ID = ListBook.Count() + 1,Category = SelectedBook.THELOAI.TenTheLoai, Amount = Amount,Price = Rules.Instance.ConvertDecimal_nullToInt64(SelectedPriceOfBook.DonGiaNhap), IntoMoney = IntoMoney };
+            var CT_HD = new Item_CT_HD() { BookName = SelectedBook.TenSach, ID = ListBook.Count() + 1,Category = SelectedBook.THELOAI1.TenTheLoai, Amount = Amount,Price = Rules.Instance.ConvertDecimal_nullToInt64(SelectedPriceOfBook.DonGiaNhap), IntoMoney = IntoMoney };
             Items.Add(CT_HD);
         }
 

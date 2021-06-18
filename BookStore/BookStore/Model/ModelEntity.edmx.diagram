@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6fb07682550441e0b30b712bb6ed0b02" Name="Diagram1">
+        <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOCONGNO" Width="1.5" PointX="6" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOTON" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.CT_BCCN" Width="1.5" PointX="8.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.CT_BCT" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.CT_HD" Width="1.5" PointX="10.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.CT_PNS" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.CHUCNANG" Width="1.5" PointX="1.5" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.DAUSACH" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.HOADON" Width="1.5" PointX="8.25" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.KHACHHANG" Width="1.5" PointX="6" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.NGUOIDUNG" Width="1.5" PointX="6" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.NHOMNGUOIDUNG" Width="1.5" PointX="3.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.PHIEUNHAPSACH" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.PHIEUTHUTIEN" Width="1.5" PointX="8.25" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.SACH" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.TACGIA" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.THAMSO" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.THELOAI" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_BCCN_BAOCAOCONGNO" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_BCT_BAOCAOTON" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_BCCN_KHACHHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_BCT_SACH" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_HD_HOADON" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_HD_SACH" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_PNS_PHIEUNHAPSACH" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_CT_PNS_SACH" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_DAUSACH_THELOAI" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_SACH_DAUSACH" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_HOADON_KHACHHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_HOADON_NGUOIDUNG" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_PHIEUTHUTIEN_KHACHHANG" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.PHANQUYEN" ManuallyRouted="false" />
+        <AssociationConnector Association="MYDATABASEModel.TT_TG" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

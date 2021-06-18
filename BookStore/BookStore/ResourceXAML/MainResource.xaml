@@ -7,4 +7,5 @@
     <viewmodel:BookEntryViewModel x:Key="BookEntryVM"></viewmodel:BookEntryViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:AddCustomerViewModel x:Key="AddCustomerVM"></viewmodel:AddCustomerViewModel>
+    <viewmodel:ThuTienViewModel x:Key="ThuTienVM"></viewmodel:ThuTienViewModel>
 </ResourceDictionary>
