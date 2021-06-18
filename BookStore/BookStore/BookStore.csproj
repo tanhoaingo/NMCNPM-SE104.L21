@@ -81,6 +81,9 @@
     <Compile Include="AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BillWindow.xaml.cs">
+      <DependentUpon>BillWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\RowToIndexConverter.cs" />
     <Compile Include="InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
@@ -185,6 +188,7 @@
     <Compile Include="Tools\Rules.cs" />
     <Compile Include="ViewModel\AddCustomerViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\BillViewModel.cs" />
     <Compile Include="ViewModel\BookEntryViewModel.cs" />
     <Compile Include="ViewModel\Icommand.cs" />
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
@@ -192,6 +196,10 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="AddCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BillWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
