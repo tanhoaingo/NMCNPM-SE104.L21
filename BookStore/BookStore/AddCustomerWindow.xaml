@@ -98,7 +98,15 @@
             Grid.Row="1"
             Text="{Binding TenKhachHang}"
             VerticalAlignment="Center"
-            Margin="20,13,40,13" Height="33"></TextBox>
+            Margin="20,13,40,13" Height="33">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding NameTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
 
         <TextBox
             Grid.Column="1"
@@ -109,6 +117,9 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewTextInput" >
                     <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                    <i:InvokeCommandAction Command="{Binding PhoneTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                    </i:InvokeCommandAction>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </TextBox>
@@ -118,19 +129,35 @@
             Grid.Row="3"
             Text="{Binding Email}"
             VerticalAlignment="Center"
-            Margin="20,13,40,13" Height="33"></TextBox>
+            Margin="20,13,40,13" Height="33">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding EmailTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
 
         <TextBox
             Grid.Column="1"
             Grid.Row="4"
             Text="{Binding DiaChi}"
             VerticalAlignment="Center"
-            Margin="20,12,40,12" Height="34"></TextBox>
+            Margin="20,12,40,12" Height="34">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding AddressTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                    </i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
 
         <Grid Grid.ColumnSpan="2" Grid.Row="5">
             <TextBlock
                 TextAlignment="Center"
-                Visibility="Visible"
+                Visibility="Hidden"
                 Name="ErrorAddCustomer"
                 Text="Xảy ra lỗi!"
                 HorizontalAlignment="Center"

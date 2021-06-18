@@ -129,6 +129,7 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Item_CT_HD.cs" />
+    <Compile Include="Model\Item_CT_PNS.cs" />
     <Compile Include="Model\KHACHHANG.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
@@ -182,6 +183,7 @@
     <Compile Include="ViewModel\AddCustomerViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BookEntryViewModel.cs" />
+    <Compile Include="ViewModel\Icommand.cs" />
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

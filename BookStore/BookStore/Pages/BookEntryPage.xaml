@@ -4,6 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BookStore.Pages"
+      xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
+      xmlns:cv ="clr-namespace:BookStore.Converters"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="HomePage"
@@ -15,18 +19,504 @@
       Background="{DynamicResource MaterialDesignPaper}"
       FontFamily="{DynamicResource MaterialDesignFont}"
       DataContext="{StaticResource BookEntryVM}" 
-      Height="1000" Width="1600">
+      Height="950" Width="1600">
 
-    <Grid>
+    <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition/>
+            <RowDefinition Height="23*"  />
+            <RowDefinition Height="72*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Width="50" Height="Auto" Background="White" BorderBrush="White" Click="Button_Click">
-                <Image Source="/Source/Image/exit.png"/>
-            </Button>
-        </StackPanel>
 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="13*"></ColumnDefinition>
+                <ColumnDefinition Width="12*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48*"></RowDefinition>
+                <RowDefinition Height="67*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="50" Width="50">
+                <Button Width="50" Height="50" Background="White" BorderBrush="White" Click="Button_Click">
+                    <Image Source="/Source/Image/exit.png"/>
+                </Button>
+            </StackPanel>
+
+            <TextBlock
+                Grid.Row="0" 
+                Grid.Column="0"
+                TextWrapping="Wrap"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="Phiếu Nhập Sách" HorizontalAlignment="Center"
+                FontSize="60"
+                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Margin="515,0,609,0" Width="476" Grid.ColumnSpan="2"/>
+
+            <Image Grid.Column="0"
+                HorizontalAlignment="Left" Height="202" 
+                VerticalAlignment="Top" Width="204" Source="/Source/Image/Hoadon.png" Grid.RowSpan="2"/>
+
+            <materialDesign:Card Grid.Row="1" Grid.Column="0" Margin="382,0,74,0">
+                <DatePicker
+                    SelectedDate="{Binding EntryBookDate, StringFormat='dd/MM/yyyy'}"
+                    materialDesign:HintAssist.Hint="Ngày nhập"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Style="{DynamicResource MaterialDesignDatePicker_re}"
+                    Margin="20,0,20,0"
+                    Height="100">
+                    <DatePicker.Resources>
+                        <Style x:Key="MaterialDesignDatePicker_re" TargetType="{x:Type DatePicker}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+                            <Setter Property="CalendarStyle" Value="{StaticResource MaterialDesignDatePickerCalendarPortrait}" />
+                            <Setter Property="IsTodayHighlighted" Value="True" />
+                            <Setter Property="SelectedDateFormat" Value="Short" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextBoxBorder}" />
+                            <Setter Property="BorderThickness" Value="0 0 0 1" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Padding" Value="{x:Static wpf:Constants.TextBoxDefaultPadding}" />
+                            <Setter Property="wpf:TextFieldAssist.TextBoxViewMargin" Value="{x:Static wpf:Constants.DefaultTextBoxViewMargin}" />
+                            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource MaterialDesignValidationErrorTemplate}" />
+                            <Setter Property="wpf:TextFieldAssist.UnderlineBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+                            <Setter Property="wpf:HintAssist.Foreground" Value="{DynamicResource PrimaryHueMidBrush}" />
+                            <Setter Property="wpf:HintAssist.IsFloating" Value="True" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                                        <ControlTemplate.Resources>
+                                            <ControlTemplate x:Key="CalendarButtonTemplate" TargetType="{x:Type Button}">
+                                                <wpf:PackIcon
+                                                Kind="Calendar"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Background="Transparent"
+                                                VerticalAlignment="Center" 
+                                                Width="30"
+                                                Height="30"/>
+                                            </ControlTemplate>
+                                        </ControlTemplate.Resources>
+                                        <Grid x:Name="PART_Root">
+                                            <DatePickerTextBox
+                                            x:Name="PART_TextBox"
+                                            FontSize="25"
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            Focusable="{TemplateBinding Focusable}"
+                                            Style="{DynamicResource MaterialDesignDatePickerTextBox}"
+                                            VerticalContentAlignment="Center"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            wpf:HintAssist.IsFloating="{TemplateBinding wpf:HintAssist.IsFloating}"
+                                            wpf:HintAssist.FloatingScale="{TemplateBinding wpf:HintAssist.FloatingScale}"
+                                            wpf:HintAssist.FloatingOffset="{TemplateBinding wpf:HintAssist.FloatingOffset}"
+                                            wpf:HintAssist.Hint="{TemplateBinding wpf:HintAssist.Hint}"
+                                            wpf:HintAssist.HintOpacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
+                                            wpf:HintAssist.Foreground="{TemplateBinding wpf:HintAssist.Foreground}"
+                                            wpf:HintAssist.HelperText="{TemplateBinding wpf:HintAssist.HelperText}"
+                                            wpf:HintAssist.HelperTextFontSize="{TemplateBinding wpf:HintAssist.HelperTextFontSize}"
+                                            wpf:TextFieldAssist.TextBoxViewMargin="{TemplateBinding wpf:TextFieldAssist.TextBoxViewMargin}"
+                                            wpf:TextFieldAssist.DecorationVisibility="{TemplateBinding wpf:TextFieldAssist.DecorationVisibility}"
+                                            wpf:TextFieldAssist.HasFilledTextField="{TemplateBinding wpf:TextFieldAssist.HasFilledTextField}"
+                                            wpf:TextFieldAssist.HasOutlinedTextField="{TemplateBinding wpf:TextFieldAssist.HasOutlinedTextField}"
+                                            wpf:TextFieldAssist.TextFieldCornerRadius="{TemplateBinding wpf:TextFieldAssist.TextFieldCornerRadius}"
+                                            wpf:TextFieldAssist.UnderlineCornerRadius="{TemplateBinding wpf:TextFieldAssist.UnderlineCornerRadius}"
+                                            wpf:TextFieldAssist.NewSpecHighlightingEnabled="{TemplateBinding wpf:TextFieldAssist.NewSpecHighlightingEnabled}"
+                                            wpf:TextFieldAssist.RippleOnFocusEnabled="{TemplateBinding wpf:TextFieldAssist.RippleOnFocusEnabled}"
+                                            wpf:TextFieldAssist.UnderlineBrush="{TemplateBinding wpf:TextFieldAssist.UnderlineBrush}"
+                                            wpf:TextFieldAssist.HasClearButton="{TemplateBinding wpf:TextFieldAssist.HasClearButton}"
+                                            wpf:TextFieldAssist.PrefixText="{TemplateBinding wpf:TextFieldAssist.PrefixText}"
+                                            wpf:TextFieldAssist.SuffixText="{TemplateBinding wpf:TextFieldAssist.SuffixText}">
+                                                <DatePickerTextBox.Padding>
+                                                    <MultiBinding Converter="{StaticResource PickerInnerPaddingConverter}">
+                                                        <Binding Path="Padding" RelativeSource="{RelativeSource TemplatedParent}" />
+                                                        <Binding Path="ActualWidth" ElementName="PART_Button" Mode="OneWay" />
+                                                    </MultiBinding>
+                                                </DatePickerTextBox.Padding>
+                                            </DatePickerTextBox>
+                                            <Button
+                                            x:Name="PART_Button"
+                                            Foreground="{TemplateBinding BorderBrush}"
+                                            Focusable="False"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Template="{StaticResource CalendarButtonTemplate}"
+                                            Margin="{TemplateBinding Padding, Converter={StaticResource PickerInnerPaddingConverter}}"
+                                            Height="35"/>
+                                            <Popup
+                                            x:Name="PART_Popup"
+                                            AllowsTransparency="True"
+                                            Placement="Custom"
+                                            CustomPopupPlacementCallback="{x:Static wpf:CustomPopupPlacementCallbackHelper.LargePopupCallback}"
+                                            PlacementTarget="{Binding ElementName=PART_TextBox}"
+                                            StaysOpen="False"
+                                            PopupAnimation="Fade" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="wpf:TextFieldAssist.HasFilledTextField" Value="True">
+                                                <Setter Property="Padding" Value="16 8" />
+                                                <Setter Property="Background" Value="{DynamicResource MaterialDesignTextFieldBoxBackground}" />
+                                                <Setter Property="wpf:TextFieldAssist.TextBoxViewMargin" Value="{x:Static wpf:Constants.DefaultTextBoxViewMarginEmbedded}" />
+                                            </Trigger>
+                                            <Trigger Property="wpf:TextFieldAssist.HasOutlinedTextField" Value="True">
+                                                <Setter Property="Padding" Value="16" />
+                                                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignTextAreaBorder}" />
+                                                <Setter Property="wpf:TextFieldAssist.TextBoxViewMargin" Value="{x:Static wpf:Constants.DefaultTextBoxViewMarginEmbedded}" />
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="wpf:TextFieldAssist.HasFilledTextField" Value="False" />
+                                                    <Condition Property="wpf:TextFieldAssist.HasOutlinedTextField" Value="False" />
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryHueMidBrush}" />
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsEnabled" Value="True" />
+                                                    <Condition SourceName="PART_Button" Property="IsMouseOver" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
+                                            </MultiTrigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="PART_Button" Property="Opacity" Value="{x:Static wpf:Constants.TextBoxNotEnabledOpacity}"/>
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsEnabled" Value="False" />
+                                                    <Condition Property="wpf:TextFieldAssist.HasOutlinedTextField" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="PART_TextBox" Property="BorderBrush" Value="{DynamicResource MaterialDesignTextAreaInactiveBorder}" />
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition SourceName="PART_TextBox" Property="IsKeyboardFocused" Value="True" />
+                                                    <Condition Property="wpf:TextFieldAssist.HasOutlinedTextField" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="PART_TextBox" Property="BorderBrush" Value="{Binding Path=(wpf:TextFieldAssist.UnderlineBrush), RelativeSource={RelativeSource Self}}" />
+                                            </MultiTrigger>
+                                            <Trigger Property="wpf:CalendarAssist.IsHeaderVisible" Value="False">
+                                                <Setter Property="CalendarStyle">
+                                                    <Setter.Value>
+                                                        <Style TargetType="Calendar" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                                                            <Setter Property="wpf:CalendarAssist.IsHeaderVisible" Value="False" />
+                                                        </Style>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="True" />
+                                                    <Condition Property="wpf:TextFieldAssist.HasFilledTextField" Value="True" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="Background" Value="{DynamicResource MaterialDesignTextFieldBoxHoverBackground}" />
+                                            </MultiTrigger>
+
+                                            <Trigger Property="Validation.HasError" Value="True">
+                                                <Setter TargetName="PART_TextBox" Property="wpf:ValidationAssist.HasError" Value="True" />
+                                                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignValidationErrorBrush}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+            </materialDesign:Card>
+
+
+            <materialDesign:Card Grid.Row="1" Grid.Column="1" Margin="20,0,272,0">
+                <TextBlock FontSize="25"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center">
+                    Nhân viên: Nguyễn Ngọc Quỳnh Giang
+                </TextBlock>
+            </materialDesign:Card>
+
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="266"></RowDefinition>
+                <RowDefinition ></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1323*"></ColumnDefinition>
+                <ColumnDefinition Width="277*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button 
+                Grid.Column="1" Grid.Row="1"
+                Command="{Binding CancelButtonClickCommand}"    
+                CommandParameter="{Binding ElementName=Invoice_Page}"
+                Background="Red"
+                Height="Auto" Margin="47,334,20,49" RenderTransformOrigin="0.5,0.5">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Width="150">
+                    <materialDesign:PackIcon
+                        Kind="Cancel"
+                        Height="36"
+                        Width="36"/>
+                    <TextBlock
+                        Text="Hủy Bỏ"
+                        FontSize="30"
+                        Margin="10,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button
+                x:Name="SaveButton"
+                Background="#66ff33"
+                Grid.Column="1" Grid.Row="1"
+                Height="Auto" Margin="47,35,20,348">
+                <StackPanel
+                    Orientation="Horizontal">
+                    <materialDesign:PackIcon
+                        Kind="ContentSave"
+                        Width="36"
+                        Height="36">
+                    </materialDesign:PackIcon>
+                    <TextBlock
+                        Text="Hoàn Tất"
+                        FontSize="30"
+                        Margin="10,0,0,0">
+                    </TextBlock>
+                </StackPanel>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SaveButtonClickCommand}"
+                                   CommandParameter="{Binding ElementName=SaveButton}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="177*"></RowDefinition>
+                    <RowDefinition Height="89*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <materialDesign:Card Grid.Row="0" Margin="20,45,20,20">
+                    <WrapPanel>
+                        <ComboBox
+                            materialDesign:HintAssist.Hint="Tên sách"
+                            Margin="20"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            IsEditable="True"
+                            ItemsSource="{Binding ListBook}"
+                            DisplayMemberPath="TenSach"
+                            SelectedItem="{Binding SelectedBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="20"
+                            Height="60"
+                            MinWidth="180"
+                            VerticalAlignment="Center">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding BookNameSelectionChangedCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <TextBox
+                            Text="{Binding SelectedBook.THELOAI.TenTheLoai, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Thể loại"
+                            Margin="20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="180"
+                            Height="60"
+                            IsReadOnly="True"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            Text="{Binding Authors, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Tác Giả"
+                            Margin="20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="180"
+                            MaxWidth="200"
+                            Height="60"
+                            IsReadOnly="True"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Số lượng"
+                            Margin="20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="100"
+                            Height="60"
+                            VerticalAlignment="Center" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput" >
+                                    <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding IntoMoneyNeedChangedCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox
+                            Text="{Binding InputPrice, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Đơn Giá Nhập"
+                            Margin="20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="180"
+                            Height="60"
+                            VerticalAlignment="Center" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewTextInput" >
+                                    <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding IntoMoneyNeedChangedCommand}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <TextBox
+                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Thành Tiền"
+                            Margin="20,20,0,20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="180"
+                            Height="60"
+                            IsReadOnly="True"
+                            VerticalAlignment="Center" />
+                        <TextBox
+                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Thành tiền"
+                            Margin="20,20,0,20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="180"
+                            Height="60"
+                            VerticalAlignment="Center" />
+                    </WrapPanel>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Row="1" Margin="20,10,20,0">
+                    <WrapPanel HorizontalAlignment="Center">
+                        <Button
+                            x:Name="AddDetailButton"
+                            Command="{Binding AddDetailClickCommand}"
+                            Content="Thêm" Margin="20" Width="100">
+                        </Button>
+                        <Button
+                            Command="{Binding EditDetailClickCommand}"
+                            Content="Sửa" Margin="20" Width="100"></Button>
+                        <Button
+                            Command="{Binding DeleteDetailClickCommand}"
+                            Content="Xóa" Margin="20" Width="100"></Button>
+                    </WrapPanel>
+                </materialDesign:Card>
+            </Grid>
+
+            <materialDesign:Card Grid.Row="1" Grid.Column="0" Margin="20" VerticalAlignment="Stretch" >
+                <ListView ItemsSource="{Binding Items}"
+                          Margin="20,0,0,0"
+                          BorderBrush="Transparent"
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="DataContextChanged" >
+                            <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="FontSize" Value="20"/>
+                                    <Setter Property="Foreground" Value="DarkSlateGray"/>
+                                    <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}"/>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Height" Value="50"/>
+
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="STT" Width="100" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding ID}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Tên Sách" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding Book.TenSach}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Thể Loại" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding Book.THELOAI.TenTheLoai}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Tác Giả" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding Authors}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Số Lượng" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding Amount}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Đơn giá nhập" Width="170">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding InputPrice}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Thành tiền" Width="170">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBlock
+                                            Text="{Binding IntoMoney}"
+                                            FontSize="18">
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </materialDesign:Card>
+        </Grid>
     </Grid>
 </Page>

@@ -3,11 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
-      xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:BookStore.Pages"
+      xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
       xmlns:cv ="clr-namespace:BookStore.Converters"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="HomePage"   
@@ -20,7 +20,8 @@
       FontFamily="{DynamicResource MaterialDesignFont}" 
       DataContext="{StaticResource InvoiceVM}" 
       Height="950"
-      Width="1600">
+      Width="1600"
+      x:Name="Invoice_Page">
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
@@ -300,8 +301,9 @@
             <Button 
                 Grid.Column="1" Grid.Row="1"
                 Command="{Binding CancelButtonClickCommand}"    
+                CommandParameter="{Binding ElementName=Invoice_Page}"
                 Background="Red"
-                Height="Auto" Margin="309,334,20,49" RenderTransformOrigin="0.5,0.5">
+                Height="Auto" Margin="303,334,20,49" RenderTransformOrigin="0.5,0.5">
                 <StackPanel
                     Orientation="Horizontal"
                     Width="150">
@@ -312,7 +314,7 @@
                     <TextBlock
                         Text="Hủy Bỏ"
                         FontSize="30"
-                        Margin="15,0,0,0"/>
+                        Margin="10,0,0,0"/>
                 </StackPanel>
             </Button>
 
@@ -320,19 +322,18 @@
                 x:Name="SaveButton"
                 Background="#66ff33"
                 Grid.Column="1" Grid.Row="1"
-                Height="Auto" Margin="20,334,311,49">
+                Height="Auto" Margin="20,334,303,49">
                 <StackPanel
-                    Orientation="Horizontal"
-                    Width="150">
+                    Orientation="Horizontal">
                     <materialDesign:PackIcon
                         Kind="ContentSave"
                         Width="36"
                         Height="36">
                     </materialDesign:PackIcon>
                     <TextBlock
-                        Text="Lưu"
+                        Text="Hoàn Tất"
                         FontSize="30"
-                        Margin="15,0,0,0">
+                        Margin="10,0,0,0">
                     </TextBlock>
                 </StackPanel>
                 <i:Interaction.Triggers>
@@ -429,7 +430,7 @@
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             IsEditable="True"
-                            ItemsSource="{Binding ListBook}"
+                            ItemsSource="{Binding ListBook, Mode=TwoWay}"
                             DisplayMemberPath="TenSach"
                             SelectedItem="{Binding SelectedBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"
@@ -454,7 +455,7 @@
                                 Height="40"/>
                         </Button>
                         <TextBox
-                            Text="{Binding SelectedBook.THELOAI.TenTheLoai,UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding SelectedBook.THELOAI.TenTheLoai, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thể loại"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -464,7 +465,7 @@
                             Height="60"
                             VerticalAlignment="Center" />
                         <TextBox
-                            Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Số lượng"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -488,7 +489,7 @@
                             materialDesign:HintAssist.Hint="Đơn Giá"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                            ItemsSource="{Binding ListPriceOfBook}"
+                            ItemsSource="{Binding ListPriceOfBook, Mode=TwoWay}"
                             DisplayMemberPath="DonGiaNhap"
                             SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"
@@ -507,10 +508,11 @@
                             </i:Interaction.Triggers>
                         </ComboBox>
                         <TextBox
-                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thành tiền"
                             Margin="20,20,0,20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            IsReadOnly="True"
                             FontSize="20"
                             MinWidth="180"
                             Height="60"
@@ -536,10 +538,11 @@
             </Grid>
 
             <materialDesign:Card Grid.Row="1" Grid.Column="0" Margin="20" VerticalAlignment="Stretch" >
+                
                 <ListView ItemsSource="{Binding Items}"
                           Margin="20,0,0,0"
                           BorderBrush="Transparent"
-                          SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DataContextChanged" >
                             <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
@@ -571,7 +574,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding BookName}"
+                                            Text="{Binding DauSach.TenSach}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
@@ -581,7 +584,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding Category}"
+                                            Text="{Binding DauSach.THELOAI.TenTheLoai}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
@@ -601,7 +604,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding Price}"
+                                            Text="{Binding CTPNS.DonGiaNhap}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
