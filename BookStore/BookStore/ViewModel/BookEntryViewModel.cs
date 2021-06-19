@@ -14,7 +14,7 @@ namespace BookStore.ViewModel
 
         public BookEntryViewModel()
         {
-            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
+            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
             Items = CreateData();
 
             IntoMoneyNeedChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { changeIntoMoney(); });
@@ -39,6 +39,9 @@ namespace BookStore.ViewModel
                 var tmp2 = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(Amount) };
                 DataProvider.Ins.DB.SACHes.Add(tmp2);
                 DataProvider.Ins.DB.SaveChanges();
+                var tmp4 = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == tmp2.MaDauSach).FirstOrDefault();
+
+
                 var tmp3 = new CT_PNS() { MaPhieuNhapSach = tmp.MaPhieuNhapSach, DonGiaNhap = decimal.Parse(v.InputPrice), MaSach = tmp2.MaSach, SoLuong = int.Parse(Amount) };
                 DataProvider.Ins.DB.CT_PNS.Add(tmp3);
                 DataProvider.Ins.DB.SaveChanges();

@@ -44,6 +44,7 @@ namespace BookStore.ViewModel
         {
             var tmp = new ListBookWindow {};
             tmp.ShowDialog();
+            var res_tmp = tmp.DataContext as ListBookViewModel;
         }
 
         private void CloseInvoice(Window p)

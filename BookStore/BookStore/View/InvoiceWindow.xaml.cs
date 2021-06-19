@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BookStore
+namespace BookStore.View
 {
     /// <summary>
     /// Interaction logic for InvoiceWindow.xaml

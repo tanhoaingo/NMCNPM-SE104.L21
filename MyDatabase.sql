@@ -332,6 +332,14 @@ FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
 
 /*=============================================================================*/
 
+CREATE TABLE HinhAnhSach(
+	MaHinhAnh INT IDENTITY(1,1),
+	MaDauSach INT NOT NULL,	
+	DuongDan varchar(100)
+)
+
+/*=============================================================================*/
+
 INSERT INTO NHOMNGUOIDUNG VALUES('admin')
 INSERT INTO NGUOIDUNG VALUES ('admin','1',1)
 INSERT INTO THELOAI VALUES(N'Khoa học viễn tưởng'),(N'Hài hước'),(N'Kinh dị'),(N'Trinh thám'),(N'Cổ tích'),('Anime')

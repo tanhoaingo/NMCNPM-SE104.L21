@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace BookStore
+namespace BookStore.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
