@@ -78,20 +78,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AddCustomerWindow.xaml.cs">
+    <Compile Include="View\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BillWindow.xaml.cs">
+    <Compile Include="View\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RowToIndexConverter.cs" />
-    <Compile Include="InvoiceWindow.xaml.cs">
+    <Compile Include="View\BookEntryWindow.xaml.cs">
+      <DependentUpon>BookEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ListBookWindow.xaml.cs">
+    <Compile Include="View\ListBookWindow.xaml.cs">
       <DependentUpon>ListBookWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginWindow.xaml.cs">
+    <Compile Include="View\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BAOCAOCONGNO.cs">
@@ -166,23 +169,8 @@
     <Compile Include="Model\THELOAI.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Pages\BaocaoPage.xaml.cs">
-      <DependentUpon>BaocaoPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\BookEntryPage.xaml.cs">
-      <DependentUpon>BookEntryPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ThayDoiPage.xaml.cs">
-      <DependentUpon>ThayDoiPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ThuTienPage.xaml.cs">
-      <DependentUpon>ThuTienPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TraCuuPage.xaml.cs">
-      <DependentUpon>TraCuuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Themes\Window.cs" />
     <Compile Include="Tools\Rules.cs" />
@@ -190,32 +178,35 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BillViewModel.cs" />
     <Compile Include="ViewModel\BookEntryViewModel.cs" />
-    <Compile Include="ViewModel\Icommand.cs" />
     <Compile Include="ViewModel\InvoiceViewModel.cs" />
     <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Page Include="AddCustomerWindow.xaml">
+    <Page Include="View\AddCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="BillWindow.xaml">
+    <Page Include="View\BillWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InvoiceWindow.xaml">
+    <Page Include="View\BookEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ListBookWindow.xaml">
+    <Page Include="View\InvoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoginWindow.xaml">
+    <Page Include="View\ListBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -223,31 +214,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\BaocaoPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\BookEntryPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ThayDoiPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ThuTienPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\TraCuuPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
