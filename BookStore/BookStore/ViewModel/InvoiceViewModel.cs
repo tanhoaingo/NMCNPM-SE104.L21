@@ -23,7 +23,7 @@ namespace BookStore.ViewModel
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
             AddCustomerClick = new RelayCommand<Object>((p) => { return true; }, (p) => { CreateNewCustomer(); });
             NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
-            BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); });
+            BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); UpdateBookInfor(); });
             PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AmountTextChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
@@ -33,6 +33,20 @@ namespace BookStore.ViewModel
             SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook());
             ExitButtonClickCommand= new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
 
+        }
+
+        private void UpdateBookInfor()
+        {
+            if (SelectedBook == null)
+            {
+                return;
+            }
+            string tmptype = "";
+            foreach (var v in SelectedBook.THELOAIs)
+            {
+                tmptype += (tmptype == "" ? "" : ",") + v.TenTheLoai;
+            }
+            BookTypes = tmptype;
         }
 
         private void ExitWindow(Window p)
@@ -167,6 +181,10 @@ namespace BookStore.ViewModel
             {
                 ListPriceOfBook.Clear();
             }
+            if(SelectedBook == null)
+            {
+                return;
+            }
             var tmp = DataProvider.Ins.DB.CT_PNS.Where(x => x.SACH.DAUSACH.TenSach == SelectedBook.TenSach).ToList();
             if (tmp == null)
             {
@@ -220,6 +238,7 @@ namespace BookStore.ViewModel
         private Int64 _LeftAMount;
         private Item_CT_HD _SelectedItem;
         private DateTime? _InvoiceDate;
+        private string _BookTypes;
 
         public ObservableCollection<Item_CT_HD> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
 
@@ -263,5 +282,7 @@ namespace BookStore.ViewModel
         }
 
         public DateTime? InvoiceDate { get => _InvoiceDate; set { _InvoiceDate = value; OnPropertyChanged(); } }
+
+        public string BookTypes { get => _BookTypes; set { _BookTypes = value; OnPropertyChanged(); } }
     }
 }

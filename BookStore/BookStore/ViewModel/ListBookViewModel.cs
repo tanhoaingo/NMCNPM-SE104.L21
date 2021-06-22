@@ -1,10 +1,12 @@
 ﻿using BookStore.Model;
+using BookStore.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BookStore.ViewModel
 {
@@ -37,7 +39,18 @@ namespace BookStore.ViewModel
             Temp.Add("Naruto");
             Temp.Add("Naruto");
             Temp.Add("Naruto");
+
+            AddBookButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddNewBook(); });
         }
+
+        private void AddNewBook()
+        {
+            var tmp = new AddBookWindow();
+            tmp.ShowDialog();
+            
+        }
+
+        public ICommand AddBookButtonClickCommand { get; set; }
 
         private ObservableCollection<DAUSACH> _ListBooks;
         private ObservableCollection<string> _temp;

@@ -9,4 +9,5 @@
     <viewmodel:AddCustomerViewModel x:Key="AddCustomerVM"></viewmodel:AddCustomerViewModel>
     <viewmodel:ListBookViewModel x:Key="ListBookVM"></viewmodel:ListBookViewModel>
     <viewmodel:BillViewModel x:Key="BillVM"></viewmodel:BillViewModel>
+    <viewmodel:AddBookViewModel x:Key="AddBookVM"></viewmodel:AddBookViewModel>
 </ResourceDictionary>

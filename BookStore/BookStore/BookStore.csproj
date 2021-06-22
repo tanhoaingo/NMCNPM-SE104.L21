@@ -78,6 +78,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\HinhAnhSach.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Item_ListCheckedBoxAuthor.cs" />
+    <Compile Include="Model\Item_ListCheckedBoxType.cs" />
+    <Compile Include="ViewModel\AddBookViewModel.cs" />
+    <Compile Include="View\AddBookWindow.xaml.cs">
+      <DependentUpon>AddBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
     </Compile>
@@ -182,6 +191,10 @@
     <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Page Include="View\AddBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +274,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Model\EntityModel.edmx.diagram">
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </None>
@@ -276,6 +292,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="DataCenter\BachTuyet.jpg" />
+    <Resource Include="DataCenter\Dracula.jpg" />
+    <Resource Include="DataCenter\LuocSuThoiGian.jpg" />
+    <Resource Include="DataCenter\Naruto.jpg" />
+    <Resource Include="DataCenter\OnePiece.jpg" />
+    <Resource Include="DataCenter\Sherlock Holmes.jpg" />
     <Content Include="Model\EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityModel.Context.cs</LastGenOutput>

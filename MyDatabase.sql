@@ -2,6 +2,81 @@
 USE MYDATABASE
 SET DATEFORMAT DMY
 
+/*Chạy 3 dòng này trước rồi chạy toàn bộ database*/
+
+/*=============================================================================*/
+
+CREATE TABLE CHUCNANG(
+	MaChucNang INT IDENTITY(1,1),
+	TenChucNang NVARCHAR(50),
+	TenManHinhDuocLoad NVARCHAR(50),
+)
+
+ALTER TABLE CHUCNANG
+ADD CONSTRAINT PK_CHUCNANG
+PRIMARY KEY (MaChucNang)
+
+/*=============================================================================*/
+
+CREATE TABLE NHOMNGUOIDUNG(
+	MaNhom INT IDENTITY(1,1),
+	TenNhom NVARCHAR(50),
+)
+
+ALTER TABLE NHOMNGUOIDUNG
+ADD CONSTRAINT PK_NHOMNGUOIDUNG
+PRIMARY KEY (MaNhom)
+
+/*=============================================================================*/
+
+CREATE TABLE PHANQUYEN(
+	MaNhom INT IDENTITY(1,1),
+	MaChucNang INT NOT NULL,
+)
+
+ALTER TABLE PHANQUYEN 
+ADD CONSTRAINT PK_PHANQUYEN
+PRIMARY KEY (MaNhom, MaChucNang) 
+
+ALTER TABLE PHANQUYEN
+ADD CONSTRAINT FK_PHANQUYEN_NHOMNGUOIDUNG
+FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
+
+ALTER TABLE PHANQUYEN 
+ADD CONSTRAINT FK_PHANQUYEN_CHUCNANG
+FOREIGN KEY (MaChucNang) REFERENCES CHUCNANG (MaChucNang)
+
+/*=============================================================================*/
+
+CREATE TABLE NGUOIDUNG(
+	MaNguoiDung INT IDENTITY(1,1),
+	TenDangNhap VARCHAR(20),
+	MatKhau VARCHAR(20),
+	MaNhom INT NOT NULL,
+)
+
+ALTER TABLE NGUOIDUNG
+ADD CONSTRAINT PK_NGUOIDUNG
+PRIMARY KEY (MaNguoiDung)
+
+ALTER TABLE NGUOIDUNG
+ADD CONSTRAINT FK_NGUOIDUNG_NHOMNGUOIDUNG
+FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
+/*=============================================================================*/
+
+CREATE TABLE KHACHHANG(
+	MaKhachHang INT IDENTITY(1,1),
+	HoTenKhachHang NVARCHAR(50),
+	SoNo MONEY,
+	DiaChi NVARCHAR(100),
+	DienThoai NVARCHAR(15),
+	Email NVARCHAR(50)
+)
+
+ALTER TABLE KHACHHANG
+ADD CONSTRAINT PK_KHACHHANG
+PRIMARY KEY (MaKhachHang)
+
 /*=============================================================================*/
 
 CREATE TABLE PHIEUNHAPSACH(
@@ -15,32 +90,15 @@ PRIMARY KEY (MaPhieuNhapSach)
 
 /*=============================================================================*/
 
-CREATE TABLE THELOAI(
-	MaTheLoai INT IDENTITY(1,1),
-	TenTheLoai NVARCHAR(50),
-)
-
-ALTER TABLE THELOAI 
-ADD CONSTRAINT PK_THELOAI
-PRIMARY KEY (MaTheLoai)
-
-/*=============================================================================*/
-
 CREATE TABLE DAUSACH(
 	MaDauSach INT  IDENTITY(1,1),
-	MaTheLoai INT NOT NULL,
 	TenSach NVARCHAR(50),
-	TheLoai NVARCHAR(50),
 	LuongTon INT,
 )
 
 ALTER TABLE DAUSACH
 ADD CONSTRAINT PK_DAUSACH
 PRIMARY KEY (MaDauSach)
-
-ALTER TABLE DAUSACH
-ADD CONSTRAINT FK_DAUSACH_THELOAI
-FOREIGN KEY (MaTheLoai) REFERENCES THELOAI (MaTheLoai)
 
 /*=============================================================================*/
 
@@ -57,6 +115,58 @@ PRIMARY KEY (MaSach)
 ALTER TABLE SACH
 ADD CONSTRAINT FK_SACH_DAUSACH
 FOREIGN KEY (MaDauSach) REFERENCES DAUSACH (MaDauSach)
+
+/*=============================================================================*/
+
+CREATE TABLE CT_PNS(
+	MaCT_PNS INT IDENTITY(1,1),
+	MaPhieuNhapSach INT NOT NULL,
+	MaSach INT NOT NULL,
+	SoLuong INT,
+	DonGiaNhap MONEY,
+)
+
+ALTER TABLE CT_PNS
+ADD CONSTRAINT PK_CT_PNS
+PRIMARY KEY (MaCT_PNS)
+
+ALTER TABLE CT_PNS
+ADD CONSTRAINT FK_CT_PNS_PHIEUNHAPSACH
+FOREIGN KEY (MaPhieuNhapSach) REFERENCES PHIEUNHAPSACH (MaPhieuNhapSach)
+
+ALTER TABLE CT_PNS
+ADD CONSTRAINT FK_CT_PNS_SACH
+FOREIGN KEY (MaSach) REFERENCES SACH (MaSach)
+
+/*=============================================================================*/
+
+CREATE TABLE THELOAI(
+	MaTheLoai INT IDENTITY(1,1),
+	TenTheLoai NVARCHAR(50),
+)
+
+ALTER TABLE THELOAI 
+ADD CONSTRAINT PK_THELOAI
+PRIMARY KEY (MaTheLoai)
+
+/*=============================================================================*/
+
+CREATE TABLE TT_TL(
+	MaTheLoai INT NOT NULL,
+	MaDauSach INT NOT NULL,
+)
+
+ALTER TABLE TT_TL 
+ADD CONSTRAINT PK_TT_TL
+PRIMARY KEY (MaTheLoai, MaDauSach)
+
+ALTER TABLE TT_TL
+ADD CONSTRAINT FK_TT_TL_THELOAI
+FOREIGN KEY (MaTheLoai) REFERENCES THELOAI(MaTheLoai)
+
+ALTER TABLE TT_TL	
+ADD CONSTRAINT FK_TT_TL_DAUSACH
+FOREIGN KEY (MaDauSach) REFERENCES DAUSACH(MaDauSach)
 
 /*=============================================================================*/
 
@@ -90,28 +200,6 @@ FOREIGN KEY (MaTacGia) REFERENCES TACGIA (MaTacGia)
 
 /*=============================================================================*/
 
-CREATE TABLE CT_PNS(
-	MaCT_PNS INT IDENTITY(1,1),
-	MaPhieuNhapSach INT NOT NULL,
-	MaSach INT NOT NULL,
-	SoLuong INT,
-	DonGiaNhap MONEY,
-)
-
-ALTER TABLE CT_PNS
-ADD CONSTRAINT PK_CT_PNS
-PRIMARY KEY (MaCT_PNS)
-
-ALTER TABLE CT_PNS
-ADD CONSTRAINT FK_CT_PNS_PHIEUNHAPSACH
-FOREIGN KEY (MaPhieuNhapSach) REFERENCES PHIEUNHAPSACH (MaPhieuNhapSach)
-
-ALTER TABLE CT_PNS
-ADD CONSTRAINT FK_CT_PNS_SACH
-FOREIGN KEY (MaSach) REFERENCES SACH (MaSach)
-
-/*=============================================================================*/
-
 CREATE TABLE THAMSO(
 	MaThamSo INT IDENTITY(1,1),
 	LuongNhapToiThieu INT,
@@ -123,21 +211,6 @@ CREATE TABLE THAMSO(
 ALTER TABLE THAMSO 
 ADD CONSTRAINT PK_THAMSO
 PRIMARY KEY (MaThamSo)
-
-/*=============================================================================*/
-
-CREATE TABLE KHACHHANG(
-	MaKhachHang INT IDENTITY(1,1),
-	HoTenKhachHang NVARCHAR(50),
-	SoNo MONEY,
-	DiaChi NVARCHAR(100),
-	DienThoai NVARCHAR(15),
-	Email NVARCHAR(50)
-)
-
-ALTER TABLE KHACHHANG
-ADD CONSTRAINT PK_KHACHHANG
-PRIMARY KEY (MaKhachHang)
 
 /*=============================================================================*/
 
@@ -273,65 +346,6 @@ FOREIGN KEY (MaKhachHang) REFERENCES KHACHHANG (MaKhachHang)
 
 /*=============================================================================*/
 
-CREATE TABLE CHUCNANG(
-	MaChucNang INT IDENTITY(1,1),
-	TenChucNang NVARCHAR(50),
-	TenManHinhDuocLoad NVARCHAR(50),
-)
-
-ALTER TABLE CHUCNANG
-ADD CONSTRAINT PK_CHUCNANG
-PRIMARY KEY (MaChucNang)
-
-/*=============================================================================*/
-
-CREATE TABLE NHOMNGUOIDUNG(
-	MaNhom INT IDENTITY(1,1),
-	TenNhom NVARCHAR(50),
-)
-
-ALTER TABLE NHOMNGUOIDUNG
-ADD CONSTRAINT PK_NHOMNGUOIDUNG
-PRIMARY KEY (MaNhom)
-
-/*=============================================================================*/
-
-CREATE TABLE PHANQUYEN(
-	MaNhom INT IDENTITY(1,1),
-	MaChucNang INT NOT NULL,
-)
-
-ALTER TABLE PHANQUYEN 
-ADD CONSTRAINT PK_PHANQUYEN
-PRIMARY KEY (MaNhom, MaChucNang) 
-
-ALTER TABLE PHANQUYEN
-ADD CONSTRAINT FK_PHANQUYEN_NHOMNGUOIDUNG
-FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
-
-ALTER TABLE PHANQUYEN 
-ADD CONS12TRAINT FK_PHANQUYEN_CHUCNANG
-FOREIGN KEY (MaChucNang) REFERENCES CHUCNANG (MaChucNang)
-
-/*=============================================================================*/
-
-CREATE TABLE NGUOIDUNG(
-	MaNguoiDung INT IDENTITY(1,1),
-	TenDangNhap VARCHAR(20),
-	MatKhau VARCHAR(20),
-	MaNhom INT NOT NULL,
-)
-
-ALTER TABLE NGUOIDUNG
-ADD CONSTRAINT PK_NGUOIDUNG
-PRIMARY KEY (MaNguoiDung)
-
-ALTER TABLE NGUOIDUNG
-ADD CONSTRAINT FK_NGUOIDUNG_NHOMNGUOIDUNG
-FOREIGN KEY (MaNhom) REFERENCES NHOMNGUOIDUNG (MaNhom)
-
-/*=============================================================================*/
-
 CREATE TABLE HinhAnhSach(
 	MaHinhAnh INT IDENTITY(1,1),
 	MaDauSach INT NOT NULL,	
@@ -343,18 +357,20 @@ CREATE TABLE HinhAnhSach(
 INSERT INTO NHOMNGUOIDUNG VALUES('admin')
 INSERT INTO NGUOIDUNG VALUES ('admin','1',1)
 INSERT INTO THELOAI VALUES(N'Khoa học viễn tưởng'),(N'Hài hước'),(N'Kinh dị'),(N'Trinh thám'),(N'Cổ tích'),('Anime')
-INSERT INTO DAUSACH(MaTheLoai,TenSach,LuongTon) VALUES
-	(12,'One Piece',0),
-	(12,'Naruto',0),
-	(9,'Dracula',0)
+INSERT INTO DAUSACH(TenSach,LuongTon) VALUES
+	('One Piece',50),
+	('Naruto',100),
+	('Dracula',0)
 INSERT INTO PHIEUNHAPSACH VALUES ('11/6/2021')
 INSERT INTO SACH(MaDauSach, LuongTon) VALUES
-	(2,0),
-	(1,0)
+	(2,100),
+	(1,50)
 INSERT INTO CT_PNS(MaPhieuNhapSach,MaSach,SoLuong,DonGiaNhap) VALUES
 	(1,1,100,35000),
 	(1,2,50,75000)
 INSERT INTO TACGIA(TenTacGia) VALUES ('Oda Eiichiro'), ('Kishimoto Masashi')
 INSERT INTO TT_TG(MaDauSach, MaTacGia) VALUES (1,1) , (2,2)
+INSERT INTO TT_TL(MaDauSach, MaTheLoai) VALUES(1,6) , (2,6)
+INSERT INTO TACGIA(TenTacGia) VALUES (N'Đặng Anh Tú'), (N'Lâm Văn Hồng'),('Arthur Conan Doyle'),('Fujiko Fujio')
 
 /*=============================================================================*/

@@ -19,17 +19,18 @@ namespace BookStore.Model
         {
             this.SACHes = new HashSet<SACH>();
             this.TACGIAs = new HashSet<TACGIA>();
+            this.THELOAIs = new HashSet<THELOAI>();
         }
     
         public int MaDauSach { get; set; }
-        public int MaTheLoai { get; set; }
         public string TenSach { get; set; }
         public Nullable<int> LuongTon { get; set; }
     
-        public virtual THELOAI THELOAI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SACH> SACHes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TACGIA> TACGIAs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THELOAI> THELOAIs { get; set; }
     }
 }

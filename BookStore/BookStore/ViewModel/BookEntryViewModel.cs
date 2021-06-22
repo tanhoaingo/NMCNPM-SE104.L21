@@ -19,7 +19,7 @@ namespace BookStore.ViewModel
 
             IntoMoneyNeedChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { changeIntoMoney(); });
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailNeed(); }, (p) => { AddDetail(); });
-            BookNameSelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateAuthors(); });
+            BookNameSelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateBookInfor(); });
             SaveButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveBookEntry(); });
         }
 
@@ -48,14 +48,24 @@ namespace BookStore.ViewModel
             }
         }
 
-        private void UpdateAuthors()
+        private void UpdateBookInfor()
         {
-            string tmp = "";
+            if(SelectedBook==null)
+            {
+                return;
+            }
+            string tmptype = "";
+            string tmpauthor = "";
             foreach (var v in SelectedBook.TACGIAs)
             {
-                tmp += v.TenTacGia;
+                tmpauthor += (tmpauthor == "" ? "" : ",") + v.TenTacGia;
             }
-            Authors = tmp;
+            Authors = tmpauthor;
+            foreach (var v in SelectedBook.THELOAIs)
+            {
+                tmptype += (tmptype == "" ? "" : ",") + v.TenTheLoai;
+            }
+            Types = tmptype;
         }
 
         private static ObservableCollection<Item_CT_PNS> CreateData()
@@ -95,6 +105,7 @@ namespace BookStore.ViewModel
         public ICommand SaveButtonClickCommand { get; set; }
 
         private DAUSACH _SelectedBook;
+        private string _Types;
         private string _Authors;
         private Int64 _IntoMoney;
         private string _Amount;
@@ -104,6 +115,7 @@ namespace BookStore.ViewModel
         private ObservableCollection<DAUSACH> _ListBook;
 
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
+        public string Types { get => _Types; set { _Types = value; OnPropertyChanged(); } }
         public string Authors { get => _Authors; set { _Authors = value; OnPropertyChanged(); } }
         public long IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
         public string Amount { get => _Amount; set { _Amount = value; OnPropertyChanged(); } }

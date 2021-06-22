@@ -326,7 +326,7 @@
                             </i:Interaction.Triggers>
                         </ComboBox>
                         <TextBox
-                            Text="{Binding SelectedBook.THELOAI.TenTheLoai, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Text="{Binding Types, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thể loại"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"

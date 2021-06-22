@@ -444,7 +444,7 @@
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             IsEditable="True"
-                            ItemsSource="{Binding ListBook, Mode=TwoWay}"
+                            ItemsSource="{Binding ListBook, Mode=OneWay}"
                             DisplayMemberPath="TenSach"
                             SelectedItem="{Binding SelectedBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"
@@ -476,7 +476,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <TextBox
-                            Text="{Binding SelectedBook.THELOAI.TenTheLoai, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Text="{Binding BookTypes, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thể loại"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -510,7 +510,7 @@
                             materialDesign:HintAssist.Hint="Đơn Giá"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                            ItemsSource="{Binding ListPriceOfBook, Mode=TwoWay}"
+                            ItemsSource="{Binding ListPriceOfBook, Mode=OneWay}"
                             DisplayMemberPath="DonGiaNhap"
                             SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"

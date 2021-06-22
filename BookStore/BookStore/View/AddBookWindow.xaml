@@ -1,0 +1,329 @@
+﻿<Window x:Class="BookStore.View.AddBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStore.View"
+        mc:Ignorable="d"
+        xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:cv ="clr-namespace:BookStore.Converters"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}" 
+        Style="{StaticResource {x:Type Window}}"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource AddBookVM}" 
+        Title="AddBookWindow" Height="450" Width="984"
+        x:Name="AddBookWD">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="22*"></RowDefinition>
+            <RowDefinition Height="183*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="263*"></ColumnDefinition>
+            <ColumnDefinition Width="713*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            TextWrapping="Wrap"
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            Text="Thêm Đầu Sách"
+            FontSize="30"
+            Foreground="#DD2D39A8" FontWeight="Bold" Margin="233,10,228,5"/>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Image 
+                Margin="0,0,0,83">
+                <Image.Source>
+                    <BitmapImage DecodePixelWidth="200" UriSource="/DataCenter/OnePiece.jpg"></BitmapImage>
+                </Image.Source>
+            </Image>
+            <Button
+                Style="{StaticResource MaterialDesignRaisedButton}"
+                materialDesign:ButtonAssist.CornerRadius="10"
+                Height="Auto" Margin="64,300,59,34">
+                <WrapPanel Orientation="Vertical"
+                           Width="112" Height="23">
+                    <materialDesign:PackIcon
+                        VerticalAlignment="Center"
+                        Kind="Image" Height="23" Width="23">
+                    </materialDesign:PackIcon>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Padding="0,4,0,0"
+                        Margin="10,0,0,0"
+                        Text="Thêm ảnh" Height="23" />
+                </WrapPanel>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="0,10,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="92*"></ColumnDefinition>
+                <ColumnDefinition Width="325*"></ColumnDefinition>
+                <ColumnDefinition Width="296*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.Column="0" Grid.Row="0"
+                Text="Tên sách:"
+                FontSize="20"
+                TextAlignment="Left"
+                VerticalAlignment="Center"
+                Height="24" Margin="0,27,0,26">
+            </TextBlock>
+            <TextBlock
+                Grid.Column="0" Grid.Row="1"
+                Text="Thể loại:"
+                FontSize="20"
+                TextAlignment="Left"
+                VerticalAlignment="Center"
+                Height="24" Margin="0,27,0,26" >
+            </TextBlock>
+            <TextBlock
+                Grid.Column="0" Grid.Row="2"
+                Text="Tác giả:"
+                FontSize="20"
+                TextAlignment="Left"
+                VerticalAlignment="Center"
+                Height="24" Margin="0,26">
+            </TextBlock>
+            <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2">
+                <TextBlock
+                    TextAlignment="Center"
+                    Visibility="Hidden"
+                    Name="ErrorAddBook"
+                    Text="Vui lòng nhập đủ thông tin!"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground ="Red"
+                    FontSize="18" Width="400">
+                </TextBlock>
+            </Grid>
+            <TextBox
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="{Binding BookName}"
+                FontSize="20"
+                VerticalAlignment="Center"
+                Margin="20,22,10,22" Height="33">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewTextInput" >
+                        <i:InvokeCommandAction Command="{Binding BookNameTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <TextBox
+                x:Name="TextListTypes"
+                Text="{Binding Type}"
+                Grid.Column="1"
+                Grid.Row="1"
+                FontSize="20"
+                VerticalAlignment="Center"
+                Margin="20,21,10,22" Height="34">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged" >
+                        <i:InvokeCommandAction Command="{Binding TypeTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <TextBox
+                x:Name="TextListAuthors"
+                Grid.Column="1"
+                Grid.Row="2"
+                Text="{Binding Author}"
+                FontSize="20"
+                VerticalAlignment="Center"
+                Height="34" Margin="20,21,10,21">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged" >
+                        <i:InvokeCommandAction Command="{Binding AuthorTextChangedCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+
+            <Button
+                BorderBrush="White"
+                Grid.Column="2"
+                Margin="0,21,250,22"
+                Background="White" Grid.Row="1" Height="Auto">
+                <materialDesign:PackIcon
+                    Kind="FormatListCheckbox"
+                    Width="39"
+                    Height="20"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Foreground="Black">
+                </materialDesign:PackIcon>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click" >
+                        <i:InvokeCommandAction Command="{Binding ShowListBookTypesCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <ListBox 
+                Visibility="Hidden"
+                x:Name="exListBookTypes"
+                BorderBrush="Gray" BorderThickness="2"
+                Grid.Row="1" Grid.Column="2" Margin="66,10,10,60"
+                Grid.RowSpan="4"
+                ItemsSource="{Binding ListTypes, Mode=TwoWay}" SelectedItem="{Binding SelectedType}" 
+                SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox 
+                            IsChecked="{Binding Path=IsSelected, Mode=TwoWay,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" 
+                            Content="{Binding Path=Type, Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked" >
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType = ListBox, Mode=FindAncestor}, Path = DataContext.ItemTypeChekedCommand }"
+                                        CommandParameter="{Binding ElementName= AddBookWD}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="Unchecked" >
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType = ListBox, Mode=FindAncestor}, Path = DataContext.ItemTypeUnChekedCommand }"
+                                        CommandParameter="{Binding ElementName= AddBookWD}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <ListBox 
+                Visibility="Visible"
+                x:Name="exListBookAuthors" 
+                BorderBrush="Gray" BorderThickness="2"
+                Grid.Row="1" Grid.Column="2" Margin="66,10,10,60"
+                Grid.RowSpan="4"
+                ItemsSource="{Binding ListAuthors, Mode=TwoWay}" SelectedItem="{Binding SelectedAuthor}" 
+                SelectionMode="Multiple">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox 
+                            IsChecked="{Binding Path=IsSelected, Mode=TwoWay,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}" 
+                            Content="{Binding Path=Name, Mode=TwoWay}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked" >
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType = ListBox, Mode=FindAncestor}, Path = DataContext.ItemAuthorChekedCommand }"
+                                        CommandParameter="{Binding ElementName= AddBookWD}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="Unchecked" >
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType = ListBox, Mode=FindAncestor}, Path = DataContext.ItemAuthorUnChekedCommand }"
+                                        CommandParameter="{Binding ElementName= AddBookWD}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </CheckBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Column="2" Height="30" Grid.RowSpan="2" 
+                    Foreground="Black"
+                    Background="White"                    
+                    Margin="254,57,10,67">
+                <materialDesign:PackIcon
+                    Margin="-10,0,-10,0"
+                    Kind="Add"
+                    Height="20"
+                    Width="20">
+                </materialDesign:PackIcon>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click" >
+                        <i:InvokeCommandAction Command="{Binding AddListClickCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+            <Button
+                BorderBrush="White"
+                Grid.Column="2"
+                Margin="0,21,250,22"
+                Background="White" Grid.Row="2" Height="Auto">
+                <materialDesign:PackIcon
+                    Kind="FormatListCheckbox"
+                    Width="39"
+                    Height="20"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Foreground="Black">
+                </materialDesign:PackIcon>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click" >
+                        <i:InvokeCommandAction Command="{Binding ShowListBookAuthorsCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+
+            <WrapPanel
+                Grid.Row="4"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center" Height="32" Width="260" Margin="62,23,3,21" Grid.Column="1">
+                <Button
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Width="100"
+                    ToolTip="Resource name: MaterialDesignRaisedButton"
+                    Content="Hoàn Tất" 
+                    Grid.Column="0"
+                    Margin="0,0,20,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ConfirmButtonClickCommand}"
+                                                   CommandParameter="{Binding ElementName=ErrorAddBook}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Width="100"
+                    ToolTip="Resource name: MaterialDesignRaisedButton"
+                    Content="Hủy Bỏ" 
+                    Grid.Column="1"
+                    Margin="20,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding CancelButtonClick}"
+                                                   CommandParameter="{Binding ElementName=ErrorAddBook}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Window>

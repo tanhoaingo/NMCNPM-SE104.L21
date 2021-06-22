@@ -74,9 +74,19 @@
             <PropertyRef Name="MaDauSach" />
           </Key>
           <Property Name="MaDauSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MaTheLoai" Type="int" Nullable="false" />
           <Property Name="TenSach" Type="nvarchar" MaxLength="50" />
           <Property Name="LuongTon" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="HinhAnhSach">
+          <Key>
+            <PropertyRef Name="MaHinhAnh" />
+            <PropertyRef Name="MaDauSach" />
+          </Key>
+          <Property Name="MaHinhAnh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaDauSach" Type="int" Nullable="false" />
+          <Property Name="DuongDan" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="HOADON">
           <Key>
@@ -182,6 +192,14 @@
           <Property Name="MaDauSach" Type="int" Nullable="false" />
           <Property Name="MaTacGia" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TT_TL">
+          <Key>
+            <PropertyRef Name="MaTheLoai" />
+            <PropertyRef Name="MaDauSach" />
+          </Key>
+          <Property Name="MaTheLoai" Type="int" Nullable="false" />
+          <Property Name="MaDauSach" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_CT_BCCN_BAOCAOCONGNO">
           <End Role="BAOCAOCONGNO" Type="Self.BAOCAOCONGNO" Multiplicity="1" />
           <End Role="CT_BCCN" Type="Self.CT_BCCN" Multiplicity="*" />
@@ -275,18 +293,6 @@
             </Principal>
             <Dependent Role="CT_PNS">
               <PropertyRef Name="MaSach" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DAUSACH_THELOAI">
-          <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="1" />
-          <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="THELOAI">
-              <PropertyRef Name="MaTheLoai" />
-            </Principal>
-            <Dependent Role="DAUSACH">
-              <PropertyRef Name="MaTheLoai" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -398,6 +404,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TT_TL_DAUSACH">
+          <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="1" />
+          <End Role="TT_TL" Type="Self.TT_TL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DAUSACH">
+              <PropertyRef Name="MaDauSach" />
+            </Principal>
+            <Dependent Role="TT_TL">
+              <PropertyRef Name="MaDauSach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TT_TL_THELOAI">
+          <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="1" />
+          <End Role="TT_TL" Type="Self.TT_TL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="THELOAI">
+              <PropertyRef Name="MaTheLoai" />
+            </Principal>
+            <Dependent Role="TT_TL">
+              <PropertyRef Name="MaTheLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MYDATABASEModelStoreContainer">
           <EntitySet Name="BAOCAOCONGNO" EntityType="Self.BAOCAOCONGNO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BAOCAOTON" EntityType="Self.BAOCAOTON" Schema="dbo" store:Type="Tables" />
@@ -419,6 +449,14 @@
           <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THELOAI" EntityType="Self.THELOAI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TT_TG" EntityType="Self.TT_TG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TT_TL" EntityType="Self.TT_TL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HinhAnhSach" EntityType="Self.HinhAnhSach" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HinhAnhSach].[MaHinhAnh] AS [MaHinhAnh], 
+    [HinhAnhSach].[MaDauSach] AS [MaDauSach], 
+    [HinhAnhSach].[DuongDan] AS [DuongDan]
+    FROM [dbo].[HinhAnhSach] AS [HinhAnhSach]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CT_BCCN_BAOCAOCONGNO" Association="Self.FK_CT_BCCN_BAOCAOCONGNO">
             <End Role="BAOCAOCONGNO" EntitySet="BAOCAOCONGNO" />
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
@@ -450,10 +488,6 @@
           <AssociationSet Name="FK_CT_PNS_SACH" Association="Self.FK_CT_PNS_SACH">
             <End Role="SACH" EntitySet="SACH" />
             <End Role="CT_PNS" EntitySet="CT_PNS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DAUSACH_THELOAI" Association="Self.FK_DAUSACH_THELOAI">
-            <End Role="THELOAI" EntitySet="THELOAI" />
-            <End Role="DAUSACH" EntitySet="DAUSACH" />
           </AssociationSet>
           <AssociationSet Name="FK_HOADON_KHACHHANG" Association="Self.FK_HOADON_KHACHHANG">
             <End Role="KHACHHANG" EntitySet="KHACHHANG" />
@@ -491,6 +525,14 @@
             <End Role="TACGIA" EntitySet="TACGIA" />
             <End Role="TT_TG" EntitySet="TT_TG" />
           </AssociationSet>
+          <AssociationSet Name="FK_TT_TL_DAUSACH" Association="Self.FK_TT_TL_DAUSACH">
+            <End Role="DAUSACH" EntitySet="DAUSACH" />
+            <End Role="TT_TL" EntitySet="TT_TL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TT_TL_THELOAI" Association="Self.FK_TT_TL_THELOAI">
+            <End Role="THELOAI" EntitySet="THELOAI" />
+            <End Role="TT_TL" EntitySet="TT_TL" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -515,6 +557,7 @@
           <EntitySet Name="TACGIAs" EntityType="MYDATABASEModel.TACGIA" />
           <EntitySet Name="THAMSOes" EntityType="MYDATABASEModel.THAMSO" />
           <EntitySet Name="THELOAIs" EntityType="MYDATABASEModel.THELOAI" />
+          <EntitySet Name="HinhAnhSaches" EntityType="MYDATABASEModel.HinhAnhSach" />
           <AssociationSet Name="FK_CT_BCCN_BAOCAOCONGNO" Association="MYDATABASEModel.FK_CT_BCCN_BAOCAOCONGNO">
             <End Role="BAOCAOCONGNO" EntitySet="BAOCAOCONGNOes" />
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
@@ -547,10 +590,6 @@
             <End Role="SACH" EntitySet="SACHes" />
             <End Role="CT_PNS" EntitySet="CT_PNS" />
           </AssociationSet>
-          <AssociationSet Name="FK_DAUSACH_THELOAI" Association="MYDATABASEModel.FK_DAUSACH_THELOAI">
-            <End Role="THELOAI" EntitySet="THELOAIs" />
-            <End Role="DAUSACH" EntitySet="DAUSACHes" />
-          </AssociationSet>
           <AssociationSet Name="FK_SACH_DAUSACH" Association="MYDATABASEModel.FK_SACH_DAUSACH">
             <End Role="DAUSACH" EntitySet="DAUSACHes" />
             <End Role="SACH" EntitySet="SACHes" />
@@ -578,6 +617,10 @@
           <AssociationSet Name="TT_TG" Association="MYDATABASEModel.TT_TG">
             <End Role="DAUSACH" EntitySet="DAUSACHes" />
             <End Role="TACGIA" EntitySet="TACGIAs" />
+          </AssociationSet>
+          <AssociationSet Name="TT_TL" Association="MYDATABASEModel.TT_TL">
+            <End Role="DAUSACH" EntitySet="DAUSACHes" />
+            <End Role="THELOAI" EntitySet="THELOAIs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="BAOCAOCONGNO">
@@ -660,12 +703,11 @@
             <PropertyRef Name="MaDauSach" />
           </Key>
           <Property Name="MaDauSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaTheLoai" Type="Int32" Nullable="false" />
           <Property Name="TenSach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LuongTon" Type="Int32" />
-          <NavigationProperty Name="THELOAI" Relationship="MYDATABASEModel.FK_DAUSACH_THELOAI" FromRole="DAUSACH" ToRole="THELOAI" />
           <NavigationProperty Name="SACHes" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="MYDATABASEModel.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
+          <NavigationProperty Name="THELOAIs" Relationship="MYDATABASEModel.TT_TL" FromRole="DAUSACH" ToRole="THELOAI" />
         </EntityType>
         <EntityType Name="HOADON">
           <Key>
@@ -771,7 +813,16 @@
           </Key>
           <Property Name="MaTheLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenTheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DAUSACHes" Relationship="MYDATABASEModel.FK_DAUSACH_THELOAI" FromRole="THELOAI" ToRole="DAUSACH" />
+          <NavigationProperty Name="DAUSACHes" Relationship="MYDATABASEModel.TT_TL" FromRole="THELOAI" ToRole="DAUSACH" />
+        </EntityType>
+        <EntityType Name="HinhAnhSach">
+          <Key>
+            <PropertyRef Name="MaHinhAnh" />
+            <PropertyRef Name="MaDauSach" />
+          </Key>
+          <Property Name="MaHinhAnh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaDauSach" Type="Int32" Nullable="false" />
+          <Property Name="DuongDan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_CT_BCCN_BAOCAOCONGNO">
           <End Type="MYDATABASEModel.BAOCAOCONGNO" Role="BAOCAOCONGNO" Multiplicity="1" />
@@ -869,18 +920,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DAUSACH_THELOAI">
-          <End Type="MYDATABASEModel.THELOAI" Role="THELOAI" Multiplicity="1" />
-          <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="THELOAI">
-              <PropertyRef Name="MaTheLoai" />
-            </Principal>
-            <Dependent Role="DAUSACH">
-              <PropertyRef Name="MaTheLoai" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SACH_DAUSACH">
           <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="1" />
           <End Type="MYDATABASEModel.SACH" Role="SACH" Multiplicity="*" />
@@ -948,6 +987,10 @@
         <Association Name="TT_TG">
           <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
           <End Type="MYDATABASEModel.TACGIA" Role="TACGIA" Multiplicity="*" />
+        </Association>
+        <Association Name="TT_TL">
+          <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
+          <End Type="MYDATABASEModel.THELOAI" Role="THELOAI" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -1031,7 +1074,6 @@
               <MappingFragment StoreEntitySet="DAUSACH">
                 <ScalarProperty Name="LuongTon" ColumnName="LuongTon" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
-                <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
                 <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1134,6 +1176,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="HinhAnhSaches">
+            <EntityTypeMapping TypeName="MYDATABASEModel.HinhAnhSach">
+              <MappingFragment StoreEntitySet="HinhAnhSach">
+                <ScalarProperty Name="DuongDan" ColumnName="DuongDan" />
+                <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
+                <ScalarProperty Name="MaHinhAnh" ColumnName="MaHinhAnh" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="PHANQUYEN" TypeName="MYDATABASEModel.PHANQUYEN" StoreEntitySet="PHANQUYEN">
             <EndProperty Name="NHOMNGUOIDUNG">
               <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
@@ -1145,6 +1196,14 @@
           <AssociationSetMapping Name="TT_TG" TypeName="MYDATABASEModel.TT_TG" StoreEntitySet="TT_TG">
             <EndProperty Name="TACGIA">
               <ScalarProperty Name="MaTacGia" ColumnName="MaTacGia" />
+            </EndProperty>
+            <EndProperty Name="DAUSACH">
+              <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TT_TL" TypeName="MYDATABASEModel.TT_TL" StoreEntitySet="TT_TL">
+            <EndProperty Name="THELOAI">
+              <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
             </EndProperty>
             <EndProperty Name="DAUSACH">
               <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />

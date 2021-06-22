@@ -31,12 +31,13 @@
         <materialDesign:Card Margin="30,10,30,0">
             <Grid Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="435*"></ColumnDefinition>
-                    <ColumnDefinition Width="383*"></ColumnDefinition>
-                    <ColumnDefinition Width="574*"></ColumnDefinition>
+                    <ColumnDefinition Width="208*"></ColumnDefinition>
+                    <ColumnDefinition Width="183*"></ColumnDefinition>
+                    <ColumnDefinition Width="56*"></ColumnDefinition>
+                    <ColumnDefinition Width="219*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBox
-                    Margin="30,8,0,10"
+                    Margin="30,18,0,20"
                     Grid.Column="0"
                     x:Name="SearchTextBox"
                     Padding="30,0,30,0"
@@ -46,11 +47,11 @@
                     BorderBrush="Black"
                     BorderThickness="2"/>
                 <ComboBox
-                    Margin="30,8,0,10"
+                    Margin="30,18,0,20"
                     Grid.Column="1"
                     materialDesign:HintAssist.Hint="Tìm theo"
                     FontSize ="25"
-                    Height="67"
+                    Height="47"
                     VerticalContentAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="Black"
@@ -60,14 +61,26 @@
                 <Button 
                     Grid.Column="2" 
                     Height="Auto"
-                    Margin="30,8,446,10"
-                    >
+                    Margin="30,18,10,20">
                     <materialDesign:PackIcon
                         Kind="Search"
-                        Width="32"
-                        Height="32">
+                        Width="25"
+                        Height="25">
                     </materialDesign:PackIcon>
                 </Button>
+                <Button
+                    FontSize="25"
+                    Grid.Column="3"
+                    Content="Thêm đầu sách" Height="Auto" Margin="10,18,0,20" 
+                    HorizontalAlignment="Left" Width="236">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding AddBookButtonClickCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
             </Grid>
         </materialDesign:Card>
         <Border BorderBrush="LightGray" BorderThickness="5"

@@ -43,5 +43,6 @@ namespace BookStore.Model
         public virtual DbSet<TACGIA> TACGIAs { get; set; }
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
         public virtual DbSet<THELOAI> THELOAIs { get; set; }
+        public virtual DbSet<HinhAnhSach> HinhAnhSaches { get; set; }
     }
 }
