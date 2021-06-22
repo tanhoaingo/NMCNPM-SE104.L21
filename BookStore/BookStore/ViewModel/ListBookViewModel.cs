@@ -15,13 +15,9 @@ namespace BookStore.ViewModel
         
         public ListBookViewModel()
         {
-            //ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
-            Temp = new ObservableCollection<string>();
-            Temp.Add("Naruto");
-            Temp.Add("Naruto");
-            Temp.Add("Naruto");
-            Temp.Add("Naruto"); Temp.Add("Naruto");
-            Temp.Add("Naruto");
+            ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
+            #region Test
+            /*Temp = new ObservableCollection<string>();
             Temp.Add("Naruto");
             Temp.Add("Naruto");
             Temp.Add("Naruto");
@@ -31,7 +27,6 @@ namespace BookStore.ViewModel
             Temp.Add("Naruto");
             Temp.Add("Naruto");
             Temp.Add("Naruto");
-            Temp.Add("Naruto"); Temp.Add("Naruto");
             Temp.Add("Naruto");
             Temp.Add("Naruto");
             Temp.Add("Naruto");
@@ -39,6 +34,15 @@ namespace BookStore.ViewModel
             Temp.Add("Naruto");
             Temp.Add("Naruto");
             Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");
+            Temp.Add("Naruto");*/
+            #endregion
 
             AddBookButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddNewBook(); });
         }

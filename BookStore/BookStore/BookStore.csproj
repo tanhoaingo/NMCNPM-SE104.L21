@@ -78,17 +78,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\HinhAnhSach.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Item_ListCheckedBoxAuthor.cs" />
     <Compile Include="Model\Item_ListCheckedBoxType.cs" />
+    <Compile Include="ViewModel\AddAuthorViewModel.cs" />
     <Compile Include="ViewModel\AddBookViewModel.cs" />
+    <Compile Include="ViewModel\AddTypeViewModel.cs" />
+    <Compile Include="View\AddAuthorWindow.xaml.cs">
+      <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddBookWindow.xaml.cs">
       <DependentUpon>AddBookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddTypeWindow.xaml.cs">
+      <DependentUpon>AddTypeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
@@ -191,11 +196,19 @@
     <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Page Include="View\AddAuthorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AddCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddTypeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

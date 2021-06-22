@@ -76,17 +76,7 @@
           <Property Name="MaDauSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenSach" Type="nvarchar" MaxLength="50" />
           <Property Name="LuongTon" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="HinhAnhSach">
-          <Key>
-            <PropertyRef Name="MaHinhAnh" />
-            <PropertyRef Name="MaDauSach" />
-          </Key>
-          <Property Name="MaHinhAnh" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MaDauSach" Type="int" Nullable="false" />
-          <Property Name="DuongDan" Type="varchar" MaxLength="100" />
+          <Property Name="HinhAnhSach" Type="image" />
         </EntityType>
         <EntityType Name="HOADON">
           <Key>
@@ -450,13 +440,6 @@ warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primar
           <EntitySet Name="THELOAI" EntityType="Self.THELOAI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TT_TG" EntityType="Self.TT_TG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TT_TL" EntityType="Self.TT_TL" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HinhAnhSach" EntityType="Self.HinhAnhSach" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [HinhAnhSach].[MaHinhAnh] AS [MaHinhAnh], 
-    [HinhAnhSach].[MaDauSach] AS [MaDauSach], 
-    [HinhAnhSach].[DuongDan] AS [DuongDan]
-    FROM [dbo].[HinhAnhSach] AS [HinhAnhSach]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_CT_BCCN_BAOCAOCONGNO" Association="Self.FK_CT_BCCN_BAOCAOCONGNO">
             <End Role="BAOCAOCONGNO" EntitySet="BAOCAOCONGNO" />
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
@@ -557,7 +540,6 @@ warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primar
           <EntitySet Name="TACGIAs" EntityType="MYDATABASEModel.TACGIA" />
           <EntitySet Name="THAMSOes" EntityType="MYDATABASEModel.THAMSO" />
           <EntitySet Name="THELOAIs" EntityType="MYDATABASEModel.THELOAI" />
-          <EntitySet Name="HinhAnhSaches" EntityType="MYDATABASEModel.HinhAnhSach" />
           <AssociationSet Name="FK_CT_BCCN_BAOCAOCONGNO" Association="MYDATABASEModel.FK_CT_BCCN_BAOCAOCONGNO">
             <End Role="BAOCAOCONGNO" EntitySet="BAOCAOCONGNOes" />
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
@@ -705,6 +687,7 @@ warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primar
           <Property Name="MaDauSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenSach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LuongTon" Type="Int32" />
+          <Property Name="HinhAnhSach" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="SACHes" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="MYDATABASEModel.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
           <NavigationProperty Name="THELOAIs" Relationship="MYDATABASEModel.TT_TL" FromRole="DAUSACH" ToRole="THELOAI" />
@@ -814,15 +797,6 @@ warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primar
           <Property Name="MaTheLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenTheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DAUSACHes" Relationship="MYDATABASEModel.TT_TL" FromRole="THELOAI" ToRole="DAUSACH" />
-        </EntityType>
-        <EntityType Name="HinhAnhSach">
-          <Key>
-            <PropertyRef Name="MaHinhAnh" />
-            <PropertyRef Name="MaDauSach" />
-          </Key>
-          <Property Name="MaHinhAnh" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaDauSach" Type="Int32" Nullable="false" />
-          <Property Name="DuongDan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_CT_BCCN_BAOCAOCONGNO">
           <End Type="MYDATABASEModel.BAOCAOCONGNO" Role="BAOCAOCONGNO" Multiplicity="1" />
@@ -1072,6 +1046,7 @@ warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primar
           <EntitySetMapping Name="DAUSACHes">
             <EntityTypeMapping TypeName="MYDATABASEModel.DAUSACH">
               <MappingFragment StoreEntitySet="DAUSACH">
+                <ScalarProperty Name="HinhAnhSach" ColumnName="HinhAnhSach" />
                 <ScalarProperty Name="LuongTon" ColumnName="LuongTon" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
                 <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
@@ -1173,15 +1148,6 @@ warning 6002: The table/view 'MYDATABASE.dbo.HinhAnhSach' does not have a primar
               <MappingFragment StoreEntitySet="THELOAI">
                 <ScalarProperty Name="TenTheLoai" ColumnName="TenTheLoai" />
                 <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HinhAnhSaches">
-            <EntityTypeMapping TypeName="MYDATABASEModel.HinhAnhSach">
-              <MappingFragment StoreEntitySet="HinhAnhSach">
-                <ScalarProperty Name="DuongDan" ColumnName="DuongDan" />
-                <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
-                <ScalarProperty Name="MaHinhAnh" ColumnName="MaHinhAnh" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

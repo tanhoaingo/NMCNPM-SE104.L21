@@ -46,10 +46,9 @@
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Image 
-                Margin="0,0,0,83">
-                <Image.Source>
-                    <BitmapImage DecodePixelWidth="200" UriSource="/DataCenter/OnePiece.jpg"></BitmapImage>
-                </Image.Source>
+                Margin="0,0,0,83"
+                x:Name="BookPicture"
+                Source="{Binding BookImage}">
             </Image>
             <Button
                 Style="{StaticResource MaterialDesignRaisedButton}"
@@ -67,6 +66,13 @@
                         Margin="10,0,0,0"
                         Text="Thêm ảnh" Height="23" />
                 </WrapPanel>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click" >
+                        <i:InvokeCommandAction Command="{Binding AddPictureCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Button>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1" Margin="0,10,0,20">
@@ -120,6 +126,7 @@
                 </TextBlock>
             </Grid>
             <TextBox
+                
                 Grid.Column="1"
                 Grid.Row="0"
                 Text="{Binding BookName}"
@@ -127,45 +134,56 @@
                 VerticalAlignment="Center"
                 Margin="20,22,10,22" Height="33">
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewTextInput" >
+                    <i:EventTrigger EventName="TextChanged" >
                         <i:InvokeCommandAction Command="{Binding BookNameTextChangedCommand}"
                                    CommandParameter="{Binding ElementName=AddBookWD}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <TextBox
-                x:Name="TextListTypes"
-                Text="{Binding Type}"
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1"
                 Grid.Column="1"
                 Grid.Row="1"
-                FontSize="20"
-                VerticalAlignment="Center"
-                Margin="20,21,10,22" Height="34">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged" >
-                        <i:InvokeCommandAction Command="{Binding TypeTextChangedCommand}"
-                                   CommandParameter="{Binding ElementName=AddBookWD}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBox>
-            <TextBox
-                x:Name="TextListAuthors"
+                Margin="20,21,10,22" >
+                <TextBlock
+                    x:Name="TextListTypes"
+                    Text="{Binding Type}"
+                    FontSize="20"
+                    TextWrapping="Wrap"
+                    VerticalAlignment="Center"
+                    IsEnabled="False"
+>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged" >
+                            <i:InvokeCommandAction Command="{Binding TypeTextChangedCommand}"
+                                        CommandParameter="{Binding ElementName=AddBookWD}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBlock>
+            </Border>
+            <Border
+                BorderBrush="Black"
+                BorderThickness="1"
                 Grid.Column="1"
                 Grid.Row="2"
-                Text="{Binding Author}"
-                FontSize="20"
-                VerticalAlignment="Center"
-                Height="34" Margin="20,21,10,21">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="TextChanged" >
-                        <i:InvokeCommandAction Command="{Binding AuthorTextChangedCommand}"
-                                   CommandParameter="{Binding ElementName=AddBookWD}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBox>
+                Margin="20,21,10,21">
+                <TextBlock
+                    x:Name="TextListAuthors"  
+                    Text="{Binding Author}"
+                    FontSize="20"
+                    VerticalAlignment="Center">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged" >
+                            <i:InvokeCommandAction Command="{Binding AuthorTextChangedCommand}"
+                                       CommandParameter="{Binding ElementName=AddBookWD}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBlock>
+            </Border>
 
             <Button
                 BorderBrush="White"
@@ -194,7 +212,7 @@
                 BorderBrush="Gray" BorderThickness="2"
                 Grid.Row="1" Grid.Column="2" Margin="66,10,10,60"
                 Grid.RowSpan="4"
-                ItemsSource="{Binding ListTypes, Mode=TwoWay}" SelectedItem="{Binding SelectedType}" 
+                ItemsSource="{Binding ListTypes, Mode=TwoWay}" 
                 SelectionMode="Multiple">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -219,12 +237,12 @@
             </ListBox>
 
             <ListBox 
-                Visibility="Visible"
+                Visibility="Hidden"
                 x:Name="exListBookAuthors" 
                 BorderBrush="Gray" BorderThickness="2"
                 Grid.Row="1" Grid.Column="2" Margin="66,10,10,60"
                 Grid.RowSpan="4"
-                ItemsSource="{Binding ListAuthors, Mode=TwoWay}" SelectedItem="{Binding SelectedAuthor}" 
+                ItemsSource="{Binding ListAuthors, Mode=TwoWay}" 
                 SelectionMode="Multiple">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -250,7 +268,9 @@
             <Button Grid.Column="2" Height="30" Grid.RowSpan="2" 
                     Foreground="Black"
                     Background="White"                    
-                    Margin="254,57,10,67">
+                    Margin="254,57,10,67"
+                    Visibility="Hidden"
+                    x:Name="AddButton">
                 <materialDesign:PackIcon
                     Margin="-10,0,-10,0"
                     Kind="Add"
@@ -303,7 +323,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding ConfirmButtonClickCommand}"
-                                                   CommandParameter="{Binding ElementName=ErrorAddBook}">
+                                                   CommandParameter="{Binding ElementName=AddBookWD}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -317,7 +337,7 @@
                     Margin="20,0,0,0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding CancelButtonClick}"
+                            <i:InvokeCommandAction Command="{Binding CancelButtonClickCommand}"
                                                    CommandParameter="{Binding ElementName=ErrorAddBook}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
