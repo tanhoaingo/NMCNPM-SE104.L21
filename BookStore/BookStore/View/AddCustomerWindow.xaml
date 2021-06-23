@@ -21,15 +21,8 @@
         Style="{StaticResource {x:Type Window}}"
         Title="Thêm khách hàng" 
         Height="450" Width="500"
-        FontSize="20">
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}"
-                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
-            </i:InvokeCommandAction>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+        FontSize="20"
+        x:Name="AddCustomerWD">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -102,7 +95,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="TextChanged">
                     <i:InvokeCommandAction Command="{Binding NameTextChangedCommand}"
-                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                                   CommandParameter="{Binding ElementName=AddCustomerWD}">
                     </i:InvokeCommandAction>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -118,7 +111,7 @@
                 <i:EventTrigger EventName="PreviewTextInput" >
                     <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
                     <i:InvokeCommandAction Command="{Binding PhoneTextChangedCommand}"
-                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                                   CommandParameter="{Binding ElementName=AddCustomerWD}">
                     </i:InvokeCommandAction>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -133,7 +126,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="TextChanged">
                     <i:InvokeCommandAction Command="{Binding EmailTextChangedCommand}"
-                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                                   CommandParameter="{Binding ElementName=AddCustomerWD}">
                     </i:InvokeCommandAction>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -148,7 +141,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="TextChanged">
                     <i:InvokeCommandAction Command="{Binding AddressTextChangedCommand}"
-                                   CommandParameter="{Binding ElementName=ErrorAddCustomer}">
+                                   CommandParameter="{Binding ElementName=AddCustomerWD}">
                     </i:InvokeCommandAction>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
@@ -181,7 +174,8 @@
                 Margin="0,0,20,0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding ConfirmButtonClickCommand}">
+                        <i:InvokeCommandAction Command="{Binding ConfirmButtonClickCommand}"
+                                               CommandParameter="{Binding ElementName=AddCustomerWD}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -192,7 +186,15 @@
                 ToolTip="Resource name: MaterialDesignRaisedButton"
                 Content="Hủy Bỏ" 
                 Grid.Column="1"
-                Margin="20,0,0,0"/>
+                Margin="20,0,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding CancelButtonClickCommand}"
+                                               CommandParameter="{Binding ElementName=AddCustomerWD}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </WrapPanel>
 
 

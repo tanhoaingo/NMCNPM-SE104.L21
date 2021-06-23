@@ -78,8 +78,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Item_ListCheckedBoxAuthor.cs" />
+    <Compile Include="Model\Item_ListCheckedBoxType.cs" />
+    <Compile Include="ViewModel\AddAuthorViewModel.cs" />
+    <Compile Include="ViewModel\AddBookViewModel.cs" />
+    <Compile Include="ViewModel\AddTypeViewModel.cs" />
+    <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
+    <Compile Include="View\AddAuthorWindow.xaml.cs">
+      <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddBookWindow.xaml.cs">
+      <DependentUpon>AddBookWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddCustomerWindow.xaml.cs">
       <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddTypeWindow.xaml.cs">
+      <DependentUpon>AddTypeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BillWindow.xaml.cs">
       <DependentUpon>BillWindow.xaml</DependentUpon>
@@ -87,6 +102,9 @@
     <Compile Include="Converters\RowToIndexConverter.cs" />
     <Compile Include="View\BookEntryWindow.xaml.cs">
       <DependentUpon>BookEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChangeRulesWindow.xaml.cs">
+      <DependentUpon>ChangeRulesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
@@ -182,7 +200,19 @@
     <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Page Include="View\AddAuthorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddTypeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BookEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChangeRulesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,6 +295,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Model\EntityModel.edmx.diagram">
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </None>
@@ -276,6 +313,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="DataCenter\BachTuyet.jpg" />
+    <Resource Include="DataCenter\Dracula.jpg" />
+    <Resource Include="DataCenter\LuocSuThoiGian.jpg" />
+    <Resource Include="DataCenter\Naruto.jpg" />
+    <Resource Include="DataCenter\OnePiece.jpg" />
+    <Resource Include="DataCenter\Sherlock Holmes.jpg" />
     <Content Include="Model\EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EntityModel.Context.cs</LastGenOutput>

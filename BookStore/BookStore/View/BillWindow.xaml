@@ -31,7 +31,13 @@
             <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
                                    CommandParameter="{Binding ElementName=BillWD}"/>
         </i:EventTrigger>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                       CommandParameter="{Binding ElementName=BillWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
+
 
     <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="8">
         <Grid>
@@ -50,14 +56,14 @@
                 </Grid>
                 <Grid Height="70">
                     <DatePicker                    
-                        SelectedDate="{Binding payDate, StringFormat = 'dd/MM/yyyy'}"
+                        SelectedDate="{Binding PayDate, StringFormat = 'dd/MM/yyyy'}"
                          Width="180"
                         Height="50"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="15"
-  materialDesign:HintAssist.Hint="Ngày thu"
-  Style="{StaticResource MaterialDesignOutlinedDatePicker}" IsEnabled="False" Margin="234,10,62,10" />
+                        materialDesign:HintAssist.Hint="Ngày thu"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" IsEnabled="False" Margin="234,10,62,10" />
                     <TextBox
                         IsEnabled="False"
                         Margin="72,10,254,10"

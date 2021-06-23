@@ -21,59 +21,98 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ListBookVM}"
-        Title="Tra Cứu Sách" Height="950" Width="1400">
+        Title="Tra Cứu Sách" Height="1000" Width="1400">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="12*"></RowDefinition>
-            <RowDefinition Height="83*"></RowDefinition>
+            <RowDefinition Height="34*"></RowDefinition>
+            <RowDefinition Height="33*"></RowDefinition>
+            <RowDefinition Height="253*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <materialDesign:Card Margin="30,10,30,0">
-            <Grid Margin="0,20,0,0">
+        <TextBlock
+            TextWrapping="Wrap"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            Text="Danh Sách Sách"
+            FontSize="60"
+            Foreground="#DD2D39A8" FontWeight="Bold" Height="72" Margin="474,15" Width="444"/>
+
+        <materialDesign:Card Margin="30,10,30,0" Grid.Row="1">
+            <Grid Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="435*"></ColumnDefinition>
-                    <ColumnDefinition Width="383*"></ColumnDefinition>
-                    <ColumnDefinition Width="574*"></ColumnDefinition>
+                    <ColumnDefinition Width="367*"></ColumnDefinition>
+                    <ColumnDefinition Width="196*"></ColumnDefinition>
+                    <ColumnDefinition Width="96*"></ColumnDefinition>
+                    <ColumnDefinition Width="234*"></ColumnDefinition>
+                    <ColumnDefinition Width="26*"></ColumnDefinition>
+                    <ColumnDefinition Width="213*"></ColumnDefinition>
+                    <ColumnDefinition Width="200*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBox
-                    Margin="30,8,0,10"
+                    Margin="30,16,10,16"
                     Grid.Column="0"
                     x:Name="SearchTextBox"
                     Padding="30,0,30,0"
                     materialDesign:HintAssist.Hint="Tìm kiếm"
+                    VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontSize="25"
                     BorderBrush="Black"
-                    BorderThickness="2"/>
+                    BorderThickness="2" Height="52"/>
                 <ComboBox
-                    Margin="30,8,0,10"
+                    Margin="10,16,0,16"
                     Grid.Column="1"
                     materialDesign:HintAssist.Hint="Tìm theo"
                     FontSize ="25"
-                    Height="67"
                     VerticalContentAlignment="Center"
                     VerticalAlignment="Center"
                     BorderBrush="Black"
                     BorderThickness="2"
-                    Padding="30,0,30,0">
-                </ComboBox>
+                    Padding="30,0,30,0" Height="52"/>
                 <Button 
                     Grid.Column="2" 
                     Height="Auto"
-                    Margin="30,8,446,10"
-                    >
+                    Margin="30,18,10,19">
                     <materialDesign:PackIcon
                         Kind="Search"
-                        Width="32"
-                        Height="32">
+                        Width="25"
+                        Height="25">
                     </materialDesign:PackIcon>
                 </Button>
+                <Button
+                    FontSize="25"
+                    Grid.Column="3"
+                    Content="Thêm đầu sách" Height="52" Margin="10,0,10,19" VerticalAlignment="Bottom" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding AddBookButtonClickCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Rectangle
+                    Grid.Column="4"
+                    Fill="Gray" Margin="10,16"/>
+                <Button
+                    Grid.Column="5" Height="Auto" Margin="38,16,36,16"
+                    Content="Lựa Chọn"
+                    FontSize="25"
+                    Background="LightGreen">
+                </Button>
+                <Button
+                    Grid.Column="6" Height="Auto" Margin="17,16,0,16"
+                    Content="Hủy Bỏ"
+                    FontSize="25"
+                    Background="Red" HorizontalAlignment="Left" Width="137">
+                </Button>
+
             </Grid>
         </materialDesign:Card>
         <Border BorderBrush="LightGray" BorderThickness="5"
-            Grid.Row="1" Margin="30">
+            Grid.Row="2" Margin="30">
             <materialDesign:Card >
-                <ListView Margin="10" Name="ListBookListView" ItemsSource="{Binding Temp}" 
+                <ListView Margin="10" Name="ListBookListView" ItemsSource="{Binding ListBooks}" 
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -90,7 +129,8 @@
                                             <RowDefinition></RowDefinition>
                                             <RowDefinition></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <Image Grid.Row="0" Width ="170"></Image>
+                                        <Image Grid.Row="0" Width ="170"
+                                               Source="{Binding HinhAnhSach}"></Image>
                                         <TextBlock
                                             Grid.Row="1"
                                             Text="{Binding TenSach }"
@@ -101,7 +141,6 @@
                                         </TextBlock>
                                         <TextBlock
                                             Grid.Row="2"
-                                            Text="{Binding THELOAI.TenTheLoai}"
                                             Height="50"
                                             Width="170"
                                             TextAlignment="Center"
