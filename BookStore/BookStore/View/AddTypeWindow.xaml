@@ -23,6 +23,13 @@
         mc:Ignorable="d"
         Title="AddTypeWindow" Height="218.5" Width="397.333"
         x:Name="AddTypeWD">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Closing" >
+                <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                       CommandParameter="{Binding ElementName=AddTypeWD}">
+                </i:InvokeCommandAction>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"></RowDefinition>
@@ -61,7 +68,7 @@
                 x:Name="TypeText"
                 Grid.Column="1"
                 Grid.Row="0"
-                Text="{Binding TypeName}"
+                Text="{Binding TypeName, Mode=TwoWay}"
                 FontSize="20"
                 VerticalAlignment="Center"
                 Height="32" Margin="39,4,61,7" RenderTransformOrigin="0.509,-0.02">

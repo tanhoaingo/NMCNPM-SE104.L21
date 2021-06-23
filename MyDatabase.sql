@@ -374,3 +374,11 @@ INSERT INTO TT_TL(MaDauSach, MaTheLoai) VALUES(1,6) , (2,6)
 INSERT INTO TACGIA(TenTacGia) VALUES (N'Đặng Anh Tú'), (N'Lâm Văn Hồng'),('Arthur Conan Doyle'),('Fujiko Fujio')
 
 /*=============================================================================*/
+/*Log 2 database*/
+/*=============================================================================*/
+	
+DROP TABLE HinhAnhSach
+
+ALTER TABLE DAUSACH
+ADD HinhAnhSach Image
+

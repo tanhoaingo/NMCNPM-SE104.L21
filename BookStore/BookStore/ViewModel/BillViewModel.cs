@@ -15,32 +15,16 @@ namespace BookStore.ViewModel
 
     public class BillViewModel : BaseViewModel
     {
-        private ObservableCollection<KHACHHANG> _ListCustomer;
-        public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set => _ListCustomer = value; }
-        private KHACHHANG _SelectedCustomer;
-        public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
-        private DateTime? _payDate;
-        public DateTime? payDate { get => _payDate; set => _payDate = value; }
-        private Int64 _PaidAmount;
-        public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
-        private Int64 _LeftAMount;
-        public long LeftAMount { get => _LeftAMount; set { _LeftAMount = value; OnPropertyChanged(); } }
-        private int _maKhachHang;
-        public int maKhachHang { get => _maKhachHang; set { _maKhachHang = value; OnPropertyChanged(); } }
-
-
         public BillViewModel()
         {
-            payDate = DateTime.Now;
+            PayDate = DateTime.Now;
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
+
+            CloseWindowCommand = new RelayCommand<BillWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
             NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             CancelButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { CancelInvoice(); });
         }
-
-        public ICommand NameCustomerSelectionChangedCommand { get; set; }
-        public ICommand SaveButtonClickCommand { get; set; }
-        public ICommand CancelButtonClickCommand { get; set; }
 
         void SaveInvoice()
         {
@@ -49,10 +33,9 @@ namespace BookStore.ViewModel
             {
                 foreach (var item in DataProvider.Ins.DB.KHACHHANGs)
                 {
-
                     if (item.MaKhachHang == SelectedCustomer.MaKhachHang)
                     {
-                        if (PaidAmount <= 0 || PaidAmount == null)
+                        if (PaidAmount <= 0)
                             MessageBox.Show("Vui lòng nhập số tiền trả !");
                         else if (item.SoNo < PaidAmount)
                             MessageBox.Show("Số tiền trả không vượt quá số tiền nợ !");
@@ -65,9 +48,8 @@ namespace BookStore.ViewModel
                     }
                 }
                 if (IsComplete)
-                {
-
-                    var phieuThuTien = new PHIEUTHUTIEN() { MaKhachHang = SelectedCustomer.MaKhachHang, NgayThuTien = payDate, SoTienThu = PaidAmount };
+                { 
+                    var phieuThuTien = new PHIEUTHUTIEN() { MaKhachHang = SelectedCustomer.MaKhachHang, NgayThuTien = PayDate, SoTienThu = PaidAmount };
                     DataProvider.Ins.DB.PHIEUTHUTIENs.Add(phieuThuTien);
                     DataProvider.Ins.DB.SaveChanges();
                     MessageBox.Show("Lưu thành công");
@@ -83,8 +65,33 @@ namespace BookStore.ViewModel
 
         void CancelInvoice()
         {
+        }
+
+        public override void CleanUpData()
+        {
+            base.CleanUpData();
             SelectedCustomer = null;
             PaidAmount = 0;
         }
+
+        public ICommand CloseWindowCommand { get; set; }
+        public ICommand NameCustomerSelectionChangedCommand { get; set; }
+        public ICommand SaveButtonClickCommand { get; set; }
+        public ICommand CancelButtonClickCommand { get; set; }
+
+        private ObservableCollection<KHACHHANG> _ListCustomer;
+        private KHACHHANG _SelectedCustomer;
+        private DateTime? _PayDate;
+        private Int64 _PaidAmount;
+        private Int64 _LeftAMount;
+        private int _MaKhachHang;
+
+        public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set => _ListCustomer = value; }
+        public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
+        public DateTime? PayDate { get => _PayDate; set => _PayDate = value; }
+        public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
+        public long LeftAMount { get => _LeftAMount; set { _LeftAMount = value; OnPropertyChanged(); } }
+        public int MaKhachHang { get => _MaKhachHang; set { _MaKhachHang = value; OnPropertyChanged(); } }
+
     }
 }

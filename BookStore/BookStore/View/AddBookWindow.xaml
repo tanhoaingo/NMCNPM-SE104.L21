@@ -23,6 +23,13 @@
         DataContext="{StaticResource AddBookVM}" 
         Title="AddBookWindow" Height="450" Width="984"
         x:Name="AddBookWD">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="22*"></RowDefinition>
@@ -126,7 +133,6 @@
                 </TextBlock>
             </Grid>
             <TextBox
-                
                 Grid.Column="1"
                 Grid.Row="0"
                 Text="{Binding BookName}"
@@ -338,7 +344,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding CancelButtonClickCommand}"
-                                                   CommandParameter="{Binding ElementName=ErrorAddBook}">
+                                                   CommandParameter="{Binding ElementName=AddBookWD}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>

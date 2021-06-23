@@ -83,6 +83,7 @@
     <Compile Include="ViewModel\AddAuthorViewModel.cs" />
     <Compile Include="ViewModel\AddBookViewModel.cs" />
     <Compile Include="ViewModel\AddTypeViewModel.cs" />
+    <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
     <Compile Include="View\AddAuthorWindow.xaml.cs">
       <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +102,9 @@
     <Compile Include="Converters\RowToIndexConverter.cs" />
     <Compile Include="View\BookEntryWindow.xaml.cs">
       <DependentUpon>BookEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChangeRulesWindow.xaml.cs">
+      <DependentUpon>ChangeRulesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
@@ -217,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BookEntryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChangeRulesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

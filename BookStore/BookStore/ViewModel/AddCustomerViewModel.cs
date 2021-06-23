@@ -1,6 +1,7 @@
 ﻿using BookStore.Model;
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -11,69 +12,92 @@ namespace BookStore.ViewModel
 
         public AddCustomerViewModel()
         {
-            LoadedCommand = new RelayCommand<TextBlock>((p) => { return true; }, (p) => { ErrorAddCustomer = (TextBlock)p; });
-            ConfirmButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { ConfirmButtonClick(); });
-            NameTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(); });
-            PhoneTextChangedCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(); });
-            EmailTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(); });
-            AddressTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(); });
+            FlagIsSaved = false;
 
+            ConfirmButtonClickCommand = new RelayCommand<AddCustomerWindow>((p) => { return true; }, (p) => { ConfirmAddCustomer(p); });
+            NameTextChangedCommand = new RelayCommand<AddCustomerWindow>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(p); });
+            PhoneTextChangedCommand = new RelayCommand<AddCustomerWindow>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(p); });
+            EmailTextChangedCommand = new RelayCommand<AddCustomerWindow>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(p); });
+            AddressTextChangedCommand = new RelayCommand<AddCustomerWindow>((p) => { return true; }, (p) => { HiddenErrorAddCustomer(p); });
+            CancelButtonClickCommand = new RelayCommand<AddCustomerWindow>((p) => { return true; }, (p) => { CancelAddCustomer(p); });
         }
 
-        private void HiddenErrorAddCustomer()
+        private void CancelAddCustomer(AddCustomerWindow p)
         {
-            ErrorAddCustomer.Visibility = System.Windows.Visibility.Hidden;
+            if (FlagIsSaved || (string.IsNullOrEmpty(TenKhachHang) && string.IsNullOrEmpty(SDT) && string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(DiaChi)))
+            {
+                p.Close();
+            }
+            else
+            {
+                var result = MessageBox.Show("Bạn có muốn lưu thay đổi? ", "Thông báo", MessageBoxButton.YesNoCancel, MessageBoxImage.Error, MessageBoxResult.Cancel);
+                if (result == MessageBoxResult.Yes)
+                {
+                    ConfirmAddCustomer(p);
+                    p.Close();
+                }
+                else if (result == MessageBoxResult.No)
+                {
+                    p.Close();
+                }
+                else
+                {
+                    return;
+                }
+            }
         }
 
-        private void ConfirmButtonClick()
+        private void HiddenErrorAddCustomer(AddCustomerWindow p)
+        {
+            p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void ConfirmAddCustomer(AddCustomerWindow p)
         {
             if (TenKhachHang == null || TenKhachHang == "")
             {
-                ErrorAddCustomer.Text = "Vui lòng nhập tên khách hàng!";
-                ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
+                p.ErrorAddCustomer.Text = "Vui lòng nhập tên khách hàng!";
+                p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
                 return;
             }
             if (SDT == null || SDT == "")
             {
-                ErrorAddCustomer.Text = "Vui lòng nhập số điện thoại!";
-                ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
+                p.ErrorAddCustomer.Text = "Vui lòng nhập số điện thoại!";
+                p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
                 return;
             }
             var tmp = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.HoTenKhachHang == TenKhachHang && x.DienThoai == SDT);
             if (tmp == null || tmp.Count() != 0)
             {
-                ErrorAddCustomer.Text = "Khách hàng đã tồn tại!";
-                ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
+                p.ErrorAddCustomer.Text = "Khách hàng đã tồn tại!";
+                p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
                 return;
             }
             var kh = new KHACHHANG() { HoTenKhachHang = TenKhachHang, DienThoai = SDT, DiaChi = DiaChi, Email = Email, SoNo = 0 };
             DataProvider.Ins.DB.KHACHHANGs.Add(kh);
             DataProvider.Ins.DB.SaveChanges();
-            ErrorAddCustomer.Text = "Thêm khách hàng thành công!";
-            ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
+            p.ErrorAddCustomer.Text = "Thêm khách hàng thành công!";
+            p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
+            _FlagIsSaved = true;
         }
 
-
-        public ICommand LoadedCommand { get; set; }
         public ICommand ConfirmButtonClickCommand { get; set; }
         public ICommand NameTextChangedCommand { get; set; }
         public ICommand PhoneTextChangedCommand { get; set; }
         public ICommand EmailTextChangedCommand { get; set; }
         public ICommand AddressTextChangedCommand { get; set; }
-
-
-        public TextBlock ErrorAddCustomer { get; set; }
-
+        public ICommand CancelButtonClickCommand { get; set; }
 
         private string _TenKhachHang;
         private string _SDT;
         private string _Email;
         private string _DiaChi;
+        private bool _FlagIsSaved;
 
-
-        public string TenKhachHang { get => _TenKhachHang; set => _TenKhachHang = value; }
-        public string SDT { get => _SDT; set => _SDT = value; }
-        public string Email { get => _Email; set => _Email = value; }
-        public string DiaChi { get => _DiaChi; set => _DiaChi = value; }
+        public string TenKhachHang { get => _TenKhachHang; set { _TenKhachHang = value; OnPropertyChanged(); } }
+        public string SDT { get => _SDT; set { _SDT = value; OnPropertyChanged(); } }
+        public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
+        public string DiaChi { get => _DiaChi; set { _DiaChi = value; OnPropertyChanged(); } }
+        public bool FlagIsSaved { get => _FlagIsSaved; set => _FlagIsSaved = value; }
     }
 }
