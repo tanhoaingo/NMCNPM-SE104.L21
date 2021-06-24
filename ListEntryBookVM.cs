@@ -45,8 +45,8 @@ namespace BookStore.ViewModel
         }
         public void loadEdit() 
         {
-            ThayDoiWindow window = new ThayDoiWindow();
-            window.ShowDialog();
+            BookEntryWindow bookEntryWindow = new BookEntryWindow();
+            bookEntryWindow.ShowDialog();
         }
     }
 }

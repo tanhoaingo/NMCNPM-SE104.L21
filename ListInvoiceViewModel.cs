@@ -45,7 +45,8 @@ namespace BookStore.ViewModel
         }
         public void loadEdit()
         {
-            
+            InvoiceWindow invoiceWindow = new InvoiceWindow();
+            invoiceWindow.ShowDialog();
         }
     }
 }
