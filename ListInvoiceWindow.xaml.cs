@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace BookStore.Pages
 {
     /// <summary>
-    /// Interaction logic for BaoCaoWindow.xaml
+    /// Interaction logic for ListInvoiceVM.xaml
     /// </summary>
-    public partial class BaoCaoWindow : Window
+    public partial class ListInvoiceWindow : Window
     {
-        public BaoCaoWindow()
+        public ListInvoiceWindow()
         {
             InitializeComponent();
         }
