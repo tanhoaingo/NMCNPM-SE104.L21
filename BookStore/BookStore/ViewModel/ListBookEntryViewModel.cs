@@ -11,9 +11,9 @@ using System.Windows.Input;
 
 namespace BookStore.ViewModel
 {
-    public class ListEntryBookViewModel : BaseViewModel
+    public class ListBookEntryViewModel : BaseViewModel
     {
-        public ListEntryBookViewModel()
+        public ListBookEntryViewModel()
         {
             ListEntryBook = new ObservableCollection<PHIEUNHAPSACH>(DataProvider.Ins.DB.PHIEUNHAPSACHes);
             SelectedEntryBook = null;

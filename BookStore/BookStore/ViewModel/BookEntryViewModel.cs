@@ -14,6 +14,8 @@ namespace BookStore.ViewModel
 
         public BookEntryViewModel()
         {
+            FlagIntent = 0;
+
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
             Items = CreateData();
 
@@ -21,6 +23,10 @@ namespace BookStore.ViewModel
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailNeed(); }, (p) => { AddDetail(); });
             BookNameSelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateBookInfor(); });
             SaveButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveBookEntry(); });
+        }
+        public BookEntryViewModel(PHIEUNHAPSACH p)
+        {
+            FlagIntent = 1;
         }
 
         private void SaveBookEntry()
@@ -100,6 +106,7 @@ namespace BookStore.ViewModel
         public ICommand BookNameSelectionChangedCommand { get; set; }
         public ICommand SaveButtonClickCommand { get; set; }
 
+        private int _FlagIntent;
         private DAUSACH _SelectedBook;
         private string _Types;
         private string _Authors;
@@ -111,6 +118,7 @@ namespace BookStore.ViewModel
         private ObservableCollection<DAUSACH> _ListBook;
         private NGUOIDUNG _Staff;
 
+        public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
         public string Types { get => _Types; set { _Types = value; OnPropertyChanged(); } }
         public string Authors { get => _Authors; set { _Authors = value; OnPropertyChanged(); } }
@@ -121,5 +129,6 @@ namespace BookStore.ViewModel
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; OnPropertyChanged(); } }
         public ObservableCollection<Item_CT_PNS> Items { get => _Items; set => _Items = value; }
         public NGUOIDUNG Staff { get => _Staff; set { _Staff = value; OnPropertyChanged(); } }
+
     }
 }
