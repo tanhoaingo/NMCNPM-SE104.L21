@@ -24,6 +24,7 @@ namespace BookStore.Model
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
         public int MaNhom { get; set; }
+        public string TenNguoiDung { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOADON> HOADONs { get; set; }

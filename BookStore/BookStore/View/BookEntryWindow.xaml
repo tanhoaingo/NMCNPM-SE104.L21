@@ -233,8 +233,8 @@
             <materialDesign:Card Grid.Row="1" Grid.Column="1" Margin="20,0,272,0">
                 <TextBlock FontSize="25"
                            TextAlignment="Center"
-                           VerticalAlignment="Center">
-                    Nhân viên: Nguyễn Ngọc Quỳnh Giang
+                           VerticalAlignment="Center"
+                           Text="{Binding Staff.TenNguoiDung}">
                 </TextBlock>
             </materialDesign:Card>
 
@@ -325,6 +325,22 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ComboBox>
+                        <Button
+                            Margin="-10,20,0,0"
+                            Style="{StaticResource MaterialDesignIconForegroundButton}"
+                            ToolTip="MaterialDesignIconForegroundButton" RenderTransformOrigin="2.521,-4.229">
+                            <materialDesign:PackIcon
+                                Kind="Search" 
+                                Width="40"
+                                Height="40"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding SearchButtonClickCommand}"
+                                   CommandParameter="{Binding ElementName=InvoiceWD}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
                         <TextBox
                             Text="{Binding Types, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thể loại"

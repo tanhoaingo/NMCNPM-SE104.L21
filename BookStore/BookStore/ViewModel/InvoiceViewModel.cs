@@ -15,9 +15,10 @@ namespace BookStore.ViewModel
 
         public InvoiceViewModel()
         {
-            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
+            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 20));
             Items = CreateData();
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
+
 
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
@@ -31,10 +32,11 @@ namespace BookStore.ViewModel
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailButtonNeed(); }, (p) => { DeleteDetail(); UpdateResultAMount(); });
             CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => CloseInvoice(p));
             SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook());
-            ExitButtonClickCommand= new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
-
+            ExitButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
+            PaidAmountTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { UpdateResultAMount(); });
         }
-
+        //toolbox coi ddaua m tool box laf cai lon` gi`cai de minh keo tha
+        //thì m phải bỏ trong sự kiện
         private void UpdateBookInfor()
         {
             if (SelectedBook == null)
@@ -44,9 +46,11 @@ namespace BookStore.ViewModel
             string tmptype = "";
             foreach (var v in SelectedBook.THELOAIs)
             {
-                tmptype += (tmptype == "" ? "" : ",") + v.TenTheLoai;
+                tmptype += (tmptype == "" ? "" : ", ") + v.TenTheLoai;
             }
             BookTypes = tmptype;
+
+            Amount = (SelectedBook.LuongTon - 20).ToString();
         }
 
         private void ExitWindow(Window p)
@@ -56,7 +60,7 @@ namespace BookStore.ViewModel
 
         private void SearchBook()
         {
-            var tmp = new ListBookWindow {};
+            var tmp = new ListBookWindow { };
             tmp.ShowDialog();
             var res_tmp = tmp.DataContext as ListBookViewModel;
         }
@@ -76,7 +80,14 @@ namespace BookStore.ViewModel
                 return;
             }
 
-            var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 5, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAMount, TongTien = SumAmount };
+            if (SaveInvoiceNeed() && LeftAmount > 20000)
+            {
+                //cái này tính tổng nợ chứ không phải nợ của mỗi hóa đơn này ok
+                MessageBox.Show("Số tiền nợ không được vượt quá 20000");
+                return;
+            }
+
+            var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 5, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
             DataProvider.Ins.DB.HOADONs.Add(HoaDon);
             DataProvider.Ins.DB.SaveChanges();
 
@@ -133,8 +144,8 @@ namespace BookStore.ViewModel
         private void UpdateResultAMount()
         {
             SumAmount = 0;
-            PaidAmount = 0;
-            LeftAMount = 0;
+            //PaidAmount = 0; sao lại set paid amount = 0 ủa 
+            LeftAmount = 0;
             if (Items == null)
             {
                 return;
@@ -143,13 +154,20 @@ namespace BookStore.ViewModel
             {
                 SumAmount += v.IntoMoney;
             }
-            LeftAMount = SumAmount - PaidAmount;
+            LeftAmount = SumAmount - PaidAmount;
         }
 
         private void AddDetail()
         {
-            var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, CTPNS = SelectedPriceOfBook, IntoMoney = IntoMoney };
-            Items.Add(CT_HD);
+            if (int.Parse(Amount) > (SelectedBook.LuongTon - 20))
+            {
+                MessageBox.Show("Số lượng tồn không đủ!");
+            }
+            else
+            {
+                var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, CTPNS = SelectedPriceOfBook, IntoMoney = IntoMoney };
+                Items.Add(CT_HD);
+            }
         }
 
         private bool AddDetailButtonNeed()
@@ -181,7 +199,7 @@ namespace BookStore.ViewModel
             {
                 ListPriceOfBook.Clear();
             }
-            if(SelectedBook == null)
+            if (SelectedBook == null)
             {
                 return;
             }
@@ -192,6 +210,7 @@ namespace BookStore.ViewModel
             }
             foreach (var vv in tmp)
             {
+                vv.DonGiaNhap = vv.DonGiaNhap * 105 / 100;
                 ListPriceOfBook.Add(vv);
             }
         }
@@ -221,6 +240,7 @@ namespace BookStore.ViewModel
         public ICommand CancelButtonClickCommand { get; set; }
         public ICommand SearchButtonClickCommand { get; set; }
         public ICommand ExitButtonClickCommand { get; set; }
+        public ICommand PaidAmountTextChangedCommand { get; set; }
 
 
         private ObservableCollection<Item_CT_HD> _Items;
@@ -235,10 +255,11 @@ namespace BookStore.ViewModel
         private Int64 _IntoMoney;
         private Int64 _SumAmount;
         private Int64 _PaidAmount;
-        private Int64 _LeftAMount;
+        private Int64 _LeftAmount;
         private Item_CT_HD _SelectedItem;
         private DateTime? _InvoiceDate;
         private string _BookTypes;
+        private string _StaffName;
 
         public ObservableCollection<Item_CT_HD> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
 
@@ -264,7 +285,7 @@ namespace BookStore.ViewModel
 
         public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
-        public long LeftAMount { get => _LeftAMount; set { _LeftAMount = value; OnPropertyChanged(); } }
+        public long LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
 
         public Item_CT_HD SelectedItem
         {
@@ -284,5 +305,7 @@ namespace BookStore.ViewModel
         public DateTime? InvoiceDate { get => _InvoiceDate; set { _InvoiceDate = value; OnPropertyChanged(); } }
 
         public string BookTypes { get => _BookTypes; set { _BookTypes = value; OnPropertyChanged(); } }
+
+        public string StaffName { get => _StaffName; set { _StaffName = value; OnPropertyChanged(); } }
     }
 }

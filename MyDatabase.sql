@@ -382,3 +382,10 @@ DROP TABLE HinhAnhSach
 ALTER TABLE DAUSACH
 ADD HinhAnhSach Image
 
+/*=============================================================================*/
+/*Log 3 database*/
+/*=============================================================================*/
+
+ALTER TABLE NGUOIDUNG
+ADD TenNguoiDung NVARCHAR(50)
+
