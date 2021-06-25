@@ -1,6 +1,7 @@
 ﻿using BookStore.Model;
 using BookStore.Tools;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -14,41 +15,117 @@ namespace BookStore.ViewModel
 
         public BookEntryViewModel()
         {
-            FlagIntent = 0;
+            #region Temp Value
+            Staff = DataProvider.Ins.DB.NGUOIDUNGs.First(x => x.MaNguoiDung == 1);
+            #endregion
 
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
-            Items = CreateData();
+            Items = new ObservableCollection<Item_CT_PNS>();
 
-            IntoMoneyNeedChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { changeIntoMoney(); });
+            CloseWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) => { this.CleanUpData(); });
+            InputPriceTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateIntoMoney(); });
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailNeed(); }, (p) => { AddDetail(); });
             BookNameSelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateBookInfor(); });
             SaveButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveBookEntry(); });
+            ItemListDetailSelectionChangedCommand = new RelayCommand<object> ((p) => { return true; }, (p) => { LoadFromDetail(); });
+            EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailNeed(); }, (p) => { EditDetail(); });
         }
-        public BookEntryViewModel(PHIEUNHAPSACH p)
+
+        private bool EditDetailNeed()
         {
-            FlagIntent = 1;
+            return AddDetailNeed() && SelectedDetail != null;
+        }
+
+        private void EditDetail()
+        {
+            SelectedDetail.Book = SelectedBook;
+            SelectedDetail.Amount = Amount;
+            SelectedDetail.InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice);
+            SelectedDetail.IntoMoney = IntoMoney;
+        }
+
+        private void LoadFromDetail()
+        {
+            if (SelectedDetail == null)
+            {
+                return;
+            }
+            SelectedBook = SelectedDetail.Book;
+            Authors = GetAuthorsString(SelectedDetail.Book.TACGIAs);
+            Types = GetTypesString(SelectedDetail.Book.THELOAIs);
+            Amount = SelectedDetail.Amount;
+            InputPrice = Rules.Instance.ConvertDecimal_nullToInt64(SelectedDetail.InputPrice).ToString();
+            IntoMoney = SelectedDetail.IntoMoney;
         }
 
         private void SaveBookEntry()
         {
             if (Items.Count() == 0 || EntryBookDate == null)
             {
-                MessageBox.Show("Vui lòng hoàn thành hóa đơn!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Vui lòng hoàn thành phiếu!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            var tmpPN = new PHIEUNHAPSACH() { NgayNhap = EntryBookDate };
-            DataProvider.Ins.DB.PHIEUNHAPSACHes.Add(tmpPN);
-
-            foreach (var v in Items)
+            if (FlagIntent == 0)
             {
-                var tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(Amount) };
-                DataProvider.Ins.DB.SACHes.Add(tmpBook);
+                var tmpPN = new PHIEUNHAPSACH() { NgayNhap = EntryBookDate, MaNguoiLap = Staff.MaNguoiDung };
+                DataProvider.Ins.DB.PHIEUNHAPSACHes.Add(tmpPN);
+                DataProvider.Ins.DB.SaveChanges();
 
-                var tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = decimal.Parse(v.InputPrice), MaSach = tmpBook.MaSach, SoLuong = int.Parse(Amount) };
-                DataProvider.Ins.DB.CT_PNS.Add(tmpCT_PN);
+                foreach (var v in Items)
+                {
+                    var tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(v.Amount) };
+                    DataProvider.Ins.DB.SACHes.Add(tmpBook);
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == tmpBook.MaDauSach);
+                    tmpMBook.LuongTon += int.Parse(v.Amount);
+                    
+                    var tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = v.InputPrice, MaSach = tmpBook.MaSach, SoLuong = int.Parse(v.Amount) };
+                    DataProvider.Ins.DB.CT_PNS.Add(tmpCT_PN);
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+                MessageBox.Show("Lập phiếu nhập sách thành công!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
             }
-            DataProvider.Ins.DB.SaveChanges();
-        }
+            if(FlagIntent == 1)
+            {
+                var tmpPN = DataProvider.Ins.DB.PHIEUNHAPSACHes.First(x => x.MaPhieuNhapSach == Editor.MaPhieuNhapSach);
+                foreach(var v in Items)
+                {
+                    var tmpBook = DataProvider.Ins.DB.SACHes.First(x => x.MaSach == v.MaSachInNeed);
+                    if(tmpBook != null)
+                    {
+                        tmpBook.DAUSACH.LuongTon -= tmpBook.LuongTon;
+                        tmpBook.LuongTon = int.Parse(v.Amount);
+                        tmpBook.MaDauSach = v.Book.MaDauSach;
+                        tmpBook.DAUSACH.LuongTon += tmpBook.LuongTon;
+                    }
+                    else
+                    {
+                        tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(v.Amount) };
+                        DataProvider.Ins.DB.SACHes.Add(tmpBook);
+                        DataProvider.Ins.DB.SaveChanges();
+                        var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == tmpBook.MaDauSach);
+                        tmpMBook.LuongTon += int.Parse(v.Amount);
+                    }
+
+                    var tmpCT_PN = DataProvider.Ins.DB.CT_PNS.First(x => x.MaCT_PNS == v.MaCTPNSInNeed);
+                    if (tmpCT_PN != null)
+                    {
+                        tmpCT_PN.DonGiaNhap = v.InputPrice;
+                        tmpCT_PN.SoLuong = int.Parse(v.Amount);
+                    }
+                    else
+                    {
+                        tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = v.InputPrice, MaSach = tmpBook.MaSach, SoLuong = int.Parse(v.Amount) };
+                        DataProvider.Ins.DB.CT_PNS.Add(tmpCT_PN);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+                MessageBox.Show("Sửa phiếu nhập sách thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }   
 
         private void UpdateBookInfor()
         {
@@ -56,28 +133,66 @@ namespace BookStore.ViewModel
             {
                 return;
             }
-            string tmptype = "";
-            string tmpauthor = "";
-            foreach (var v in SelectedBook.TACGIAs)
-            {
-                tmpauthor += (tmpauthor == "" ? "" : ",") + v.TenTacGia;
-            }
-            Authors = tmpauthor;
-            foreach (var v in SelectedBook.THELOAIs)
-            {
-                tmptype += (tmptype == "" ? "" : ",") + v.TenTheLoai;
-            }
-            Types = tmptype;
+            Authors = GetAuthorsString(SelectedBook.TACGIAs);
+            Types = GetTypesString(SelectedBook.THELOAIs);
         }
 
-        private static ObservableCollection<Item_CT_PNS> CreateData()
+        private string GetTypesString(ICollection<THELOAI> tHELOAIs)
         {
-            return new ObservableCollection<Item_CT_PNS> { };
+            string tmptype = "";
+            foreach (var v in tHELOAIs)
+            {
+                tmptype += (tmptype == "" ? "" : ", ") + v.TenTheLoai;
+            }
+            return tmptype;
+        }
+
+        private string GetAuthorsString(ICollection<TACGIA> tACGIAs)
+        {
+            string tmpauthor = "";
+            foreach (var v in tACGIAs)
+            {
+                tmpauthor += (tmpauthor == "" ? "" : ", ") + v.TenTacGia;
+            }
+            return tmpauthor;
+        }
+
+
+        public void LoadData()
+        {
+            if (FlagIntent == 1)
+            {
+                Items = new ObservableCollection<Item_CT_PNS> { };
+                EntryBookDate = Editor.NgayNhap;
+                Staff = DataProvider.Ins.DB.NGUOIDUNGs.First(x => x.MaNguoiDung == Editor.MaNguoiLap);
+                foreach(var v in Editor.CT_PNS)
+                {
+                    var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == v.SACH.MaDauSach);
+                    Items.Add(new Item_CT_PNS()
+                    {
+                        ID = Items.Count + 1,
+                        Book = tmpMBook,
+                        Authors = GetAuthorsString(tmpMBook.TACGIAs),
+                        Types = GetTypesString(tmpMBook.THELOAIs),
+                        InputPrice = v.DonGiaNhap,
+                        Amount = v.SoLuong.ToString(),
+                        IntoMoney = Rules.Instance.ConvertDecimal_nullToInt64(v.DonGiaNhap) * Rules.Instance.ConvertInt_nullToInt64(v.SoLuong),
+                        MaSachInNeed = v.MaSach, 
+                        MaCTPNSInNeed = v.MaCT_PNS
+                        
+                    });
+                }
+                foreach(var v in Items)
+                {
+                    SumAmount += v.IntoMoney;
+                }
+                return;
+            }
         }
 
         private bool AddDetailNeed()
         {
-            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || string.IsNullOrEmpty(InputPrice))
+            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || InputPrice == null)
             {
                 return false;
 
@@ -87,24 +202,56 @@ namespace BookStore.ViewModel
 
         private void AddDetail()
         {
-            var tmp = new Item_CT_PNS() { Book = SelectedBook, Amount = Amount, ID = Items.Count() + 1, Authors = Authors, InputPrice = InputPrice, IntoMoney = IntoMoney };
+            var tmp = new Item_CT_PNS()
+            {
+                Book = SelectedBook,
+                Amount = Amount,
+                ID = Items.Count() + 1,
+                Authors = Authors,
+                Types = Types,
+                InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice),
+                IntoMoney = IntoMoney
+            };
             Items.Add(tmp);
+            SumAmount += IntoMoney;
         }
 
-        private void changeIntoMoney()
+        private void UpdateIntoMoney()
         {
             if (SelectedBook == null)
             {
                 return;
             }
-            IntoMoney = Rules.Instance.ConvertStringAmountToInt64(Amount) * Rules.Instance.ConvertStringAmountToInt64(_InputPrice);
+            IntoMoney = Rules.Instance.ConvertStringAmountToInt64(Amount) * Rules.Instance.ConvertStringAmountToInt64(InputPrice);
 
         }
 
-        public ICommand IntoMoneyNeedChangedCommand { get; set; }
+        public override void CleanUpData()
+        {
+            base.CleanUpData();
+            FlagIntent = 0;
+            SelectedBook = null;
+            Types = string.Empty;
+            Authors = string.Empty;
+            IntoMoney = 0;
+            Amount = string.Empty;
+            InputPrice = string.Empty;
+            EntryBookDate = null;
+            Items = null;
+            ListBook = null;
+            Staff = null;
+            Editor = null;
+            SumAmount = 0;
+            SelectedDetail = null;
+        }
+
+        public ICommand CloseWindowCommand { get; set; }
+        public ICommand InputPriceTextChangedCommand { get; set; }
         public ICommand AddDetailClickCommand { get; set; }
         public ICommand BookNameSelectionChangedCommand { get; set; }
         public ICommand SaveButtonClickCommand { get; set; }
+        public ICommand ItemListDetailSelectionChangedCommand { get; set; }
+        public ICommand EditDetailClickCommand { get; set; }
 
         private int _FlagIntent;
         private DAUSACH _SelectedBook;
@@ -117,6 +264,9 @@ namespace BookStore.ViewModel
         private ObservableCollection<Item_CT_PNS> _Items;
         private ObservableCollection<DAUSACH> _ListBook;
         private NGUOIDUNG _Staff;
+        private PHIEUNHAPSACH _Editor;
+        private long _SumAmount;
+        private Item_CT_PNS _SelectedDetail;
 
         public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
@@ -127,8 +277,11 @@ namespace BookStore.ViewModel
         public DateTime? EntryBookDate { get => _EntryBookDate; set { _EntryBookDate = value; OnPropertyChanged(); } }
         public string InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; OnPropertyChanged(); } }
-        public ObservableCollection<Item_CT_PNS> Items { get => _Items; set => _Items = value; }
+        public ObservableCollection<Item_CT_PNS> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
         public NGUOIDUNG Staff { get => _Staff; set { _Staff = value; OnPropertyChanged(); } }
+        public PHIEUNHAPSACH Editor { get => _Editor; set => _Editor = value; }
+        public long SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
 
+        public Item_CT_PNS SelectedDetail { get => _SelectedDetail; set { _SelectedDetail = value; OnPropertyChanged(); } }
     }
 }

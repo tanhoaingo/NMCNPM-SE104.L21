@@ -9,18 +9,25 @@
 
 namespace BookStore.Model
 {
+    using BookStore.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class CT_PNS
+    public partial class CT_PNS: BaseViewModel
     {
-        public int MaCT_PNS { get; set; }
-        public int MaPhieuNhapSach { get; set; }
-        public int MaSach { get; set; }
-        public Nullable<int> SoLuong { get; set; }
-        public Nullable<decimal> DonGiaNhap { get; set; }
-    
+        private int _MaCT_PNS;
+        private int _MaPhieuNhapSach;
+        private int _MaSach;
+        private Nullable<int> _SoLuong;
+        private Nullable<decimal> _DonGiaNhap;
+
         public virtual PHIEUNHAPSACH PHIEUNHAPSACH { get; set; }
         public virtual SACH SACH { get; set; }
+
+        public int MaCT_PNS { get => _MaCT_PNS; set { _MaCT_PNS = value; OnPropertyChanged(); } }
+        public int MaPhieuNhapSach { get => _MaPhieuNhapSach; set { _MaPhieuNhapSach = value; OnPropertyChanged(); } }
+        public int MaSach { get => _MaSach; set { _MaSach = value; OnPropertyChanged(); } }
+        public int? SoLuong { get => _SoLuong; set { _SoLuong = value; OnPropertyChanged(); } }
+        public decimal? DonGiaNhap { get => _DonGiaNhap; set { _DonGiaNhap = value; OnPropertyChanged(); } }
     }
 }

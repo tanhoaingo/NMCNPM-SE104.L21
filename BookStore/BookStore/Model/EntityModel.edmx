@@ -132,6 +132,7 @@
           </Key>
           <Property Name="MaPhieuNhapSach" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NgayNhap" Type="smalldatetime" />
+          <Property Name="MaNguoiLap" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PHIEUTHUTIEN">
           <Key>
@@ -750,6 +751,7 @@
           <Property Name="MaPhieuNhapSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NgayNhap" Type="DateTime" Precision="0" />
           <NavigationProperty Name="CT_PNS" Relationship="MYDATABASEModel.FK_CT_PNS_PHIEUNHAPSACH" FromRole="PHIEUNHAPSACH" ToRole="CT_PNS" />
+          <Property Name="MaNguoiLap" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PHIEUTHUTIEN">
           <Key>
@@ -1102,6 +1104,7 @@
           <EntitySetMapping Name="PHIEUNHAPSACHes">
             <EntityTypeMapping TypeName="MYDATABASEModel.PHIEUNHAPSACH">
               <MappingFragment StoreEntitySet="PHIEUNHAPSACH">
+                <ScalarProperty Name="MaNguoiLap" ColumnName="MaNguoiLap" />
                 <ScalarProperty Name="NgayNhap" ColumnName="NgayNhap" />
                 <ScalarProperty Name="MaPhieuNhapSach" ColumnName="MaPhieuNhapSach" />
               </MappingFragment>
