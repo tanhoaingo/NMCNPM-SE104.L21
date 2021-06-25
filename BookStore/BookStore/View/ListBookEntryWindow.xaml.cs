@@ -17,9 +17,9 @@ namespace BookStore.View
     /// <summary>
     /// Interaction logic for ListEntryBookWindow.xaml
     /// </summary>
-    public partial class ListEntryBookWindow : Window
+    public partial class ListBookEntryWindow : Window
     {
-        public ListEntryBookWindow()
+        public ListBookEntryWindow()
         {
             InitializeComponent();
         }
