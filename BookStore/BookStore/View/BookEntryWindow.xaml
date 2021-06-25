@@ -22,8 +22,21 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource BookEntryVM}" 
         Title="HomePage"
-        Height="950" Width="1600">
+        Height="950" Width="1600"
+        x:Name="BookEntryWD">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                   CommandParameter="{Binding ElementName=BookEntryWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid Margin="0,0,0,0">
+
+        <Grid.Resources>
+            <cv:MoneyConverter x:Key="MoneyCV" EmptyStringValue="-1"></cv:MoneyConverter>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"  />
             <RowDefinition Height="72*" />
@@ -255,7 +268,7 @@
                 Command="{Binding CancelButtonClickCommand}"    
                 CommandParameter="{Binding ElementName=Invoice_Page}"
                 Background="Red"
-                Height="Auto" Margin="47,118,20,246" RenderTransformOrigin="0.5,0.5">
+                Height="Auto" Margin="47,331,20,33" RenderTransformOrigin="0.5,0.5">
                 <StackPanel
                     Orientation="Horizontal"
                     Width="150">
@@ -274,7 +287,7 @@
                 x:Name="SaveButton"
                 Background="#66ff33"
                 Grid.Column="1" Grid.Row="1"
-                Height="Auto" Margin="47,35,20,329">
+                Height="Auto" Margin="47,254,20,110">
                 <StackPanel
                     Orientation="Horizontal">
                     <materialDesign:PackIcon
@@ -306,6 +319,7 @@
 
                 <materialDesign:Card Grid.Row="0" Margin="20,45,20,20">
                     <WrapPanel>
+                        
                         <ComboBox
                             materialDesign:HintAssist.Hint="Tên sách"
                             Margin="20"
@@ -395,7 +409,7 @@
                                     <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding IntoMoneyNeedChangedCommand}">
+                                    <i:InvokeCommandAction Command="{Binding InputPriceTextChangedCommand}">
                                     </i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
@@ -427,14 +441,14 @@
                         <Button
                             x:Name="AddDetailButton"
                             Command="{Binding AddDetailClickCommand}"
-                            Content="Thêm" Margin="20" Width="100">
+                            Content="Thêm mục" Margin="20" Width="100">
                         </Button>
                         <Button
-                            Command="{Binding EditDetailClickCommand}"
-                            Content="Sửa" Margin="20" Width="100"></Button>
-                        <Button
                             Command="{Binding DeleteDetailClickCommand}"
-                            Content="Xóa" Margin="20" Width="100"></Button>
+                            Content="Xóa mục" Margin="20" Width="100"></Button>
+                        <Button
+                            Command="{Binding EditDetailClickCommand}"
+                            Content=" Lưu sửa đổi" Margin="100,20,20,20" Width="130"></Button>
                     </WrapPanel>
                 </materialDesign:Card>
             </Grid>
@@ -443,10 +457,14 @@
                 <ListView ItemsSource="{Binding Items}"
                           Margin="20,0,0,0"
                           BorderBrush="Transparent"
-                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                          SelectedItem="{Binding SelectedDetail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DataContextChanged" >
                             <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding ItemListDetailSelectionChangedCommand}">
+                            </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ListView.View>
@@ -485,7 +503,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding Book.THELOAI.TenTheLoai}"
+                                            Text="{Binding Types}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
@@ -515,7 +533,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding InputPrice}"
+                                            Text="{Binding InputPrice, StringFormat={}{0:#.##}}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
@@ -534,6 +552,30 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+            </materialDesign:Card>
+            <materialDesign:Card  
+                Grid.Column="1" Grid.Row="1" Margin="20,20,20,0" Height="161" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        TextAlignment="Right"
+                        Grid.Row="0" 
+                        VerticalAlignment="Center"
+                        Text="Tổng tiền: " FontSize="30" 
+                        Width="150" Height="34">
+                    </TextBlock>
+                    <TextBlock
+                        IsEnabled="False"
+                        TextAlignment="Left"
+                        Grid.Row="1" 
+                        VerticalAlignment="Center"
+                        Text="{Binding SumAmount, Mode=TwoWay}" FontSize="30" 
+                        Width="150" >
+                    </TextBlock>
+                </Grid>
             </materialDesign:Card>
         </Grid>
     </Grid>

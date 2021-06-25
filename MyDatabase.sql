@@ -389,3 +389,12 @@ ADD HinhAnhSach Image
 ALTER TABLE NGUOIDUNG
 ADD TenNguoiDung NVARCHAR(50)
 
+/*=============================================================================*/
+/*Log 4 database*/
+/*=============================================================================*/
+
+ALTER TABLE PHIEUNHAPSACH ADD MaNguoiLap INT NOT NULL DEFAULT 1
+
+ALTER TABLE PHIEUNHAPSACH
+ADD CONSTRAINT FK_PHIEUNHAPSACH_NGUOIDUNG
+FOREIGN KEY (MaNguoiLap) REFERENCES NGUOIDUNG (MaNguoiDung)

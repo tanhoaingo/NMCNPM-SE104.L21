@@ -29,6 +29,15 @@ namespace BookStore.Tools
             decimal tmp = number ?? 0;
             return Convert.ToInt64(tmp);
         }
+        public long ConvertInt_nullToInt64(int? number)
+        {
+            if (number == null)
+            {
+                return 0;
+            }
+            int tmp = number ?? 0;
+            return Convert.ToInt64(tmp);
+        }
 
     }
 }

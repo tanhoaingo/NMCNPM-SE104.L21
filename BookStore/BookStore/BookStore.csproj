@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\MoneyConverter.cs" />
     <Compile Include="Model\Item_ListCheckedBoxAuthor.cs" />
     <Compile Include="Model\Item_ListCheckedBoxType.cs" />
     <Compile Include="ViewModel\AddAuthorViewModel.cs" />
