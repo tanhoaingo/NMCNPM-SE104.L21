@@ -27,25 +27,21 @@ namespace BookStore.ViewModel
         {
             if (Items.Count() == 0 || EntryBookDate == null)
             {
-                MessageBox.Show("Vui lòng hoàn thành hóa đơn!");
+                MessageBox.Show("Vui lòng hoàn thành hóa đơn!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-            var tmp = new PHIEUNHAPSACH() { NgayNhap = EntryBookDate };
-            DataProvider.Ins.DB.PHIEUNHAPSACHes.Add(tmp);
-            DataProvider.Ins.DB.SaveChanges();
+            var tmpPN = new PHIEUNHAPSACH() { NgayNhap = EntryBookDate };
+            DataProvider.Ins.DB.PHIEUNHAPSACHes.Add(tmpPN);
 
             foreach (var v in Items)
             {
-                var tmp2 = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(Amount) };
-                DataProvider.Ins.DB.SACHes.Add(tmp2);
-                DataProvider.Ins.DB.SaveChanges();
-                var tmp4 = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == tmp2.MaDauSach).FirstOrDefault();
+                var tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(Amount) };
+                DataProvider.Ins.DB.SACHes.Add(tmpBook);
 
-
-                var tmp3 = new CT_PNS() { MaPhieuNhapSach = tmp.MaPhieuNhapSach, DonGiaNhap = decimal.Parse(v.InputPrice), MaSach = tmp2.MaSach, SoLuong = int.Parse(Amount) };
-                DataProvider.Ins.DB.CT_PNS.Add(tmp3);
-                DataProvider.Ins.DB.SaveChanges();
+                var tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = decimal.Parse(v.InputPrice), MaSach = tmpBook.MaSach, SoLuong = int.Parse(Amount) };
+                DataProvider.Ins.DB.CT_PNS.Add(tmpCT_PN);
             }
+            DataProvider.Ins.DB.SaveChanges();
         }
 
         private void UpdateBookInfor()
@@ -113,6 +109,7 @@ namespace BookStore.ViewModel
         private DateTime? _EntryBookDate;
         private ObservableCollection<Item_CT_PNS> _Items;
         private ObservableCollection<DAUSACH> _ListBook;
+        private NGUOIDUNG _Staff;
 
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
         public string Types { get => _Types; set { _Types = value; OnPropertyChanged(); } }
@@ -123,5 +120,6 @@ namespace BookStore.ViewModel
         public string InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; OnPropertyChanged(); } }
         public ObservableCollection<Item_CT_PNS> Items { get => _Items; set => _Items = value; }
+        public NGUOIDUNG Staff { get => _Staff; set { _Staff = value; OnPropertyChanged(); } }
     }
 }

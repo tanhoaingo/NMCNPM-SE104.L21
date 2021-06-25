@@ -13,4 +13,7 @@
     <viewmodel:AddAuthorViewModel x:Key="AddAuthorVM"></viewmodel:AddAuthorViewModel>
     <viewmodel:AddTypeViewModel x:Key="AddTypeVM"></viewmodel:AddTypeViewModel>
     <viewmodel:ChangeRulesViewModel x:Key="ChangeRulesVM"></viewmodel:ChangeRulesViewModel>
+    <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
+    <viewmodel:ListEntryBookViewModel x:Key="ListEntryBookVM"></viewmodel:ListEntryBookViewModel>
+    <viewmodel:ListInvoiceViewModel x:Key="ListInvoiceVM"></viewmodel:ListInvoiceViewModel>
 </ResourceDictionary>

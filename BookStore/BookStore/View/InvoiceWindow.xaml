@@ -404,11 +404,15 @@
                         TextAlignment="Left"
                         Grid.Row="1" Grid.Column="1" 
                         VerticalAlignment="Center"
-                        Text="{Binding PaidAmount, Mode=TwoWay}" FontSize="30" 
+                        Text="{Binding PaidAmount, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" FontSize="30" 
                         Width="150" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewTextInput" >
                                 <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding PaidAmountTextChangedCommand}">
+                                </i:InvokeCommandAction>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
@@ -417,7 +421,7 @@
                         TextAlignment="Left"
                         Grid.Row="2" Grid.Column="1" 
                         VerticalAlignment="Center"
-                        Text="{Binding LeftAMount, Mode=TwoWay}" FontSize="30" 
+                        Text="{Binding LeftAmount, Mode=TwoWay}" FontSize="30" 
                         Width="150" >
                     </TextBlock>
                 </Grid>
@@ -606,7 +610,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding DauSach.THELOAI.TenTheLoai}"
+                                            Text="{Binding }"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>

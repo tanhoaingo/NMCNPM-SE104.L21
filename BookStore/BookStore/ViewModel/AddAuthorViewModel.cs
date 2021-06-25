@@ -55,6 +55,7 @@ namespace BookStore.ViewModel
             DataProvider.Ins.DB.SaveChanges();
             FlagIsSaved = true;
 
+
             #region UI changes
             tmpwd.ErrorAddAuthor.Text = "Thêm tác giả thành công!";
             tmpwd.ErrorAddAuthor.Foreground = Brushes.Green;

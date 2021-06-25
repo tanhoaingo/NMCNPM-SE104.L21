@@ -109,6 +109,7 @@
           <Property Name="TenDangNhap" Type="varchar" MaxLength="20" />
           <Property Name="MatKhau" Type="varchar" MaxLength="20" />
           <Property Name="MaNhom" Type="int" Nullable="false" />
+          <Property Name="TenNguoiDung" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -731,6 +732,7 @@
           <Property Name="MaNhom" Type="Int32" Nullable="false" />
           <NavigationProperty Name="HOADONs" Relationship="MYDATABASEModel.FK_HOADON_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="HOADON" />
           <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
+          <Property Name="TenNguoiDung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -1081,6 +1083,7 @@
           <EntitySetMapping Name="NGUOIDUNGs">
             <EntityTypeMapping TypeName="MYDATABASEModel.NGUOIDUNG">
               <MappingFragment StoreEntitySet="NGUOIDUNG">
+                <ScalarProperty Name="TenNguoiDung" ColumnName="TenNguoiDung" />
                 <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
                 <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
                 <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
