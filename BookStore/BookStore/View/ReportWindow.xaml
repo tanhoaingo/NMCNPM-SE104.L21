@@ -1,0 +1,244 @@
+﻿<Window x:Class="BookStore.View.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:chart1="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource ReportVM}"
+        MinHeight="768"
+        MinWidth="1024"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="Quản lý nhà sách" 
+        Height="1050" Width="1600"
+        Style="{StaticResource {x:Type Window}}"
+        Name="mainWindow">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="8">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+                <Grid Height="80">
+
+                    <Image Source="/Source/Image/report.png" Height="80" Width="80" Margin="576,0,920,0"></Image>
+                    <TextBlock
+                TextWrapping="Wrap"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="Báo cáo tháng" VerticalAlignment="Center"
+                FontSize="45"
+                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Margin="726,14,538,0" Height="66"/>
+
+                </Grid>
+                <Grid Height="40" Grid.Column="0" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox 
+                         
+                        Grid.Column="1"
+                        x:Name="MonthCombobox"
+                        materialDesign:HintAssist.Hint="Tháng" 
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"                        
+                        ItemsSource="{Binding MonthItemSource}"
+                        SelectedItem="{Binding SelectedMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Top" Width="150"
+                        Margin="20,0,0,0" Height="40">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=MonthCombobox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        <ComboBox 
+                        Grid.Column="1"
+                        x:Name="YearCombobox"
+                        materialDesign:HintAssist.Hint="Năm" 
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"                        
+                        ItemsSource="{Binding YearItemSource}"
+                        SelectedItem="{Binding SelectedYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Top" Width="150"
+                        Margin="100,0,0,0" Height="40">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=YearCombobox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+                <Grid Height="20"></Grid>
+                <Grid Height="450">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="135*"/>
+                        <ColumnDefinition Width="259*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Height="30" VerticalAlignment="Top" Grid.Column="0">
+                        <Label Grid.Row="2" Opacity="0.65" Margin="10,0,0,0"
+               Content="So sánh tỷ lệ bán được của từng loại (%)"
+               FontSize="18" Padding="0"
+               FontWeight="Light"/>
+                    </Grid>
+                    <chart1:PieChart FontFamily="Sitka Subheading"  
+                                     Grid.Column="0"
+                                     Margin="5,0,0,0"
+            ChartTitleVisibility="Hidden"
+            Padding="0"
+            SelectedBrush="Transparent"
+            Background="Transparent" FontSize="22">
+                        <chart1:PieChart.Series>
+                            <chart1:ChartSeries
+                                ItemsSource="{Binding itemSource, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    Name="pieChart1"                   
+                    SeriesTitle="Tỷ trọng bán"
+                    DisplayMember="Name"
+                    ValueMember="Amount"/>
+                        </chart1:PieChart.Series>
+                    </chart1:PieChart>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <chart1:ClusteredColumnChart
+                       
+            FontFamily="Sitka Subheading" 
+            ChartTitle="" Grid.Column="0"
+            ChartSubTitle="Số sản phẩm của từng loại"
+            ChartLegendVisibility="Hidden"
+            Padding="0"
+            Background="Transparent">
+                            <chart1:ClusteredColumnChart.Series>
+                                <chart1:ChartSeries
+                                ItemsSource="{Binding itemSource, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    Name="columnChart1"
+                    SeriesTitle=" "
+                    DisplayMember="Name"
+                    ValueMember="Amount"/>
+                            </chart1:ClusteredColumnChart.Series>
+                        </chart1:ClusteredColumnChart>
+                        <chart1:ClusteredColumnChart
+            FontFamily="Sitka Subheading"
+            Name="myChart"
+            
+            ChartTitle="" Grid.Column="2"
+            ChartSubTitle="Số tiền bán được của từng loại"
+            ChartLegendVisibility="Hidden"
+            Padding="0"
+            Background="Transparent">
+                            <chart1:ClusteredColumnChart.Series>
+                                <chart1:ChartSeries
+                                ItemsSource="{Binding itemSource, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    Name="columnChart2"
+                    SeriesTitle=" "
+                    DisplayMember="Name"
+                    ValueMember="Money"/>
+                            </chart1:ClusteredColumnChart.Series>
+                        </chart1:ClusteredColumnChart>
+                    </Grid>
+                </Grid>
+                <Grid Height="400">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Height="40" VerticalAlignment="Top" Grid.Column="0" Margin="0,40,0,0">
+                        <ComboBox
+                        x:Name="BCTMonthCombobox"
+                        materialDesign:HintAssist.Hint="Tháng" 
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"                        
+                        ItemsSource="{Binding MonthItemSource}"
+                        SelectedItem="{Binding SelectedMonthBCT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Top" Width="150"
+                        Margin="271,0,367,0" Height="40">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding BCTSelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=BCTMonthCombobox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </Grid>
+                    <DataGrid Margin="0,80,0,0" Grid.Column="0" ItemsSource="{Binding BaoCaoTonSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="180" CanUserReorderColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Sach}" Header="Sách"/>
+                            <DataGridTextColumn Binding="{Binding tonDau}" Header="Tồn Đầu"/>
+                            <DataGridTextColumn Binding="{Binding phatSinh}" Header="Phát sinh"/>
+                            <DataGridTextColumn Binding="{Binding tonCuoi}" Header="Tồn cuối"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Height="40" Grid.Column="0" VerticalAlignment="Top">
+                        <TextBlock
+                TextWrapping="Wrap"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="Báo cáo tồn" VerticalAlignment="Center"
+                FontSize="25"
+                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="268,10,286,-2"/>
+                    </Grid>
+                    <Grid Height="40" Grid.Column="2" VerticalAlignment="Top">
+                        <TextBlock
+                TextWrapping="Wrap"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="Báo cáo công nợ" VerticalAlignment="Center"
+                FontSize="25"
+                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="268,10,286,-2"/>
+                    </Grid>
+                    <Grid Height="40" VerticalAlignment="Top" Grid.Column="2" Margin="0,40,0,0">
+                        <ComboBox
+                        x:Name="BCCNMonthCombobox"
+                        materialDesign:HintAssist.Hint="Tháng" 
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"                        
+                        ItemsSource="{Binding MonthItemSource}"
+                        SelectedItem="{Binding SelectedMonthBCCN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Top" Width="150"
+                        Margin="271,0,367,0" Height="40">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding BCCNSelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=BCCNMonthCombobox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </Grid>
+                    <DataGrid Margin="0,80,0,0" Grid.Column="2" ItemsSource="{Binding BaoCaoCongNoSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="150" CanUserReorderColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding maKH}" Header="Mã khách hàng"/>
+                            <DataGridTextColumn Binding="{Binding khachHang}" Header="Tên khách hàng"/>
+                            <DataGridTextColumn Binding="{Binding noDau}" Header="Nợ Đầu"/>
+                            <DataGridTextColumn Binding="{Binding phatSinh}" Header="Phát sinh"/>
+                            <DataGridTextColumn Binding="{Binding noCuoi}" Header="Nợ cuối"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,110 @@
+﻿<Window x:Class="BookStore.View.ListInvoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:chart1="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource ListInvoiceVM}"
+        MinHeight="768"
+        MinWidth="1024"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="Quản lý nhà sách" 
+        Height="768" Width="1080"
+        Style="{StaticResource {x:Type Window}}"
+        Name="mainWindow">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="8">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+
+                <Grid Height="650">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="300"/>
+                    </Grid.RowDefinitions>
+                    <Grid Height="40" Grid.Row="0" VerticalAlignment="Top" Margin="10,0,0,0">
+                        <TextBlock
+                TextWrapping="Wrap"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="Danh sách hóa đơn" VerticalAlignment="Center"
+                FontSize="20"
+                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="426,10,428,-2" />
+                    </Grid>
+                    <Border Margin="10,40,10,0" Background="GhostWhite" BorderBrush="Black" BorderThickness="3" Grid.Row="0">
+                        <DataGrid x:Name="HDdatagrid" ItemsSource="{Binding ListInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInvoice,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="130" CanUserReorderColumns="False" IsReadOnly="True" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding MaHoaDon}" Header="Mã hóa đơn" Width="130"/>
+                                <DataGridTextColumn Binding="{Binding MaKhachHang}" Header="Mã khách hàng" Width="150"/>
+                                <DataGridTextColumn Binding="{Binding NgayLapHoaDon}" Header="Ngày lập" Width="180"/>
+                                <DataGridTextColumn Binding="{Binding TongTien}" Header="Tổng tiền"/>
+                                <DataGridTextColumn Binding="{Binding SoTienTra}" Header="Số tiền trả"/>
+                                <DataGridTextColumn Binding="{Binding ConLai}" Header="Còn lại"/>
+                                <DataGridTextColumn Binding="{Binding MaNguoiLap}" Header="Mã người lập"/>
+                            </DataGrid.Columns>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=HDdatagrid}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </DataGrid>
+                    </Border>
+                    <Grid Height="40" Grid.Row="2" VerticalAlignment="Top" Margin="0,0,10,0">
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                            Text="Chi tiết hóa đơn" VerticalAlignment="Center"
+                            FontSize="20"
+                            Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="443,10,441,-2" />
+                    </Grid>
+                    <Border Margin="196,45,196,-5" Background="GhostWhite" BorderBrush="Black" BorderThickness="3" Grid.Row="2">
+                        <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="130" CanUserReorderColumns="False" IsReadOnly="True"  >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding MaCT_HD}" Header="Mã CTHD"/>
+                                <DataGridTextColumn Binding="{Binding MaHoaDon}" Header="Mã hóa đơn"/>
+                                <DataGridTextColumn Binding="{Binding MaSach}" Header="Mã sách"/>
+                                <DataGridTextColumn Binding="{Binding SoLuong}" Header="Số lượng"/>
+                                <DataGridTextColumn Binding="{Binding DonGiaBan}" Header="Đơn giá bán"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+                <Grid Height="61">
+                    <Button x:Name="BtnEdit"
+  Style="{StaticResource MaterialDesignOutlinedButton}"
+  ToolTip="MaterialDesignOutlinedButton"
+  Content="SỬA HOÁ ĐƠN" Margin="422,10,424,19">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ButtonEditClickCommand}"
+                                   CommandParameter="{Binding ElementName=BtnLoadDetail}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</Window>
