@@ -167,7 +167,7 @@
           <Property Name="LuongTonToiThieu" Type="int" />
           <Property Name="SoNoToiDa" Type="money" />
           <Property Name="LuongTonToiThieuSauBan" Type="int" />
-          <Property Name="ChoPhepThuLonHonNo" Type="varchar" MaxLength="10" />
+          <Property Name="ChoPhepThuLonHonNo" Type="bit" />
         </EntityType>
         <EntityType Name="THELOAI">
           <Key>
@@ -348,6 +348,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PHIEUNHAPSACH_NGUOIDUNG">
+          <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="1" />
+          <End Role="PHIEUNHAPSACH" Type="Self.PHIEUNHAPSACH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOIDUNG">
+              <PropertyRef Name="MaNguoiDung" />
+            </Principal>
+            <Dependent Role="PHIEUNHAPSACH">
+              <PropertyRef Name="MaNguoiLap" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PHIEUTHUTIEN_KHACHHANG">
           <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1" />
           <End Role="PHIEUTHUTIEN" Type="Self.PHIEUTHUTIEN" Multiplicity="*" />
@@ -494,6 +506,10 @@
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
             <End Role="PHANQUYEN" EntitySet="PHANQUYEN" />
           </AssociationSet>
+          <AssociationSet Name="FK_PHIEUNHAPSACH_NGUOIDUNG" Association="Self.FK_PHIEUNHAPSACH_NGUOIDUNG">
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />
+            <End Role="PHIEUNHAPSACH" EntitySet="PHIEUNHAPSACH" />
+          </AssociationSet>
           <AssociationSet Name="FK_PHIEUTHUTIEN_KHACHHANG" Association="Self.FK_PHIEUTHUTIEN_KHACHHANG">
             <End Role="KHACHHANG" EntitySet="KHACHHANG" />
             <End Role="PHIEUTHUTIEN" EntitySet="PHIEUTHUTIEN" />
@@ -593,6 +609,10 @@
           <AssociationSet Name="FK_NGUOIDUNG_NHOMNGUOIDUNG" Association="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG">
             <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
             <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHIEUNHAPSACH_NGUOIDUNG" Association="MYDATABASEModel.FK_PHIEUNHAPSACH_NGUOIDUNG">
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
+            <End Role="PHIEUNHAPSACH" EntitySet="PHIEUNHAPSACHes" />
           </AssociationSet>
           <AssociationSet Name="PHANQUYEN" Association="MYDATABASEModel.PHANQUYEN">
             <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
@@ -731,9 +751,10 @@
           <Property Name="TenDangNhap" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MatKhau" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MaNhom" Type="Int32" Nullable="false" />
+          <Property Name="TenNguoiDung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="HOADONs" Relationship="MYDATABASEModel.FK_HOADON_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="HOADON" />
           <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="MYDATABASEModel.FK_NGUOIDUNG_NHOMNGUOIDUNG" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
-          <Property Name="TenNguoiDung" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PHIEUNHAPSACHes" Relationship="MYDATABASEModel.FK_PHIEUNHAPSACH_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="PHIEUNHAPSACH" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -750,8 +771,9 @@
           </Key>
           <Property Name="MaPhieuNhapSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NgayNhap" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CT_PNS" Relationship="MYDATABASEModel.FK_CT_PNS_PHIEUNHAPSACH" FromRole="PHIEUNHAPSACH" ToRole="CT_PNS" />
           <Property Name="MaNguoiLap" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CT_PNS" Relationship="MYDATABASEModel.FK_CT_PNS_PHIEUNHAPSACH" FromRole="PHIEUNHAPSACH" ToRole="CT_PNS" />
+          <NavigationProperty Name="NGUOIDUNG" Relationship="MYDATABASEModel.FK_PHIEUNHAPSACH_NGUOIDUNG" FromRole="PHIEUNHAPSACH" ToRole="NGUOIDUNG" />
         </EntityType>
         <EntityType Name="PHIEUTHUTIEN">
           <Key>
@@ -792,7 +814,7 @@
           <Property Name="LuongTonToiThieu" Type="Int32" />
           <Property Name="SoNoToiDa" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="LuongTonToiThieuSauBan" Type="Int32" />
-          <Property Name="ChoPhepThuLonHonNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ChoPhepThuLonHonNo" Type="Boolean" />
         </EntityType>
         <EntityType Name="THELOAI">
           <Key>
@@ -955,6 +977,18 @@
             </Principal>
             <Dependent Role="NGUOIDUNG">
               <PropertyRef Name="MaNhom" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PHIEUNHAPSACH_NGUOIDUNG">
+          <End Type="MYDATABASEModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="1" />
+          <End Type="MYDATABASEModel.PHIEUNHAPSACH" Role="PHIEUNHAPSACH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOIDUNG">
+              <PropertyRef Name="MaNguoiDung" />
+            </Principal>
+            <Dependent Role="PHIEUNHAPSACH">
+              <PropertyRef Name="MaNguoiLap" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

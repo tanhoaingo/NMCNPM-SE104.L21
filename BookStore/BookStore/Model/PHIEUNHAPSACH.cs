@@ -26,5 +26,6 @@ namespace BookStore.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_PNS> CT_PNS { get; set; }
+        public virtual NGUOIDUNG NGUOIDUNG { get; set; }
     }
 }

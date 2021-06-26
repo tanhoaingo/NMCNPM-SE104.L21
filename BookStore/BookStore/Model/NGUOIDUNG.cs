@@ -18,6 +18,7 @@ namespace BookStore.Model
         public NGUOIDUNG()
         {
             this.HOADONs = new HashSet<HOADON>();
+            this.PHIEUNHAPSACHes = new HashSet<PHIEUNHAPSACH>();
         }
     
         public int MaNguoiDung { get; set; }
@@ -29,5 +30,7 @@ namespace BookStore.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOADON> HOADONs { get; set; }
         public virtual NHOMNGUOIDUNG NHOMNGUOIDUNG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PHIEUNHAPSACH> PHIEUNHAPSACHes { get; set; }
     }
 }

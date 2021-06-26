@@ -19,6 +19,6 @@ namespace BookStore.Model
         public Nullable<int> LuongTonToiThieu { get; set; }
         public Nullable<decimal> SoNoToiDa { get; set; }
         public Nullable<int> LuongTonToiThieuSauBan { get; set; }
-        public string ChoPhepThuLonHonNo { get; set; }
+        public Nullable<bool> ChoPhepThuLonHonNo { get; set; }
     }
 }
