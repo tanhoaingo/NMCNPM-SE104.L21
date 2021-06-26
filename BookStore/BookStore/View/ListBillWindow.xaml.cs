@@ -1,5 +1,4 @@
-﻿using BookStore.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BookStore
+namespace BookStore.View
 {
     /// <summary>
-    /// Interaction logic for BillWindow.xaml
+    /// Interaction logic for ListBillWindow.xaml
     /// </summary>
-    public partial class BillWindow : Window
+    public partial class ListBillWindow : Window
     {
-        public BillWindow()
+        public ListBillWindow()
         {
             InitializeComponent();
-  
         }
-
-
-        
     }
 }

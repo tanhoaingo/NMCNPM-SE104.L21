@@ -13,10 +13,10 @@ namespace BookStore.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MYDATABASE_Entities : DbContext
+    public partial class MYDATABASEEntities1 : DbContext
     {
-        public MYDATABASE_Entities()
-            : base("name=MYDATABASE_Entities")
+        public MYDATABASEEntities1()
+            : base("name=MYDATABASEEntities1")
         {
         }
     
