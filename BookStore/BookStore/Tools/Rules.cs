@@ -18,7 +18,7 @@ namespace BookStore.Tools
             {
                 return 0;
             }
-            return Int64.Parse(amount);
+                return Int64.Parse(amount);
         }
         public long ConvertDecimal_nullToInt64(decimal? number)
         {

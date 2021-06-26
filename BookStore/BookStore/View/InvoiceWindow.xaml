@@ -606,7 +606,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding DauSach.THELOAI.TenTheLoai}"
+                                            Text="{Binding DauSach.THELOAIs.TenTheLoai}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>

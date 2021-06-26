@@ -20,6 +20,8 @@ namespace BookStore.ViewModel
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+        public virtual void CleanUpData() { }
     }
     class RelayCommand<T> : ICommand
     {

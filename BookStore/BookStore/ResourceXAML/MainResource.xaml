@@ -12,4 +12,8 @@
     <viewmodel:AddBookViewModel x:Key="AddBookVM"></viewmodel:AddBookViewModel>
     <viewmodel:AddAuthorViewModel x:Key="AddAuthorVM"></viewmodel:AddAuthorViewModel>
     <viewmodel:AddTypeViewModel x:Key="AddTypeVM"></viewmodel:AddTypeViewModel>
+    <viewmodel:NewMainViewModel x:Key="NewMain"></viewmodel:NewMainViewModel>
+    <viewmodel:AuthorViewModel x:Key="AuthorVM"></viewmodel:AuthorViewModel>
+    
+    
 </ResourceDictionary>
