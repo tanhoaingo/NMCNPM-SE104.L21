@@ -687,6 +687,7 @@
           <Property Name="MaNguoiLap" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CT_PNS" Relationship="Self.FK_CT_PNS_PHIEUNHAPSACH" FromRole="PHIEUNHAPSACH" ToRole="CT_PNS" />
           <NavigationProperty Name="NGUOIDUNG" Relationship="Self.FK_PHIEUNHAPSACH_NGUOIDUNG" FromRole="PHIEUNHAPSACH" ToRole="NGUOIDUNG" />
+
         </EntityType>
         <EntityType Name="PHIEUTHUTIEN">
           <Key>
@@ -1139,6 +1140,10 @@
           <EntitySetMapping Name="PHIEUNHAPSACHes">
             <EntityTypeMapping TypeName="MYDATABASE_Entities.PHIEUNHAPSACH">
               <MappingFragment StoreEntitySet="PHIEUNHAPSACH">
+
+                <ScalarProperty Name="MaNguoiLap" ColumnName="MaNguoiLap" />
+                <ScalarProperty Name="NgayNhap" ColumnName="NgayNhap" />
+
                 <ScalarProperty Name="MaPhieuNhapSach" ColumnName="MaPhieuNhapSach" />
                 <ScalarProperty Name="NgayNhap" ColumnName="NgayNhap" />
                 <ScalarProperty Name="MaNguoiLap" ColumnName="MaNguoiLap" />

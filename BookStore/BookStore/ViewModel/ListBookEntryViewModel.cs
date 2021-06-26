@@ -11,19 +11,23 @@ using System.Windows.Input;
 
 namespace BookStore.ViewModel
 {
-    public class ListEntryBookViewModel : BaseViewModel
+    public class ListBookEntryViewModel : BaseViewModel
     {
-        public ListEntryBookViewModel()
+        public ListBookEntryViewModel()
         {
-            ListEntryBook = new ObservableCollection<PHIEUNHAPSACH>(DataProvider.Ins.DB.PHIEUNHAPSACHes);
+            LoadData();
             SelectedEntryBook = null;
             SelectionChangedCommand = new RelayCommand<DataGrid>((p) => { return true; }, (p) => { loadDetail(); });
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadEdit(); });
         }
 
+        private void LoadData()
+        {
+            ListEntryBook = new ObservableCollection<PHIEUNHAPSACH>(DataProvider.Ins.DB.PHIEUNHAPSACHes);
+        }
+
         public void loadDetail()
         {
-
             Detail = new ObservableCollection<CT_PNS>();
             foreach (var item in DataProvider.Ins.DB.CT_PNS)
             {
@@ -36,8 +40,16 @@ namespace BookStore.ViewModel
 
         public void loadEdit()
         {
+            if(SelectedEntryBook == null)
+            {
+                return;
+            }    
             BookEntryWindow bookEntryWindow = new BookEntryWindow();
+            (bookEntryWindow.DataContext as BookEntryViewModel).FlagIntent = 1;
+            (bookEntryWindow.DataContext as BookEntryViewModel).Editor = SelectedEntryBook;
+            (bookEntryWindow.DataContext as BookEntryViewModel).LoadData();
             bookEntryWindow.ShowDialog();
+            LoadData();
         }
 
         public ICommand SelectionChangedCommand { get; set; }
@@ -47,7 +59,7 @@ namespace BookStore.ViewModel
         private ObservableCollection<CT_PNS> _Detail;
         private PHIEUNHAPSACH _SelectedEntryBook;
 
-        public ObservableCollection<PHIEUNHAPSACH> ListEntryBook { get => _ListEntryBook; set => _ListEntryBook = value; }
+        public ObservableCollection<PHIEUNHAPSACH> ListEntryBook { get => _ListEntryBook; set { _ListEntryBook = value; OnPropertyChanged(); } }
         public ObservableCollection<CT_PNS> Detail { get => _Detail; set { _Detail = value; OnPropertyChanged(); } }
         public PHIEUNHAPSACH SelectedEntryBook { get => _SelectedEntryBook; set { _SelectedEntryBook = value; OnPropertyChanged(); } }
     }
