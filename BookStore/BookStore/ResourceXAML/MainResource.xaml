@@ -16,4 +16,5 @@
     <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
     <viewmodel:ListBookEntryViewModel x:Key="ListBookEntryVM"></viewmodel:ListBookEntryViewModel>
     <viewmodel:ListInvoiceViewModel x:Key="ListInvoiceVM"></viewmodel:ListInvoiceViewModel>
+    <viewmodel:ListBillViewModel x:Key="ListBillVM"></viewmodel:ListBillViewModel>
 </ResourceDictionary>

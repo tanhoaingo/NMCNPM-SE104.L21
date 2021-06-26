@@ -65,8 +65,8 @@ namespace BookStore.ViewModel
 
         void CancelInvoice()
         {
+            this.CleanUpData();
         }
-
         public override void CleanUpData()
         {
             base.CleanUpData();
