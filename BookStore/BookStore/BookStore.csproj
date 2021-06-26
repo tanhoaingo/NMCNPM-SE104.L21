@@ -81,77 +81,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\BAOCAOCONGNO.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\BAOCAOTON.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CHUCNANG.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CT_BCCN.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CT_BCT.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CT_HD.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\CT_PNS.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\DAUSACH.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\HOADON.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Item_ListCheckedBoxAuthor.cs" />
     <Compile Include="Model\Item_ListCheckedBoxType.cs" />
-    <Compile Include="Model\KHACHHANG.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ModelEntity.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelEntity.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ModelEntity.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ModelEntity.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelEntity.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Model\NGUOIDUNG.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\NHOMNGUOIDUNG.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PHIEUNHAPSACH.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\PHIEUTHUTIEN.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\SACH.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\TACGIA.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\THAMSO.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\THELOAI.cs">
-      <DependentUpon>ModelEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModel\AddAuthorViewModel.cs" />
     <Compile Include="ViewModel\AddBookViewModel.cs" />
     <Compile Include="ViewModel\AddTypeViewModel.cs" />
@@ -329,13 +260,6 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
-    <EntityDeploy Include="Model\ModelEntity.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelEntity.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\ModelEntity.edmx.diagram">
-      <DependentUpon>ModelEntity.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -345,18 +269,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model\ModelEntity.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelEntity.edmx</DependentUpon>
-      <LastGenOutput>ModelEntity.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\ModelEntity.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelEntity.edmx</DependentUpon>
-      <LastGenOutput>ModelEntity.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="DataCenter\BachTuyet.jpg" />
