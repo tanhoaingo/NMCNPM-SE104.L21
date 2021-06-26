@@ -13,10 +13,10 @@ namespace BookStore.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MYDATABASE_Entities : DbContext
+    public partial class MYDATABASEEntities : DbContext
     {
-        public MYDATABASE_Entities()
-            : base("name=MYDATABASE_Entities")
+        public MYDATABASEEntities()
+            : base("name=MYDATABASEEntities")
         {
         }
     
@@ -27,11 +27,11 @@ namespace BookStore.Model
     
         public virtual DbSet<BAOCAOCONGNO> BAOCAOCONGNOes { get; set; }
         public virtual DbSet<BAOCAOTON> BAOCAOTONs { get; set; }
-        public virtual DbSet<CHUCNANG> CHUCNANGs { get; set; }
         public virtual DbSet<CT_BCCN> CT_BCCN { get; set; }
         public virtual DbSet<CT_BCT> CT_BCT { get; set; }
         public virtual DbSet<CT_HD> CT_HD { get; set; }
         public virtual DbSet<CT_PNS> CT_PNS { get; set; }
+        public virtual DbSet<CHUCNANG> CHUCNANGs { get; set; }
         public virtual DbSet<DAUSACH> DAUSACHes { get; set; }
         public virtual DbSet<HOADON> HOADONs { get; set; }
         public virtual DbSet<KHACHHANG> KHACHHANGs { get; set; }

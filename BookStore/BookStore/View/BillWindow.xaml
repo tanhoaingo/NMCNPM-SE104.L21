@@ -63,7 +63,7 @@
                         VerticalAlignment="Center"
                         FontSize="15"
                         materialDesign:HintAssist.Hint="Ngày thu"
-                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" IsEnabled="False" Margin="234,10,62,10" />
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" IsEnabled="True" Margin="234,10,62,10" />
                     <TextBox
                         IsEnabled="False"
                         Margin="72,10,254,10"

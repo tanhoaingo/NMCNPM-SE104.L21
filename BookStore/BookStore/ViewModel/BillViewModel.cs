@@ -62,9 +62,10 @@ namespace BookStore.ViewModel
                 MessageBox.Show("Vui lòng chọn khách hàng !");
             }
         }
-
-        void CancelInvoice()
+        public void CancelInvoice()
         {
+            SelectedCustomer = null;
+            PaidAmount = 0;
         }
 
         public override void CleanUpData()
@@ -85,6 +86,8 @@ namespace BookStore.ViewModel
         private Int64 _PaidAmount;
         private Int64 _LeftAMount;
         private int _MaKhachHang;
+        private int _id;
+        
 
         public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set => _ListCustomer = value; }
         public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
