@@ -292,7 +292,7 @@ PRIMARY KEY (MaBaoCaoTon)
 CREATE TABLE CT_BCT(
 	MaCT_BCT INT IDENTITY(1,1),
 	MaBaoCaoTon INT NOT NULL,
-	MaSach INT NOT NULL,
+	MaDauSach INT NOT NULL,
 	TonDau INT,
 	PhatSinh INT, 
 	TonCuoi INT,
@@ -308,8 +308,12 @@ FOREIGN KEY (MaBaoCaoTon) REFERENCES BAOCAOTON (MaBaoCaoTon)
 
 ALTER TABLE CT_BCT
 ADD CONSTRAINT FK_CT_BCT_SACH
-FOREIGN KEY (MaSach) REFERENCES SACH (MaSach)
+FOREIGN KEY (MaDauSach) REFERENCES DAUSACH (MaDauSach)
 
+alter table CT_BCT
+drop constraint FK_CT_BCT_SACH
+
+drop table CT_BCT
 /*=============================================================================*/
 
 CREATE TABLE BAOCAOCONGNO(

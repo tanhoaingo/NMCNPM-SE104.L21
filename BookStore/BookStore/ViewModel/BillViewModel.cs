@@ -21,8 +21,8 @@ namespace BookStore.ViewModel
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
 
             CloseWindowCommand = new RelayCommand<BillWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
-            NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
+            NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });           
             CancelButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { CancelInvoice(); });
         }
 
@@ -76,8 +76,8 @@ namespace BookStore.ViewModel
         }
 
         public ICommand CloseWindowCommand { get; set; }
-        public ICommand NameCustomerSelectionChangedCommand { get; set; }
         public ICommand SaveButtonClickCommand { get; set; }
+        public ICommand NameCustomerSelectionChangedCommand { get; set; }
         public ICommand CancelButtonClickCommand { get; set; }
 
         private ObservableCollection<KHACHHANG> _ListCustomer;

@@ -17,4 +17,8 @@
     <viewmodel:ListEntryBookViewModel x:Key="ListEntryBookVM"></viewmodel:ListEntryBookViewModel>
     <viewmodel:ListInvoiceViewModel x:Key="ListInvoiceVM"></viewmodel:ListInvoiceViewModel>
     <viewmodel:ListBillViewModel x:Key="ListBillVM"></viewmodel:ListBillViewModel>
+    <viewmodel:ListUserViewModel x:Key="ListUserVM"></viewmodel:ListUserViewModel>
+    <viewmodel:AddUserViewModel x:Key="AddUserVM"></viewmodel:AddUserViewModel>
+    <viewmodel:BCCNViewModel x:Key="BccnVM"></viewmodel:BCCNViewModel>
+    <viewmodel:BCTViewModel x:Key="BctVM"></viewmodel:BCTViewModel>
 </ResourceDictionary>

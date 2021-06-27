@@ -36,7 +36,7 @@
           </Key>
           <Property Name="MaCT_BCT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaBaoCaoTon" Type="int" Nullable="false" />
-          <Property Name="MaSach" Type="int" Nullable="false" />
+          <Property Name="MaDauSach" Type="int" Nullable="false" />
           <Property Name="TonDau" Type="int" />
           <Property Name="PhatSinh" Type="int" />
           <Property Name="TonCuoi" Type="int" />
@@ -228,14 +228,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CT_BCT_SACH">
-          <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
+          <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="1" />
           <End Role="CT_BCT" Type="Self.CT_BCT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SACH">
-              <PropertyRef Name="MaSach" />
+            <Principal Role="DAUSACH">
+              <PropertyRef Name="MaDauSach" />
             </Principal>
             <Dependent Role="CT_BCT">
-              <PropertyRef Name="MaSach" />
+              <PropertyRef Name="MaDauSach" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -454,7 +454,7 @@
             <End Role="CT_BCT" EntitySet="CT_BCT" />
           </AssociationSet>
           <AssociationSet Name="FK_CT_BCT_SACH" Association="Self.FK_CT_BCT_SACH">
-            <End Role="SACH" EntitySet="SACH" />
+            <End Role="DAUSACH" EntitySet="DAUSACH" />
             <End Role="CT_BCT" EntitySet="CT_BCT" />
           </AssociationSet>
           <AssociationSet Name="FK_CT_HD_HOADON" Association="Self.FK_CT_HD_HOADON">
@@ -554,7 +554,7 @@
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
           </AssociationSet>
           <AssociationSet Name="FK_CT_BCT_SACH" Association="MYDATABASEModel.FK_CT_BCT_SACH">
-            <End Role="SACH" EntitySet="SACHes" />
+            <End Role="DAUSACH" EntitySet="DAUSACHes" />
             <End Role="CT_BCT" EntitySet="CT_BCT" />
           </AssociationSet>
           <AssociationSet Name="FK_CT_HD_HOADON" Association="MYDATABASEModel.FK_CT_HD_HOADON">
@@ -641,12 +641,12 @@
           </Key>
           <Property Name="MaCT_BCT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaBaoCaoTon" Type="Int32" Nullable="false" />
-          <Property Name="MaSach" Type="Int32" Nullable="false" />
+          <Property Name="MaDauSach" Type="Int32" Nullable="false" />
           <Property Name="TonDau" Type="Int32" />
           <Property Name="PhatSinh" Type="Int32" />
           <Property Name="TonCuoi" Type="Int32" />
           <NavigationProperty Name="BAOCAOTON" Relationship="MYDATABASEModel.FK_CT_BCT_BAOCAOTON" FromRole="CT_BCT" ToRole="BAOCAOTON" />
-          <NavigationProperty Name="SACH" Relationship="MYDATABASEModel.FK_CT_BCT_SACH" FromRole="CT_BCT" ToRole="SACH" />
+          <NavigationProperty Name="DAUSACH" Relationship="MYDATABASEModel.FK_CT_BCT_SACH" FromRole="CT_BCT" ToRole="DAUSACH" />
         </EntityType>
         <EntityType Name="CT_HD">
           <Key>
@@ -689,6 +689,7 @@
           <Property Name="TenSach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LuongTon" Type="Int32" />
           <Property Name="HinhAnhSach" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="CT_BCT" Relationship="MYDATABASEModel.FK_CT_BCT_SACH" FromRole="DAUSACH" ToRole="CT_BCT" />
           <NavigationProperty Name="SACHes" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="MYDATABASEModel.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
           <NavigationProperty Name="THELOAIs" Relationship="MYDATABASEModel.TT_TL" FromRole="DAUSACH" ToRole="THELOAI" />
@@ -768,7 +769,6 @@
           <Property Name="MaSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaDauSach" Type="Int32" Nullable="false" />
           <Property Name="LuongTon" Type="Int32" />
-          <NavigationProperty Name="CT_BCT" Relationship="MYDATABASEModel.FK_CT_BCT_SACH" FromRole="SACH" ToRole="CT_BCT" />
           <NavigationProperty Name="CT_HD" Relationship="MYDATABASEModel.FK_CT_HD_SACH" FromRole="SACH" ToRole="CT_HD" />
           <NavigationProperty Name="CT_PNS" Relationship="MYDATABASEModel.FK_CT_PNS_SACH" FromRole="SACH" ToRole="CT_PNS" />
           <NavigationProperty Name="DAUSACH" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="SACH" ToRole="DAUSACH" />
@@ -837,14 +837,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CT_BCT_SACH">
-          <End Type="MYDATABASEModel.SACH" Role="SACH" Multiplicity="1" />
+          <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="1" />
           <End Type="MYDATABASEModel.CT_BCT" Role="CT_BCT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SACH">
-              <PropertyRef Name="MaSach" />
+            <Principal Role="DAUSACH">
+              <PropertyRef Name="MaDauSach" />
             </Principal>
             <Dependent Role="CT_BCT">
-              <PropertyRef Name="MaSach" />
+              <PropertyRef Name="MaDauSach" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -968,7 +968,7 @@
           <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
           <End Type="MYDATABASEModel.THELOAI" Role="THELOAI" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1008,7 +1008,7 @@
                 <ScalarProperty Name="TonCuoi" ColumnName="TonCuoi" />
                 <ScalarProperty Name="PhatSinh" ColumnName="PhatSinh" />
                 <ScalarProperty Name="TonDau" ColumnName="TonDau" />
-                <ScalarProperty Name="MaSach" ColumnName="MaSach" />
+                <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
                 <ScalarProperty Name="MaBaoCaoTon" ColumnName="MaBaoCaoTon" />
                 <ScalarProperty Name="MaCT_BCT" ColumnName="MaCT_BCT" />
               </MappingFragment>
