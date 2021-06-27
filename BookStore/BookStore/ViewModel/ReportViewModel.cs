@@ -77,7 +77,7 @@ namespace BookStore.ViewModel
 
             List<ChiTietBaoCaoTon> list = new List<ChiTietBaoCaoTon>();
             var maBCT = baoCaoTon.Where(x => (month == "Tất cả" ? true : x.Thang.Value.Month.ToString() == month)).Select(x => x.MaBaoCaoTon);
-            foreach (var item in maBCT)
+            /*foreach (var item in maBCT)
             {
                 var ct_BCT = chiTiet.Where(x => x.MaBaoCaoTon == item);
                 foreach (var ct in ct_BCT)
@@ -92,7 +92,7 @@ namespace BookStore.ViewModel
                         phatSinh = ct.PhatSinh
                     });
                 }
-            }
+            }*/
             BaoCaoTonSource = list;
         }
         public void loadBaoCaoCongNo(string month)
