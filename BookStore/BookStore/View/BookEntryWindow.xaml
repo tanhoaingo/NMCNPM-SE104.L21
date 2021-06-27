@@ -319,8 +319,8 @@
 
                 <materialDesign:Card Grid.Row="0" Margin="20,45,20,20">
                     <WrapPanel>
-                        
                         <ComboBox
+                            x:Name="BookNameComboBox"
                             materialDesign:HintAssist.Hint="Tên sách"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -356,6 +356,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <TextBox
+                            x:Name="BookTypeTextBox"
                             Text="{Binding Types, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thể loại"
                             Margin="20"
@@ -366,6 +367,7 @@
                             IsReadOnly="True"
                             VerticalAlignment="Center" />
                         <TextBox
+                            x:Name="BookAuthorTextBox"
                             Text="{Binding Authors, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Tác Giả"
                             Margin="20"
@@ -377,6 +379,7 @@
                             IsReadOnly="True"
                             VerticalAlignment="Center" />
                         <TextBox
+                            x:Name="AmountTextBox"
                             Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Số lượng"
                             Margin="20"
@@ -396,6 +399,7 @@
                             </i:Interaction.Triggers>
                         </TextBox>
                         <TextBox
+                            x:Name="InputPriceTextBox"
                             Text="{Binding InputPrice, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Đơn Giá Nhập"
                             Margin="20"
@@ -415,6 +419,7 @@
                             </i:Interaction.Triggers>
                         </TextBox>
                         <TextBox
+                            x:Name="IntoMoneyTextBox"
                             Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thành Tiền"
                             Margin="20,20,0,20"
@@ -444,9 +449,11 @@
                             Content="Thêm mục" Margin="20" Width="100">
                         </Button>
                         <Button
+                            x:Name="DeleteDetailButton"
                             Command="{Binding DeleteDetailClickCommand}"
                             Content="Xóa mục" Margin="20" Width="100"></Button>
                         <Button
+                            x:Name="EditDetailButton"
                             Command="{Binding EditDetailClickCommand}"
                             Content=" Lưu sửa đổi" Margin="100,20,20,20" Width="130"></Button>
                     </WrapPanel>

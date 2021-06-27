@@ -408,3 +408,10 @@ DROP COLUMN ChoPhepThuLonHonNo
 
 ALTER TABLE THAMSO
 ADD ChoPhepThuLonHonNo BIT
+
+/*=============================================================================*/
+/*Log 6 database*/
+/*=============================================================================*/
+
+INSERT INTO THAMSO (LuongNhapToiThieu, LuongTonToiThieu, SoNoToiDa, LuongTonToiThieuSauBan, ChoPhepThuLonHonNo)
+VALUES (150, 300, 20000, 20, 1)
