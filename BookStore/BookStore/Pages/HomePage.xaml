@@ -30,11 +30,18 @@
                         <RowDefinition Height="60" />
                         <RowDefinition Height="0" />
                     </Grid.RowDefinitions>
-                    <Image
+                    <Button 
+                        Cursor="Hand"
+                        Background="White"
+                        BorderThickness="0"
+                        Click="Button_Click" 
+                        Style="{StaticResource ButtonTextStyle}">
+                        <Image                        
                         Source="/Source/Image/Book.png"
                         Height="140"
                         Width="196"
                         Stretch="Uniform" />
+                    </Button>
                     <StackPanel
                         Grid.Row="1"
                         Margin="8 24 8 0">

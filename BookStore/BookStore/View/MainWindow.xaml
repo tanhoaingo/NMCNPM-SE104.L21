@@ -31,7 +31,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Grid Height="410" Width="610">
+    <Grid Height="510" Width="610">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="307*"/>
@@ -39,7 +39,7 @@
         <Frame
             x:Name="MainFrame"
             Source="../Pages/HomePage.xaml"
-            NavigationUIVisibility="Hidden" Grid.ColumnSpan="2" />
+            Grid.ColumnSpan="2" />
     </Grid>
 
 </Window>
