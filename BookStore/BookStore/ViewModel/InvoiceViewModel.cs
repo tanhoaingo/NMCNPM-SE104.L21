@@ -82,14 +82,14 @@ namespace BookStore.ViewModel
                 return;
             }
 
-            if (SaveInvoiceNeed() && LeftAmount > 20000)
+            if (SaveInvoiceNeed() && LeftAMount > 20000)
             {
                 //cái này tính tổng nợ chứ không phải nợ của mỗi hóa đơn này ok
                 MessageBox.Show("Số tiền nợ không được vượt quá 20000");
                 return;
             }
 
-            var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 5, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
+            var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 5, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAMount, TongTien = SumAmount };
             DataProvider.Ins.DB.HOADONs.Add(HoaDon);
             DataProvider.Ins.DB.SaveChanges();
 
@@ -147,7 +147,7 @@ namespace BookStore.ViewModel
         {
             SumAmount = 0;
             //PaidAmount = 0; sao lại set paid amount = 0 ủa 
-            LeftAmount = 0;
+            LeftAMount = 0;
             if (Items == null)
             {
                 return;
@@ -156,7 +156,7 @@ namespace BookStore.ViewModel
             {
                 SumAmount += v.IntoMoney;
             }
-            LeftAmount = SumAmount - PaidAmount;
+            LeftAMount = SumAmount - PaidAmount;
         }
 
         private void AddDetail()
@@ -325,7 +325,7 @@ namespace BookStore.ViewModel
 
         public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
-        public long LeftAMount { get => _LeftAMount; set { _LeftAMount = value; OnPropertyChanged(); } }
+        public long LeftAMount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
         
         public string CardName { get => _cardName; set { _cardName = value; OnPropertyChanged(); } }
         public string CardPhone { get => _cardPhone; set { _cardPhone = value; OnPropertyChanged(); } }
