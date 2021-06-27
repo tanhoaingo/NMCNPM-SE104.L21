@@ -113,8 +113,7 @@ namespace BookStore.ViewModel
                     {
                         var tmpCT_PN = DataProvider.Ins.DB.CT_PNS.Where(x => x.MaCT_PNS == v).FirstOrDefault();
                         var tmpSach = DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCT_PN.MaSach).FirstOrDefault();
-                        if (DataProvider.Ins.DB.CT_HD.Where(x => x.MaSach == tmpSach.MaSach).Count() > 0
-                            || DataProvider.Ins.DB.CT_PNS.Where(x => x.MaSach == tmpSach.MaSach).Count() > 0)
+                        if (DataProvider.Ins.DB.CT_HD.Where(x => x.MaSach == tmpSach.MaSach).Count() > 0)
                         {
                             MessageBox.Show("Sách đã sử dụng, không thể xóa dữ liệu nhập sách này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;

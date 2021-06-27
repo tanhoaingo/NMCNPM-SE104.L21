@@ -17,7 +17,6 @@ namespace BookStore.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SACH()
         {
-            this.CT_BCT = new HashSet<CT_BCT>();
             this.CT_HD = new HashSet<CT_HD>();
             this.CT_PNS = new HashSet<CT_PNS>();
         }
@@ -26,8 +25,6 @@ namespace BookStore.Model
         public int MaDauSach { get; set; }
         public Nullable<int> LuongTon { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CT_BCT> CT_BCT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_HD> CT_HD { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

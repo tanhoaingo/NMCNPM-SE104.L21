@@ -22,7 +22,13 @@
       Title="BookEntryPage"
        DataContext="{StaticResource BookEntryVM}" 
       >
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                   CommandParameter="{Binding ElementName=BookEntryWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="15*"  />
@@ -35,11 +41,12 @@
                 <ColumnDefinition Width="19*"></ColumnDefinition>
                 <ColumnDefinition Width="21*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
-            
-            
 
-    
+
+            <Grid.Resources>
+                <cv:MoneyConverter x:Key="MoneyCV" EmptyStringValue="-1"></cv:MoneyConverter>
+            </Grid.Resources>
+
             <Grid Width="400" Grid.Column="1" Margin="-0,0,0,0">
                 <DatePicker
                     SelectedDate="{Binding EntryBookDate, StringFormat='dd/MM/yyyy'}"
@@ -281,7 +288,7 @@
                 <ColumnDefinition Width="11*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-           
+
 
 
             <Grid Grid.Row="0" Grid.Column="0">
@@ -304,7 +311,7 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <WrapPanel >
-                                <ComboBox
+                            <ComboBox
                             materialDesign:HintAssist.Hint="Tên sách"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -316,16 +323,16 @@
                             Height="60"
                             MinWidth="350"
                             VerticalAlignment="Center">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="SelectionChanged">
-                                            <i:InvokeCommandAction Command="{Binding BookNameSelectionChangedCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </ComboBox>
-                               
-                               
-                                <TextBox
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding BookNameSelectionChangedCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ComboBox>
+
+
+                            <TextBox
                             Text="{Binding InputPrice, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Đơn Giá Nhập"
                             Margin="30 20 20 20"
@@ -334,17 +341,17 @@
                             MinWidth="210"
                             Height="60"
                             VerticalAlignment="Center" >
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="PreviewTextInput" >
-                                            <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
-                                        </i:EventTrigger>
-                                        <i:EventTrigger EventName="TextChanged">
-                                            <i:InvokeCommandAction Command="{Binding IntoMoneyNeedChangedCommand}">
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </TextBox>
-                            
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewTextInput" >
+                                        <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding InputPriceTextChangedCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+
                             <TextBox
                             Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Số lượng"
@@ -395,8 +402,9 @@
                             FontSize="20"
                             MinWidth="180"
                             Height="110"
+                                IsReadOnly="True"
                             VerticalAlignment="Center" />
-                            </WrapPanel>
+                        </WrapPanel>
 
                         <Grid Grid.Column="1">
                             <StackPanel Margin="15"  HorizontalAlignment="Right" Orientation="Vertical">
@@ -421,108 +429,140 @@
                             </StackPanel>
                         </Grid>
                     </Grid>
-                    
-                    
+
+
                 </materialDesign:Card>
 
-                
+
             </Grid>
 
             <materialDesign:Card Grid.Row="1" Grid.Column="0" Margin="20" VerticalAlignment="Stretch" >
-                <ListView ItemsSource="{Binding Items}"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1186*"></ColumnDefinition>
+                        <ColumnDefinition Width="361*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <ListView ItemsSource="{Binding Items}"
                           Margin="20,0,0,0"
+                          Grid.Column="0"
                           BorderBrush="Transparent"
                           SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="DataContextChanged" >
-                            <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <ListView.View>
-                        <GridView>
-                            <GridView.ColumnHeaderContainerStyle>
-                                <Style TargetType="GridViewColumnHeader">
-                                    <Setter Property="FontSize" Value="20"/>
-                                    <Setter Property="Foreground" Value="DarkSlateGray"/>
-                                    <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}"/>
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Height" Value="50"/>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="DataContextChanged" >
+                                <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.ColumnHeaderContainerStyle>
+                                    <Style TargetType="GridViewColumnHeader">
+                                        <Setter Property="FontSize" Value="20"/>
+                                        <Setter Property="Foreground" Value="DarkSlateGray"/>
+                                        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Height" Value="50"/>
 
-                                </Style>
-                            </GridView.ColumnHeaderContainerStyle>
-                            <GridViewColumn Header="STT" Width="100" >
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
+                                    </Style>
+                                </GridView.ColumnHeaderContainerStyle>
+                                <GridViewColumn Header="STT" Width="100" >
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
                                             Text="{Binding ID}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Tên Sách" Width="200">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Tên Sách" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
                                             Text="{Binding Book.TenSach}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Thể Loại" Width="200">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
-                                            Text="{Binding Book.THELOAI.TenTheLoai}"
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Thể Loại" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
+                                            Text="{Binding Types}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Tác Giả" Width="200">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Tác Giả" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
                                             Text="{Binding Authors}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Số Lượng" Width="150">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Số Lượng" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
                                             Text="{Binding Amount}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Đơn giá nhập" Width="170">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
-                                            Text="{Binding InputPrice}"
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Đơn giá nhập" Width="170">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
+                                            Text="{Binding InputPrice, StringFormat={}{0:#.##}}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Thành tiền" Width="170">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <TextBlock
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Thành tiền" Width="170">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate >
+                                            <TextBlock
                                             Text="{Binding IntoMoney}"
                                             FontSize="18">
-                                        </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <materialDesign:Card  
+                Grid.Column="1" Grid.Row="1" Margin="20,20,20,0" Height="161" VerticalAlignment="Top">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                        TextAlignment="Right"
+                        Grid.Row="0" 
+                        VerticalAlignment="Center"
+                        Text="Tổng tiền: " FontSize="30" 
+                        Width="150" Height="34">
+                            </TextBlock>
+                            <TextBlock
+                        IsEnabled="False"
+                        TextAlignment="Left"
+                        Grid.Row="1" 
+                        VerticalAlignment="Center"
+                        Text="{Binding SumAmount, Mode=TwoWay}" FontSize="30" 
+                        Width="150" >
+                            </TextBlock>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
             </materialDesign:Card>
         </Grid>
     </Grid>
