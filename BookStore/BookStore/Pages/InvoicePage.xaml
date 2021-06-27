@@ -544,11 +544,15 @@
                         Grid.Row="1" Grid.Column="1" 
                         VerticalAlignment="Center"
                             FontWeight="Bold"
-                        Text="{Binding PaidAmount, Mode=TwoWay}" FontSize="25" 
+                        Text="{Binding PaidAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
                         Width="150" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewTextInput" >
                                         <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding PaidAmountTextChangedCommand}">
+                                        </i:InvokeCommandAction>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
@@ -560,7 +564,7 @@
                         Grid.Row="2" Grid.Column="1" 
                             FontWeight="Bold"
                         VerticalAlignment="Center"
-                        Text="{Binding LeftAMount, Mode=TwoWay}" FontSize="25" 
+                        Text="{Binding LeftAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
                         Width="150" >
                         </TextBlock>
                     </Grid>
@@ -660,7 +664,7 @@
                             Margin="30 10"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             ItemsSource="{Binding ListPriceOfBook, Mode=OneWay}"
-                            DisplayMemberPath="DonGiaNhap"
+                            
                             SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"
                             Height="60"
@@ -782,7 +786,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate >
                                             <TextBlock
-                                            Text="{Binding DauSach.THELOAIs}"
+                                            Text="{Binding BookTypes}"
                                             FontSize="18">
                                             </TextBlock>
                                         </DataTemplate>
@@ -802,7 +806,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate >
                                             <TextBlock
-                                            Text="{Binding CTPNS.DonGiaNhap}"
+                                            Text="{Binding OutputPrice}"
                                             FontSize="18">
                                             </TextBlock>
                                         </DataTemplate>
@@ -824,7 +828,7 @@
                 </materialDesign:Card>
             </Grid>
         </Grid>
-        <ContentControl Content="{Binding controls}" Grid.ColumnSpan="2"/>
+        
 
     </Grid>
 </Page>

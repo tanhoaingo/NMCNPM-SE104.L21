@@ -505,7 +505,7 @@ namespace BookStore.ViewModel
 
         public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
-        public long LeftAMount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
+        public long LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
         
         public string CardName { get => _cardName; set { _cardName = value; OnPropertyChanged(); } }
         public string CardPhone { get => _cardPhone; set { _cardPhone = value; OnPropertyChanged(); } }
