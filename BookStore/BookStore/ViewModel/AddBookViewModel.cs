@@ -35,8 +35,8 @@ namespace BookStore.ViewModel
             ConfirmButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ConfirmAddBook(p); });
             BookNameTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { BookNameChanged(p); });
             TypeTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { HiddenErrorTextBlock(p); TextListBookTypesChanged(); });
-            AuthorTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { HiddenErrorTextBlock(p);TextListBookAuthorsChanged(); });
-            ShowListBookTypesCommand= new RelayCommand<Window>((p) => { return true; }, (p) => { ShowListBookTypes(p);  });
+            AuthorTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { HiddenErrorTextBlock(p); TextListBookAuthorsChanged(); });
+            ShowListBookTypesCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ShowListBookTypes(p); });
             ShowListBookAuthorsCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ShowListBookAuthors(p); });
             ItemTypeChekedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ItemTypeChecked(p); });
             ItemAuthorChekedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ItemAuthorChecked(p); });
@@ -44,6 +44,9 @@ namespace BookStore.ViewModel
             ItemAuthorUnChekedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ItemAuthorChecked(p); });
             AddListClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddToList(p); });
             AddPictureCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddPicture(p); });
+
+            BookImage = new BitmapImage(new Uri(@"/BookStore;component/Source/Image/bookInsert.jpg", UriKind.Relative));
+
             CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelAddBook(p); });
         }
 

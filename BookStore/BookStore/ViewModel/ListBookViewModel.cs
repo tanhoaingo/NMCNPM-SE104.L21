@@ -1,4 +1,5 @@
 ﻿using BookStore.Model;
+using BookStore.Pages;
 using BookStore.View;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 
 namespace BookStore.ViewModel
 {
@@ -44,14 +48,23 @@ namespace BookStore.ViewModel
             Temp.Add("Naruto");*/
             #endregion
 
-            AddBookButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { AddNewBook(); });
+            AddBookButtonClickCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { AddNewBook(p); });
         }
 
-        private void AddNewBook()
+        private void AddNewBook(Page p)
         {
+
+            var tmpPg = p as BookPage ;
+
+            tmpPg.Grid.Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
             var tmp = new AddBookWindow();
             tmp.ShowDialog();
-            
+
+            // Splash.Visibility = Visibility.Collapsed;
+            tmpPg.Grid.Effect = null;
         }
 
         public ICommand AddBookButtonClickCommand { get; set; }

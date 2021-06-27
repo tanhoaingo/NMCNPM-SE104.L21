@@ -197,6 +197,6 @@
             </Button>
         </WrapPanel>
 
-
+        <Border x:Name="Splash" Grid.RowSpan="4" Opacity=".2" Visibility="Collapsed" Background="Black"/>
     </Grid>
 </Window>

@@ -1,0 +1,138 @@
+﻿<Page x:Class="BookStore.Pages.BookCategory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookStore.Pages"
+      xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
+      mc:Ignorable="d" 
+      d:DesignHeight="950" d:DesignWidth="1500"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}" 
+      DataContext="{StaticResource CategoryVM}"
+      Title="AuthorPage">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="12*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.RowSpan="2" Grid.Column="1" Orientation="Vertical">
+
+            <TextBlock Text="Chỉnh sửa thể loại" VerticalAlignment="Center"
+                          Margin="35 100 20 20"
+                               Foreground="#6432a8"
+                               FontSize="30" FontWeight="DemiBold"
+                       HorizontalAlignment="Stretch"/>
+            <TextBox
+                            Text="{Binding CategoryName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            materialDesign:HintAssist.Hint="Tên thể loại"
+                            Margin="35 30 20 20"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            FontSize="20"
+                            MinWidth="100"
+                            Height="60"
+                            VerticalAlignment="Center" >
+            </TextBox>
+
+            <StackPanel Margin="35 15 15 15"  Orientation="Horizontal">
+                <Button
+                                        x:Name="AddDetailButton"
+                                        Command="{Binding AddDetailClickCommand}"
+                                        Background="White"
+                                        Foreground="#6432a8"
+                                        CommandParameter="{Binding }"
+                                        Content="Thêm" Margin="0 10 10 10" Width="100">
+                </Button>
+                <Button
+                                        Command="{Binding EditDetailClickCommand}"
+                                         Background="White"
+                                        Foreground="#6432a8"
+                                        Content="Sửa" Margin="20 10 10 10" Width="100"></Button>
+                <Button
+                                         Background="White"
+                                        Foreground="#6432a8"
+                                        Command="{Binding DeleteDetailClickCommand}"
+                                        Content="Xóa" Margin="20 10 10 10" Width="100"></Button>
+            </StackPanel>
+
+
+
+
+        </StackPanel>
+
+        <StackPanel Grid.ColumnSpan="2">
+            <TextBlock Text="Danh sách thể loại" VerticalAlignment="Center"
+                          Margin="30 30 0 0"
+                               Foreground="#6432a8"
+                               FontSize="30" FontWeight="DemiBold"
+                       HorizontalAlignment="Stretch"/>
+
+        </StackPanel>
+        <materialDesign:Card UniformCornerRadius="15" Grid.Row="1" Grid.Column="0" Margin="20 20 20 110" VerticalAlignment="Stretch" >
+
+            <ListView ItemsSource="{Binding Items}"
+                          Margin="20,0,0,0"
+                          BorderBrush="Transparent"
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="DataContextChanged" >
+                        <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="Foreground" Value="DarkSlateGray"/>
+                                <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Height" Value="50"/>
+
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="STT" Width="120"  >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate >
+                                    <TextBlock
+                                        Margin="35 0 0 0"
+                                            Text="{Binding ID}"
+                                            FontSize="18">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Thể loại" Width="900" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate >
+                                    <TextBlock
+                                         Margin="55 0 0 0"
+                                        
+                                            Text="{Binding Category}"
+                                            FontSize="18">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </materialDesign:Card>
+    </Grid>
+</Page>
