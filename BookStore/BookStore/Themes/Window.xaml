@@ -69,6 +69,7 @@
     <ControlTemplate x:Key="WindowTemplate" TargetType="{x:Type Window}">
         <Grid>
             <Border 
+                CornerRadius="30"
                 Name="RootBorder"
                 BorderBrush="{StaticResource InactiveWindowBrush}"
                 BorderThickness="0">
@@ -80,7 +81,7 @@
                     <Grid x:Name="TitleBar"
                           Grid.Row="0"
                           Height="32"
-                          Background="Black">
+                          Background="#6485FF">
                         <TextBlock HorizontalAlignment="Left"
                                VerticalAlignment="Center"
                                Margin="10,5"
