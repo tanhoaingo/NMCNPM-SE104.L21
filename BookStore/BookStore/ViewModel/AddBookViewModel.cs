@@ -29,8 +29,11 @@ namespace BookStore.ViewModel
 
             LoadListTypes();
             LoadListAuthor();
-            
-                
+
+
+            createListAuthor();
+
+
             CloseWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { this.CleanUpData(); });
             ConfirmButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ConfirmAddBook(p); });
             BookNameTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { BookNameChanged(p); });
@@ -48,6 +51,22 @@ namespace BookStore.ViewModel
             BookImage = new BitmapImage(new Uri(@"/BookStore;component/Source/Image/bookInsert.jpg", UriKind.Relative));
 
             CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelAddBook(p); });
+        }
+
+        void createListAuthor()
+        {
+            ListAuthor = new ObservableCollection<string>();
+            ListCategory = new ObservableCollection<string>();
+            var author = DataProvider.Ins.DB.TACGIAs;
+            foreach(var i in author)
+            {
+                ListAuthor.Add(i.TenTacGia);
+            }
+            var category = DataProvider.Ins.DB.THELOAIs;
+            foreach (var i in category)
+            {
+                ListCategory.Add(i.TenTheLoai);
+            }
         }
 
         private void BookNameChanged(Window p)
@@ -246,27 +265,38 @@ namespace BookStore.ViewModel
         private void ConfirmAddBook(Window p)
         {
             var tmpWD = p as AddBookWindow;
-            if (string.IsNullOrEmpty(BookName)||string.IsNullOrEmpty(Type)||string.IsNullOrEmpty(Author)||BookImage == null)
+            /*  if (string.IsNullOrEmpty(BookName)||string.IsNullOrEmpty(Type)||string.IsNullOrEmpty(Author)||BookImage == null)
+              {
+                  tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
+                  return;
+              }
+  */
+            if (string.IsNullOrEmpty(BookName) || BookImage == null)
             {
                 tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
                 return;
             }
 
             var tmpBook = new DAUSACH() { TenSach = BookName, LuongTon = 0 };
-            foreach (var v in tmpWD.exListBookAuthors.SelectedItems)
-            {
-                var tmpName = (v as Item_ListCheckedBoxAuthor).Name;
-                var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == tmpName);
-                tmpBook.TACGIAs.Add(tmpAuthor);
-            }
-            foreach(var v in tmpWD.exListBookTypes.SelectedItems)
-            {
-                var tmpName = (v as Item_ListCheckedBoxType).Type;
-                var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == tmpName);
-                tmpBook.THELOAIs.Add(tmpType);
-            }
+            var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == SelectAuthor);
+            tmpBook.TACGIAs.Add(tmpAuthor);
 
-            if(!IsBookExist(tmpBook))
+            var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == SelectCategory);
+            tmpBook.THELOAIs.Add(tmpType);
+            /*  foreach (var v in tmpWD.exListBookAuthors.SelectedItems)
+              {
+                  var tmpName = (v as Item_ListCheckedBoxAuthor).Name;
+                  var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == tmpName);
+                  tmpBook.TACGIAs.Add(tmpAuthor);
+              }
+              foreach (var v in tmpWD.exListBookTypes.SelectedItems)
+              {
+                  var tmpName = (v as Item_ListCheckedBoxType).Type;
+                  var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == tmpName);
+                  tmpBook.THELOAIs.Add(tmpType);
+              }*/
+
+            if (!IsBookExist(tmpBook))
             {
                 tmpBook.HinhAnhSach = BitmapSourceToByteArray(BookImage);
 
@@ -312,6 +342,8 @@ namespace BookStore.ViewModel
             }
             return false;
         }
+      
+
 
         private byte[] BitmapSourceToByteArray(BitmapImage image)
         {
@@ -367,7 +399,15 @@ namespace BookStore.ViewModel
         private int _FlagListNow;
         private BitmapImage _BookImage;
         private bool _FlagIsSaved;
+        private ObservableCollection<string> _listAuthor;
+        private ObservableCollection<string> _listCategory;
+        private string _selectAuthor;
+        private string _selectCategory;
 
+        public string SelectAuthor { get => _selectAuthor; set { _selectAuthor = value; OnPropertyChanged(); } }
+        public string SelectCategory { get => _selectCategory; set { _selectCategory = value; OnPropertyChanged(); } }
+        public ObservableCollection<string> ListAuthor { get => _listAuthor; set  { _listAuthor = value; OnPropertyChanged(); } }
+        public ObservableCollection<string> ListCategory { get => _listCategory; set { _listCategory = value;OnPropertyChanged();  } }
         public string BookName { get => _BookName; set { _BookName = value; OnPropertyChanged(); } }
         public string Type { get => _Type; set { _Type = value; OnPropertyChanged(); } }
         public string Author { get => _Author; set { _Author = value; OnPropertyChanged(); } }
