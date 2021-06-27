@@ -135,6 +135,12 @@
     <Compile Include="Model\KHACHHANG.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ListBookEntryPage.xaml.cs">
+      <DependentUpon>ListBookEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ListInvoiceBillPage.xaml.cs">
+      <DependentUpon>ListInvoiceBillPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,6 +179,9 @@
     </Compile>
     <Compile Include="Model\THELOAI.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RulePage.xaml.cs">
+      <DependentUpon>RulePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AddAuthorViewModel.cs" />
     <Compile Include="ViewModel\AddBookViewModel.cs" />
@@ -244,6 +253,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ListBookEntryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ListInvoiceBillPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AuthorPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\InvoicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RulePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

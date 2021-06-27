@@ -550,6 +550,10 @@
                                     <i:EventTrigger EventName="PreviewTextInput" >
                                         <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
                                     </i:EventTrigger>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding PaidAmountTextChangedCommand}">
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
                         </materialDesign:Card>

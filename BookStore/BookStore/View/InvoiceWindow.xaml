@@ -446,6 +446,7 @@
                         <ComboBox
                             materialDesign:HintAssist.Hint="Tên sách"
                             Margin="20"
+                            
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             IsEditable="True"
                             ItemsSource="{Binding ListBook, Mode=OneWay}"
