@@ -179,6 +179,7 @@
     <Compile Include="ViewModel\AddTypeViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
+    <Compile Include="ViewModel\ListBillViewModel.cs" />
     <Compile Include="ViewModel\ListBookEntryViewModel.cs" />
     <Compile Include="ViewModel\ListInvoiceViewModel.cs" />
     <Compile Include="ViewModel\NewMainViewModel1.cs" />
@@ -208,6 +209,9 @@
     </Compile>
     <Compile Include="View\InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ListBillWindow.xaml.cs">
+      <DependentUpon>ListBillWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ListBookWindow.xaml.cs">
       <DependentUpon>ListBookWindow.xaml</DependentUpon>
@@ -293,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InvoiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ListBillWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
