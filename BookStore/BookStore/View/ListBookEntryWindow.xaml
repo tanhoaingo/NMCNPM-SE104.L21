@@ -73,7 +73,8 @@
                             Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="180,8,180,0" />
                     </Grid>
                     <Border Margin="0,40,10,0" Background="GhostWhite" BorderBrush="Black" BorderThickness="3" Grid.Column="2">
-                        <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="120" CanUserReorderColumns="False" IsReadOnly="True" >
+                        <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" 
+                                  CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="120" CanUserReorderColumns="False" IsReadOnly="True" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding MaCT_PNS}" Header="Mã CT_PNS"/>
                                 <DataGridTextColumn Binding="{Binding MaPhieuNhapSach}" Header="Mã PNS"/>
