@@ -21,10 +21,10 @@ namespace BookStore.ViewModel
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
 
 
-            SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); CleanUpData(); });
+            SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
             AddCustomerClick = new RelayCommand<Object>((p) => { return true; }, (p) => { CreateNewCustomer(); });
-            NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
+            NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateSoNoCustomer();  });
             BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); UpdateBookInfor(); });
             PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); UpdateAmountBook(); });
             AmountTextChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
@@ -37,9 +37,27 @@ namespace BookStore.ViewModel
             PaidAmountTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { UpdateResultAMount(); });
         }
 
+
+        private void UpdateSoNoCustomer()
+        {
+            if (SelectedCustomer != null && FlagIntent==0 && SelectedCustomer.SoNo>0)
+            {
+                MessageBox.Show("Khách hàng đang nợ " + SelectedCustomer.SoNo + "! Vui lòng thanh toán nợ!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(SelectedCustomer.SoNo);
+            }
+        }
+
         private void UpdateAmountBook()
         {
-            Amount = (DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedBook.TenSach).LuongTon - 20).ToString();
+            if (SelectedBook != null)
+            {
+                Amount = (DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedBook.TenSach).LuongTon - 20).ToString();
+            }
+            else
+            {
+                return;
+            }
+            
         }
 
         private void UpdateBookInfor()
@@ -77,36 +95,57 @@ namespace BookStore.ViewModel
 
         private void SaveInvoice()
         {
-            if (!SaveInvoiceNeed())
+            if (FlagIntent == 0)
             {
-                MessageBox.Show("Vui lòng hoàn thành hóa đơn!");
-                return;
-            }
+                if (!SaveInvoiceNeed())
+                {
+                    MessageBox.Show("Vui lòng thanh toán hóa đơn!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            if (SaveInvoiceNeed() && LeftAmount+SelectedCustomer.SoNo > 20000)
-            {
-                MessageBox.Show("Khach no" + SelectedCustomer.SoNo);
-            }
+                if (LeftAmount > 20000)
+                {
+                    MessageBox.Show("Số tiền nợ không được vượt quá 20000!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
 
-            var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
-            DataProvider.Ins.DB.HOADONs.Add(HoaDon);
-            DataProvider.Ins.DB.SaveChanges();
-
-            if (HoaDon.ConLai>0)
-            {
-                DataProvider.Ins.DB.KHACHHANGs.First(x => x.MaKhachHang == HoaDon.MaKhachHang).SoNo += HoaDon.ConLai;
+                var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
+                DataProvider.Ins.DB.HOADONs.Add(HoaDon);
                 DataProvider.Ins.DB.SaveChanges();
-            }
 
-            foreach (var v in Items)
+                if (HoaDon.ConLai >= 0 && HoaDon.ConLai <= 20000)
+                {
+                    DataProvider.Ins.DB.KHACHHANGs.First(x => x.MaKhachHang == HoaDon.MaKhachHang).SoNo = HoaDon.ConLai;
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+
+
+
+                foreach (var v in Items)
+                {
+
+                    var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.First(x => x.SACH.DAUSACH.TenSach == v.DauSach.TenSach);
+                    var CTHD = new CT_HD() { DonGiaBan = v.OutputPrice, MaHoaDon = HoaDon.MaHoaDon, SoLuong = int.Parse(v.Amount), MaSach = tmpCTPNS.MaSach };
+                    DataProvider.Ins.DB.CT_HD.Add(CTHD);
+                    DataProvider.Ins.DB.SaveChanges();
+                    v.IDinDataBase = CTHD.MaCT_HD;
+                }
+                MessageBox.Show("Lập hóa đơn thành công!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                CleanUpData();
+            }
+            if (FlagIntent == 1)
             {
-
-                var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.First(x => x.SACH.DAUSACH.TenSach == v.DauSach.TenSach);
-                var CTHD = new CT_HD() { DonGiaBan = v.OutputPrice, MaHoaDon = HoaDon.MaHoaDon, SoLuong = int.Parse(v.Amount), MaSach = tmpCTPNS.MaSach };
-                DataProvider.Ins.DB.CT_HD.Add(CTHD);
+                if (Items.Count() == 0)
+                {
+                    DataProvider.Ins.DB.HOADONs.Remove(Editor);
+                    DataProvider.Ins.DB.SaveChanges();
+                }
                 DataProvider.Ins.DB.SaveChanges();
-                v.IDinDataBase = CTHD.MaCT_HD;
+                MessageBox.Show("Sửa hóa đơn thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                CleanUpData();
             }
+
+
         }
 
         private bool SaveInvoiceNeed()
@@ -120,7 +159,7 @@ namespace BookStore.ViewModel
 
         private bool DeleteDetailButtonNeed()
         {
-            if (SelectedItem == null)
+            if (SelectedItem == null || SelectedCustomer == null || InvoiceDate == null)
             {
                 return false;
             }
@@ -129,7 +168,7 @@ namespace BookStore.ViewModel
 
         private bool EditDetailButtonNeed()
         {
-            if (SelectedItem == null || SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null)
+            if (SelectedItem == null || SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || SelectedCustomer == null || InvoiceDate == null || FlagIntent==1)
             {
                 return false;
             }
@@ -138,9 +177,38 @@ namespace BookStore.ViewModel
 
         private void DeleteDetail()
         {
-            DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
-            DataProvider.Ins.DB.SaveChanges();
-            Items.Remove(SelectedItem);
+            if (FlagIntent == 0)
+            {
+                DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
+                //DataProvider.Ins.DB.SaveChanges();
+                Items.Remove(SelectedItem);
+            }
+
+
+            if (FlagIntent == 1)
+            {
+                SumAmount -= SelectedItem.IntoMoney;
+                LeftAmount = (SumAmount - PaidAmount);
+                if (SumAmount>0) Editor.TongTien = SumAmount;
+                if (LeftAmount<=0)
+                {
+                    Editor.SoTienTra = Editor.TongTien;
+                    SelectedCustomer.SoNo = 0;
+                    Editor.ConLai = 0;
+
+                }
+                if (LeftAmount>0 && LeftAmount <=20000)
+                {
+                    SelectedCustomer.SoNo = LeftAmount;
+                    Editor.ConLai = LeftAmount;
+                }
+
+                DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
+                var tmpCTHD = DataProvider.Ins.DB.CT_HD.First(x => (x.MaSach == SelectedItem.MaSachInNeed) && (x.MaHoaDon == Editor.MaHoaDon));
+                DataProvider.Ins.DB.CT_HD.Remove(tmpCTHD);
+                Items.Remove(SelectedItem);
+            }
+
         }
 
         private void EditDetail()
@@ -153,18 +221,21 @@ namespace BookStore.ViewModel
 
         private void UpdateResultAMount()
         {
-            SumAmount = 0;
-            //PaidAmount = 0;
-            LeftAmount = 0;
-            if (Items == null)
+            if (FlagIntent==0)
             {
-                return;
+                SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(SelectedCustomer.SoNo);
+                //PaidAmount = 0;
+                //LeftAmount = 0;
+                if (Items == null)
+                {
+                    return;
+                }
+                foreach (var v in Items)
+                {
+                    SumAmount += v.IntoMoney;
+                }
+                LeftAmount = SumAmount - PaidAmount;
             }
-            foreach (var v in Items)
-            {
-                SumAmount += v.IntoMoney;
-            }
-            LeftAmount = SumAmount - PaidAmount;
         }
 
         private void AddDetail()
@@ -178,13 +249,13 @@ namespace BookStore.ViewModel
                 var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, BookTypes = GetTypesString(SelectedBook.THELOAIs), OutputPrice = SelectedPriceOfBook, IntoMoney = IntoMoney };
                 Items.Add(CT_HD);
                 DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedBook.TenSach).LuongTon -= int.Parse(Amount);
-                DataProvider.Ins.DB.SaveChanges();
+                //DataProvider.Ins.DB.SaveChanges();
             }
         }
 
         private bool AddDetailButtonNeed()
         {
-            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || int.Parse(Amount) == 0)
+            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || int.Parse(Amount) == 0 || SelectedCustomer==null || InvoiceDate==null || FlagIntent == 1)
             {
                 return false;
             }
@@ -268,10 +339,9 @@ namespace BookStore.ViewModel
                         SelectedCustomer = kh;
                     }
                 }
-                foreach (var v in Items)
-                {
-                    SumAmount += v.IntoMoney;
-                }
+                SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.TongTien);
+                PaidAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.SoTienTra);
+                LeftAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.ConLai);
                 return;
             }
         }
@@ -287,8 +357,8 @@ namespace BookStore.ViewModel
             OutputPrice = 0;
             InvoiceDate = null;
             Items = null;
-            //ListBook = null;
-            //ListCustomer = null;
+            ListBook = null;
+            ListCustomer = null;
             Staff = null;
             Editor = null;
             SumAmount = 0;
