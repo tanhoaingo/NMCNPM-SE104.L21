@@ -17,6 +17,7 @@ namespace BookStore.ViewModel
         {
             #region Temp Value
             Staff = DataProvider.Ins.DB.NGUOIDUNGs.First(x => x.MaNguoiDung == 1);
+            DeletedCT_PN = new List<int>();
             #endregion
 
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
@@ -29,6 +30,23 @@ namespace BookStore.ViewModel
             SaveButtonClickCommand = new RelayCommand<object>((p) => { return true; }, (p) => { SaveBookEntry(); });
             ItemListDetailSelectionChangedCommand = new RelayCommand<object> ((p) => { return true; }, (p) => { LoadFromDetail(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailNeed(); }, (p) => { EditDetail(); });
+            DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailNeed(); }, (p) => { DeleteDetail(); });
+        }
+
+        private bool DeleteDetailNeed()
+        {
+            return SelectedDetail != null;
+        }
+
+        private void DeleteDetail()
+        {
+            DeletedCT_PN.Add(SelectedDetail.MaCTPNSInNeed);
+            Items.Remove(SelectedDetail);
+            SelectedDetail = null; 
+            foreach(var v in Items)
+            {
+                v.ID = Items.IndexOf(v) + 1;
+            }
         }
 
         private bool EditDetailNeed()
@@ -87,42 +105,27 @@ namespace BookStore.ViewModel
                 MessageBox.Show("Lập phiếu nhập sách thành công!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            if(FlagIntent == 1)
+            if (FlagIntent == 1)
             {
                 var tmpPN = DataProvider.Ins.DB.PHIEUNHAPSACHes.First(x => x.MaPhieuNhapSach == Editor.MaPhieuNhapSach);
-                foreach(var v in Items)
-                {
-                    var tmpBook = DataProvider.Ins.DB.SACHes.First(x => x.MaSach == v.MaSachInNeed);
-                    if(tmpBook != null)
+                { 
+                    foreach(var v in DeletedCT_PN)
                     {
-                        tmpBook.DAUSACH.LuongTon -= tmpBook.LuongTon;
-                        tmpBook.LuongTon = int.Parse(v.Amount);
-                        tmpBook.MaDauSach = v.Book.MaDauSach;
-                        tmpBook.DAUSACH.LuongTon += tmpBook.LuongTon;
+                        var tmpCT_PN = DataProvider.Ins.DB.CT_PNS.Where(x => x.MaCT_PNS == v).FirstOrDefault();
+                        var tmpSach = DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCT_PN.MaSach).FirstOrDefault();
+                        if (DataProvider.Ins.DB.CT_HD.Where(x => x.MaSach == tmpSach.MaSach).Count() > 0)
+                        {
+                            MessageBox.Show("Sách đã sử dụng, không thể xóa dữ liệu nhập sách này!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        var tmpMSach = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == tmpSach.MaDauSach).FirstOrDefault();
+                        tmpMSach.LuongTon -= tmpSach.LuongTon;
+                        DataProvider.Ins.DB.SACHes.Remove(tmpSach);
+                        DataProvider.Ins.DB.CT_PNS.Remove(tmpCT_PN);
                     }
-                    else
-                    {
-                        tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(v.Amount) };
-                        DataProvider.Ins.DB.SACHes.Add(tmpBook);
-                        DataProvider.Ins.DB.SaveChanges();
-                        var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == tmpBook.MaDauSach);
-                        tmpMBook.LuongTon += int.Parse(v.Amount);
-                    }
-
-                    var tmpCT_PN = DataProvider.Ins.DB.CT_PNS.First(x => x.MaCT_PNS == v.MaCTPNSInNeed);
-                    if (tmpCT_PN != null)
-                    {
-                        tmpCT_PN.DonGiaNhap = v.InputPrice;
-                        tmpCT_PN.SoLuong = int.Parse(v.Amount);
-                    }
-                    else
-                    {
-                        tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = v.InputPrice, MaSach = tmpBook.MaSach, SoLuong = int.Parse(v.Amount) };
-                        DataProvider.Ins.DB.CT_PNS.Add(tmpCT_PN);
-                        DataProvider.Ins.DB.SaveChanges();
-                    }
-                    DataProvider.Ins.DB.SaveChanges();
                 }
+                DataProvider.Ins.DB.SaveChanges();
+                DeletedCT_PN = null;
                 MessageBox.Show("Sửa phiếu nhập sách thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }   
@@ -202,6 +205,30 @@ namespace BookStore.ViewModel
 
         private void AddDetail()
         {
+            var minRemain = 0;
+            var nowRemain = SelectedBook.LuongTon ?? 0;
+            if (DataProvider.Ins.DB.THAMSOes.ToList().Count() > 0)
+            {
+                minRemain = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongTonToiThieu ?? 0;
+            }
+            if(nowRemain > minRemain)
+            {
+                MessageBox.Show(string.Format("Lượng tồn của sách phải ít hơn {0} để nhập sách! \n\nLượng tồn hiện tại: {1}", minRemain, nowRemain), "Thông báo",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var minAmount = 0;
+            if (DataProvider.Ins.DB.THAMSOes.ToList().Count() > 0)
+            {
+                minAmount = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongNhapToiThieu ?? 0;
+            }
+            if (int.Parse(Amount) < minAmount)
+            {
+                MessageBox.Show(string.Format("Lượng nhập tối thiểu là: {0} ", minAmount), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
             var tmp = new Item_CT_PNS()
             {
                 Book = SelectedBook,
@@ -243,6 +270,7 @@ namespace BookStore.ViewModel
             Editor = null;
             SumAmount = 0;
             SelectedDetail = null;
+            DeletedCT_PN = null;
         }
 
         public ICommand CloseWindowCommand { get; set; }
@@ -252,6 +280,7 @@ namespace BookStore.ViewModel
         public ICommand SaveButtonClickCommand { get; set; }
         public ICommand ItemListDetailSelectionChangedCommand { get; set; }
         public ICommand EditDetailClickCommand { get; set; }
+        public ICommand DeleteDetailClickCommand { get; set; }
 
         private int _FlagIntent;
         private DAUSACH _SelectedBook;
@@ -267,6 +296,7 @@ namespace BookStore.ViewModel
         private PHIEUNHAPSACH _Editor;
         private long _SumAmount;
         private Item_CT_PNS _SelectedDetail;
+        private List<int> _DeletedCT_PN;
 
         public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
@@ -283,5 +313,7 @@ namespace BookStore.ViewModel
         public long SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
 
         public Item_CT_PNS SelectedDetail { get => _SelectedDetail; set { _SelectedDetail = value; OnPropertyChanged(); } }
+
+        public List<int> DeletedCT_PN { get => _DeletedCT_PN; set => _DeletedCT_PN = value; }
     }
 }

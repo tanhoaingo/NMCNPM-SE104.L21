@@ -1,4 +1,5 @@
 ﻿using BookStore.Model;
+using BookStore.Pages;
 using BookStore.Tools;
 using System;
 using System.Collections.Generic;
@@ -7,24 +8,28 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 
 namespace BookStore.ViewModel
 {
     public class InvoiceViewModel : BaseViewModel
     {
-
-
         public InvoiceViewModel()
         {
-            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 20));
+          
+            _cardVisible = Visibility.Hidden;
+            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
             Items = CreateData();
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
 
 
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
-            AddCustomerClick = new RelayCommand<Object>((p) => { return true; }, (p) => { CreateNewCustomer(); });
+
             NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateSoNoCustomer();  });
+
+            AddCustomerClick = new RelayCommand<Page>((p) => { return true; }, (p) => { CreateNewCustomer(p); });
+
             BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); UpdateBookInfor(); });
             PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); UpdateAmountBook(); });
             AmountTextChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
@@ -103,6 +108,7 @@ namespace BookStore.ViewModel
                     return;
                 }
 
+
                 if (LeftAmount > 20000)
                 {
                     MessageBox.Show("Số tiền nợ không được vượt quá 20000!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -112,6 +118,7 @@ namespace BookStore.ViewModel
                 var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
                 DataProvider.Ins.DB.HOADONs.Add(HoaDon);
                 DataProvider.Ins.DB.SaveChanges();
+
 
                 if (HoaDon.ConLai >= 0 && HoaDon.ConLai <= 20000)
                 {
@@ -147,7 +154,7 @@ namespace BookStore.ViewModel
 
 
         }
-
+       
         private bool SaveInvoiceNeed()
         {
             if (SelectedCustomer == null || InvoiceDate == null || Items.Count == 0)
@@ -221,7 +228,9 @@ namespace BookStore.ViewModel
 
         private void UpdateResultAMount()
         {
+
             if (FlagIntent==0)
+
             {
                 SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(SelectedCustomer.SoNo);
                 //PaidAmount = 0;
@@ -236,6 +245,7 @@ namespace BookStore.ViewModel
                 }
                 LeftAmount = SumAmount - PaidAmount;
             }
+
         }
 
         private void AddDetail()
@@ -346,6 +356,7 @@ namespace BookStore.ViewModel
             }
         }
 
+
         public override void CleanUpData()
         {
             base.CleanUpData();
@@ -368,11 +379,46 @@ namespace BookStore.ViewModel
             SelectedPriceOfBook = null;
         }
 
-        private void CreateNewCustomer()
+        
+        private void CreateNewCustomer(Page p)
+
         {
-            AddCustomerWindow tmp = new AddCustomerWindow();
+            /*   (controls as Grid).Effect = new BlurEffect();
+              // Splash.Visibility = Visibility.Visible;
+
+               var dlg = new Window();
+
+               dlg.ShowDialog();
+
+               // Splash.Visibility = Visibility.Collapsed;
+               (controls as Grid).Effect = null;
+
+   */
+
+            var tmpPg = p as InvoicePage;
+
+            tmpPg.Grid.Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
+            var tmp = new AddCustomerWindow();
             tmp.ShowDialog();
 
+            // Splash.Visibility = Visibility.Collapsed;
+            tmpPg.Grid.Effect = null;
+        }
+        private void SetCard(KHACHHANG value)
+        {
+            if(value!=null)
+            {
+                CardPhone = value.DienThoai; 
+                CardVisible = Visibility.Visible;
+                CardName = value.HoTenKhachHang;
+            }
+            else
+            {
+                CardVisible = Visibility.Hidden;
+            }
         }
 
         private static ObservableCollection<Item_CT_HD> CreateData()
@@ -381,6 +427,7 @@ namespace BookStore.ViewModel
         }
 
         public ICommand SaveButtonClickCommand { get; set; }
+        public ICommand Grid { get; set; }
         public ICommand AddingNewItemCommand { get; set; }
         public ICommand AddCustomerClick { get; set; }
         public ICommand NameCustomerSelectionChangedCommand { get; set; }
@@ -414,6 +461,7 @@ namespace BookStore.ViewModel
         private Item_CT_HD _SelectedItem;
         private DateTime? _InvoiceDate;
         private string _BookTypes;
+
         private decimal? _OutputPrice;
 
 
@@ -425,13 +473,20 @@ namespace BookStore.ViewModel
 
         public NGUOIDUNG Staff { get => _Staff; set { _Staff = value; OnPropertyChanged(); } }
 
+        private string _cardName;
+        private string _cardPhone;
+        private Visibility _cardVisible;
+        private Grid _grid;
+        private string _StaffName;
+
+
         public ObservableCollection<Item_CT_HD> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
 
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; } }
 
         public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set => _ListCustomer = value; }
 
-        public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; OnPropertyChanged(); } }
+        public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; SetCard(value); OnPropertyChanged(); } }
 
         public KHACHHANG SelectedCustomer_2 { get => _SelectedCustomer_2; set { _SelectedCustomer_2 = value; OnPropertyChanged(); } }
 
@@ -450,7 +505,12 @@ namespace BookStore.ViewModel
 
         public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
-        public long LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
+        public long LeftAMount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
+        
+        public string CardName { get => _cardName; set { _cardName = value; OnPropertyChanged(); } }
+        public string CardPhone { get => _cardPhone; set { _cardPhone = value; OnPropertyChanged(); } }
+        public Visibility CardVisible { get => _cardVisible; set { _cardVisible = value; OnPropertyChanged(); } }
+        public Grid GRID { get => _grid; set { _grid = value; OnPropertyChanged(); } }
 
         public Item_CT_HD SelectedItem
         {

@@ -398,3 +398,20 @@ ALTER TABLE PHIEUNHAPSACH ADD MaNguoiLap INT NOT NULL DEFAULT 1
 ALTER TABLE PHIEUNHAPSACH
 ADD CONSTRAINT FK_PHIEUNHAPSACH_NGUOIDUNG
 FOREIGN KEY (MaNguoiLap) REFERENCES NGUOIDUNG (MaNguoiDung)
+
+/*=============================================================================*/
+/*Log 5 database*/
+/*=============================================================================*/
+
+ALTER TABLE THAMSO
+DROP COLUMN ChoPhepThuLonHonNo
+
+ALTER TABLE THAMSO
+ADD ChoPhepThuLonHonNo BIT
+
+/*=============================================================================*/
+/*Log 6 database*/
+/*=============================================================================*/
+
+INSERT INTO THAMSO (LuongNhapToiThieu, LuongTonToiThieu, SoNoToiDa, LuongTonToiThieuSauBan, ChoPhepThuLonHonNo)
+VALUES (150, 300, 20000, 20, 1)

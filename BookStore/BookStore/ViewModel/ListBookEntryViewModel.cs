@@ -48,8 +48,17 @@ namespace BookStore.ViewModel
             (bookEntryWindow.DataContext as BookEntryViewModel).FlagIntent = 1;
             (bookEntryWindow.DataContext as BookEntryViewModel).Editor = SelectedEntryBook;
             (bookEntryWindow.DataContext as BookEntryViewModel).LoadData();
+            bookEntryWindow.AddDetailButton.IsEnabled = false;
+            bookEntryWindow.EditDetailButton.IsEnabled = false;
+            bookEntryWindow.BookNameComboBox.IsEnabled = false;
+            bookEntryWindow.BookTypeTextBox.IsEnabled = false;
+            bookEntryWindow.BookAuthorTextBox.IsEnabled = false;
+            bookEntryWindow.AmountTextBox.IsEnabled = false;
+            bookEntryWindow.InputPriceTextBox.IsEnabled = false;
+            bookEntryWindow.IntoMoneyTextBox.IsEnabled = false;
             bookEntryWindow.ShowDialog();
-            LoadData();
+            loadDetail();
+            
         }
 
         public ICommand SelectionChangedCommand { get; set; }

@@ -9,32 +9,32 @@
 
 namespace BookStore.Model
 {
-    using BookStore.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class DAUSACH:BaseViewModel
+    public partial class DAUSACH
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DAUSACH()
         {
+            this.CT_BCT = new HashSet<CT_BCT>();
             this.SACHes = new HashSet<SACH>();
             this.TACGIAs = new HashSet<TACGIA>();
             this.THELOAIs = new HashSet<THELOAI>();
         }
     
         public int MaDauSach { get; set; }
-        private string _TenSach;
-        private Nullable<int> _LuongTon;
+        public string TenSach { get; set; }
+        public Nullable<int> LuongTon { get; set; }
         public byte[] HinhAnhSach { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CT_BCT> CT_BCT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SACH> SACHes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TACGIA> TACGIAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<THELOAI> THELOAIs { get; set; }
-        public string TenSach { get => _TenSach; set { _TenSach = value; OnPropertyChanged(); } }
-        public int? LuongTon { get => _LuongTon; set { _LuongTon = value; OnPropertyChanged(); } }
     }
 }

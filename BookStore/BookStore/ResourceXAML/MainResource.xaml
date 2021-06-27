@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:viewmodel="clr-namespace:BookStore.ViewModel"
-                    xmlns:local="clr-namespace:BookStore">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                   
+                    xmlns:local="clr-namespace:BookStore"
+                    xmlns:viewmodel="clr-namespace:BookStore.ViewModel">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:InvoiceViewModel x:Key="InvoiceVM"></viewmodel:InvoiceViewModel>
     <viewmodel:BookEntryViewModel x:Key="BookEntryVM"></viewmodel:BookEntryViewModel>
@@ -16,4 +16,8 @@
     <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
     <viewmodel:ListBookEntryViewModel x:Key="ListBookEntryVM"></viewmodel:ListBookEntryViewModel>
     <viewmodel:ListInvoiceViewModel x:Key="ListInvoiceVM"></viewmodel:ListInvoiceViewModel>
+    <viewmodel:ListBillViewModel x:Key="ListBillVM"></viewmodel:ListBillViewModel>
+    <viewmodel:NewMainViewModel1 x:Key="NewMain"></viewmodel:NewMainViewModel1>
+    <viewmodel:AuthorViewModel x:Key="AuthorVM"></viewmodel:AuthorViewModel>
+    <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
 </ResourceDictionary>
