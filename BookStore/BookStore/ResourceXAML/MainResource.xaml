@@ -20,4 +20,8 @@
     <viewmodel:NewMainViewModel1 x:Key="NewMain"></viewmodel:NewMainViewModel1>
     <viewmodel:AuthorViewModel x:Key="AuthorVM"></viewmodel:AuthorViewModel>
     <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
+    <viewmodel:ListUserViewModel x:Key="ListUserVM"></viewmodel:ListUserViewModel>
+    <viewmodel:AddUserViewModel x:Key="AddUserVM"></viewmodel:AddUserViewModel>
+    <viewmodel:BCCNViewModel x:Key="BccnVM"></viewmodel:BCCNViewModel>
+    <viewmodel:BCTViewModel x:Key="BctVM"></viewmodel:BCTViewModel>
 </ResourceDictionary>

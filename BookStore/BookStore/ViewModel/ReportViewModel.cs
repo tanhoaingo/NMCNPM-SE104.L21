@@ -77,13 +77,12 @@ namespace BookStore.ViewModel
 
             List<ChiTietBaoCaoTon> list = new List<ChiTietBaoCaoTon>();
             var maBCT = baoCaoTon.Where(x => (month == "Tất cả" ? true : x.Thang.Value.Month.ToString() == month)).Select(x => x.MaBaoCaoTon);
-            /*foreach (var item in maBCT)
+            foreach (var item in maBCT)
             {
                 var ct_BCT = chiTiet.Where(x => x.MaBaoCaoTon == item);
                 foreach (var ct in ct_BCT)
                 {
-                    var maDauSach = sach.Where(x => x.MaSach == ct.MaSach).Select(x => x.MaDauSach).First();
-                    var tenSach = dauSach.Where(x => x.MaDauSach == maDauSach).Select(x => x.TenSach).First();
+                    var tenSach = dauSach.Where(x => x.MaDauSach == ct.MaDauSach).Select(x => x.TenSach).First();
                     list.Add(new ChiTietBaoCaoTon()
                     {
                         Sach = tenSach,
@@ -92,7 +91,7 @@ namespace BookStore.ViewModel
                         phatSinh = ct.PhatSinh
                     });
                 }
-            }*/
+            }
             BaoCaoTonSource = list;
         }
         public void loadBaoCaoCongNo(string month)
@@ -103,7 +102,7 @@ namespace BookStore.ViewModel
 
 
             List<ChiTietBaoCaoCongNo> list = new List<ChiTietBaoCaoCongNo>();
-            var maBCCN = baoCaoCongNo.Where(x => (month == "Tất cả" ? true : x.Thang.Value.Month.ToString() == month)).Select(x => x.MaBaoCaoCongNo);
+            var maBCCN = baoCaoCongNo.Where(x => (month == "Tất cả" ? true : x.Thang.Value.Month.ToString() == month) && (x.Thang.Value.Year == DateTime.Now.Year)).Select(x => x.MaBaoCaoCongNo);
             foreach (var item in maBCCN)
             {
                 var ct_BCCN = chiTiet.Where(x => x.MaBaoCaoCongNo == item);

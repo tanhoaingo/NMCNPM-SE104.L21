@@ -1,0 +1,161 @@
+﻿<Window x:Class="BookStore.View.ListUserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:chart1="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource ListUserVM}"
+        MinHeight="768"
+        MinWidth="1024"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="Quản lý nhà sách" 
+        Height="768" Width="1024"
+        Style="{StaticResource {x:Type Window}}"
+        Name="ListUserWD">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=ListUserWD}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                       CommandParameter="{Binding ElementName=ListUserWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="8">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+
+                <Grid Height="650">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="550"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <TextBox
+                        Text="{Binding SelectedUser.MaNguoiDung, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="False"
+                        Margin="90,30,20,30"
+                        FontSize="15"
+  materialDesign:HintAssist.Hint="Mã người dùng"
+                        
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+  VerticalAlignment="Center" Width="140" />
+                        <TextBox
+                        Grid.Row="1"
+                        Text="{Binding SelectedUser.TenDangNhap, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="False"
+                        Margin="20,30,20,30"
+                        FontSize="15"
+  materialDesign:HintAssist.Hint="Tên đăng nhập"
+                        
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+  VerticalAlignment="Center" Width="140" />
+                        <TextBox
+                        Grid.Row="1"
+                        Text="{Binding SelectedUser.MatKhau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="True"
+                        Margin="20,30,20,30"
+                        FontSize="15"
+  materialDesign:HintAssist.Hint="Mật khẩu"
+                        
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+  VerticalAlignment="Center" Width="140" />
+                        <TextBox
+                        Grid.Row="1"
+                        Text="{Binding SelectedUser.TenNguoiDung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        IsEnabled="True"
+                        Margin="20,30,20,30"
+                        FontSize="15"
+  materialDesign:HintAssist.Hint="Tên người dùng"
+                        
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+  VerticalAlignment="Center" Width="140" />
+                        <ComboBox 
+                        x:Name="GroupCombobox"
+                        materialDesign:HintAssist.Hint="Mã nhóm"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"
+                        ItemsSource="{Binding GroupUser}"
+                        SelectedItem="{Binding SelectedUser.MaNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Center"
+                        Margin="20,30,20,29" Height="41">
+                        </ComboBox>
+                    </StackPanel>
+                    <Grid Height="40" Grid.Row="0" VerticalAlignment="Top" Margin="0,0,10,0">
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                            Text="Danh sách người dùng" VerticalAlignment="Center"
+                            FontSize="20"
+                            Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.342,0.369" Height="32" Margin="370,10,380,-2" />
+                    </Grid>
+                    <Border Margin="80,45,80,-5" Background="GhostWhite" BorderBrush="Black" BorderThickness="3" Grid.Row="0">
+                        <DataGrid ItemsSource="{Binding ListUser, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedUser, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="180" CanUserReorderColumns="False" IsReadOnly="True"  >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding MaNguoiDung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã người dùng"/>
+                                <DataGridTextColumn Binding="{Binding TenDangNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Tên đăng nhập"/>
+                                <DataGridTextColumn Binding="{Binding MatKhau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat = 'dd/MM/yyyy'}" Header="Mật khẩu" />
+                                <DataGridTextColumn Binding="{Binding TenNguoiDung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Tên người dùng"/>
+                                <DataGridTextColumn Binding="{Binding MaNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã nhóm" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+                <Grid Height="61">
+                    <Button x:Name="BtnEdit"
+  Style="{StaticResource MaterialDesignOutlinedButton}"
+  ToolTip="MaterialDesignOutlinedButton"
+  Content="LƯU THAY ĐỔI" Margin="411,10,411,19">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ButtonEditClickCommand}"
+                                   CommandParameter="{Binding ElementName=BtnEdit}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button x:Name="BtnAdd"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        ToolTip="MaterialDesignOutlinedButton"
+                        Content="THÊM NGƯỜI DÙNG" Margin="114,10,708,19">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ButtonAddClickCommand}"
+                                    CommandParameter="{Binding ElementName=BtnAdd}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button x:Name="BtnDelete"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        ToolTip="MaterialDesignOutlinedButton"
+                        Content="XÓA NGƯỜI DÙNG" Margin="708,10,114,19">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ButtonDeleteClickCommand}"
+                                    CommandParameter="{Binding ElementName=BtnDelete}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+</Window>
