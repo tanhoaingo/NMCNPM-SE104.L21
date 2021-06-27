@@ -9,9 +9,9 @@ using System.Windows.Input;
 
 namespace BookStore.ViewModel
 {
-    public class AuthorViewModel : BaseViewModel
+    class CategoryPageViewModel : BaseViewModel
     {
-        public AuthorViewModel()
+        public CategoryPageViewModel()
         {
             Items = CreateData();
             LoadAuthor();
@@ -35,12 +35,12 @@ namespace BookStore.ViewModel
         }
         private bool checkADD()
         {
-            if (string.IsNullOrEmpty(AuthorName))
+            if (string.IsNullOrEmpty(CategoryName))
             {
                 return false;
             }
-            var c = DataProvider.Ins.DB.TACGIAs.Where(x => x.TenTacGia == AuthorName).Count();
-            if(c>0)
+            var c = DataProvider.Ins.DB.THELOAIs.Where(x => x.TenTheLoai == CategoryName).Count();
+            if (c > 0)
             {
                 return false;
             }
@@ -48,51 +48,57 @@ namespace BookStore.ViewModel
         }
         private void AddTolist()
         {
-            _Items.Add(new Item_Auth() { Author = AuthorName, ID = (_Items.Count+1).ToString() });
-        } 
+            _Items.Add(new Item_category() { Category = CategoryName, ID = (_Items.Count + 1).ToString() });
+        }
         private void EditTolist()
         {
-            SelectedItem.Author = AuthorName;
-        } 
+            SelectedItem.Category = CategoryName;
+        }
         private void UpdateDB()
         {
-            DataProvider.Ins.DB.TACGIAs.Add(new TACGIA() { TenTacGia = AuthorName });
+            DataProvider.Ins.DB.THELOAIs.Add(new THELOAI() { TenTheLoai = CategoryName });
             DataProvider.Ins.DB.SaveChanges();
-           
+
         }
 
         private void UpdateEditDB()
         {
-            var author = DataProvider.Ins.DB.TACGIAs.Where(x => x.MaTacGia.ToString() == SelectedItem.ID).SingleOrDefault();
-            author.TenTacGia = AuthorName;
+            var author = DataProvider.Ins.DB.THELOAIs.Where(x => x.MaTheLoai.ToString() == SelectedItem.ID).SingleOrDefault();
+            author.TenTheLoai = CategoryName;
             DataProvider.Ins.DB.SaveChanges();
         }
 
-        private static ObservableCollection<Item_Auth> CreateData()
+        private static ObservableCollection<Item_category> CreateData()
         {
-            return new ObservableCollection<Item_Auth> { };
+            return new ObservableCollection<Item_category> { };
         }
 
         private void LoadAuthor()
         {
             int i = 1;
-            foreach(var v in DataProvider.Ins.DB.TACGIAs)
+            foreach (var v in DataProvider.Ins.DB.THELOAIs)
             {
-                _Items.Add(new Item_Auth() { Author=v.TenTacGia , ID =i.ToString() });
+                _Items.Add(new Item_category() { Category = v.TenTheLoai, ID = i.ToString() });
+
                 i++;
             }
         }
-        private ObservableCollection<Item_Auth> _Items;
-        private Item_Auth _selectedItem;
-        private String _authorName;
-        public ObservableCollection<Item_Auth> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
-        public Item_Auth SelectedItem { get => _selectedItem; set { 
+        private ObservableCollection<Item_category> _Items;
+        private Item_category _selectedItem;
+        private String _categoryName;
+        public ObservableCollection<Item_category> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
+        public Item_category SelectedItem
+        {
+            get => _selectedItem; set
+            {
                 _selectedItem = value; OnPropertyChanged();
                 if (_selectedItem != null)
                 {
-                    AuthorName = _selectedItem.Author;
+                    CategoryName = _selectedItem.Category;
                 }
-            } }
-        public string AuthorName { get => _authorName; set { _authorName = value; OnPropertyChanged(); } }
+            }
+        }
+        public string CategoryName { get => _categoryName; set { _categoryName = value; OnPropertyChanged(); } }
     }
 }
+

@@ -30,8 +30,8 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="263*"></ColumnDefinition>
-            <ColumnDefinition Width="713*"></ColumnDefinition>
+            <ColumnDefinition Width="243*"></ColumnDefinition>
+            <ColumnDefinition Width="513*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <TextBlock
@@ -42,11 +42,11 @@
             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
             Text="Thêm Đầu Sách"
             FontSize="30"
-            Foreground="#DD2D39A8" FontWeight="Bold" Margin="233,10,228,5"/>
+            Foreground="#DD2D39A8" FontWeight="Bold" Margin="433,10,228,5"/>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Image 
-                Margin="0,0,0,83"
+                Margin="10,0,30,83"
                 x:Name="BookPicture"
                 Source="{Binding BookImage}">
             </Image>
@@ -310,10 +310,44 @@
 
 
             <WrapPanel
-                Grid.Row="4"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Center" Height="32" Width="260" Margin="62,23,3,21" Grid.Column="1">
-                <Button
+                Grid.Row="4"  Grid.Column="1" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                >
+                    <Button
+                        Width="150"
+                        Command="{Binding CancelButtonClickCommand}"
+                        BorderBrush="Transparent"
+                        Foreground="#af91fa"
+                        Background="White"
+                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
+            Height="50"
+            materialDesign:ButtonAssist.CornerRadius="25"
+                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
+                        <TextBlock
+                 Text="Hủy" FontSize="22" FontWeight="Bold" />
+                    </Button>
+
+                    <Button
+                        Width="150" Margin="20 10 10 10"
+                        BorderBrush="Transparent"
+                        Command="{Binding ConfirmButtonClickCommand}"
+                        CommandParameter="{Binding ElementName=AddBookWD}"
+                         Foreground="White"
+                        Background="#af91fa"
+                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
+            Height="50"
+            materialDesign:ButtonAssist.CornerRadius="25"
+                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
+                        <TextBlock
+                 Text="Hoàn tất" FontSize="22" FontWeight="Bold" />
+                    </Button>
+                </StackPanel>
+
+               
+
+
+                <!--<Button
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     Width="100"
                     ToolTip="Resource name: MaterialDesignRaisedButton"
@@ -342,7 +376,7 @@
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </Button>
+                </Button>-->
             </WrapPanel>
         </Grid>
     </Grid>

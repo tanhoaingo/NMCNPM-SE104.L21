@@ -109,6 +109,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Item_Auth.cs" />
+    <Compile Include="Model\Item_category.cs" />
     <Compile Include="Model\Item_ListCheckedBoxAuthor.cs" />
     <Compile Include="Model\Item_ListCheckedBoxType.cs" />
     <Compile Include="Model\KHACHHANG.cs">
@@ -156,8 +157,14 @@
     <Compile Include="Pages\AuthorPage.xaml.cs">
       <DependentUpon>AuthorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BookCategory.xaml.cs">
+      <DependentUpon>BookCategory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BookEntryPage.xaml.cs">
       <DependentUpon>BookEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BookPage.xaml.cs">
+      <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InvoicePage.xaml.cs">
       <DependentUpon>InvoicePage.xaml</DependentUpon>
@@ -166,6 +173,7 @@
     <Compile Include="ViewModel\AddBookViewModel.cs" />
     <Compile Include="ViewModel\AddTypeViewModel.cs" />
     <Compile Include="ViewModel\AuthorViewModel.cs" />
+    <Compile Include="ViewModel\CategoryPageViewModel.cs" />
     <Compile Include="ViewModel\NewMainViewModel.cs" />
     <Compile Include="ViewModel\SlideMenu.cs" />
     <Compile Include="View\AddAuthorWindow.xaml.cs">
@@ -223,7 +231,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\BookCategory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\BookEntryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BookPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -345,6 +361,7 @@
   <ItemGroup>
     <Resource Include="Source\Image\icon.png" />
     <Resource Include="Source\Image\as1.png" />
+    <Resource Include="Source\Image\bookInsert.jpg" />
     <Content Include="Source\Image\card1.png" />
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

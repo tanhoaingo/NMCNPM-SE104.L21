@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,15 +18,27 @@ using System.Windows.Shapes;
 namespace BookStore.Pages
 {
     /// <summary>
-    /// Interaction logic for InvoicePage.xaml
+    /// Interaction logic for BookPage.xaml
     /// </summary>
-    public partial class InvoicePage : Page
+    public partial class BookPage : Page
     {
-        public InvoicePage()
+        public BookPage()
         {
             InitializeComponent();
         }
 
-        
+        private void Btn_themDauSach(object sender, RoutedEventArgs e)
+        {
+            (Grid as Grid).Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
+            var tmp = new AddBookWindow();
+            tmp.ShowDialog();
+
+            // Splash.Visibility = Visibility.Collapsed;
+            (Grid as Grid).Effect = null;
+
+        }
     }
 }

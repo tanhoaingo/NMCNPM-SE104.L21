@@ -1,4 +1,5 @@
 ﻿using BookStore.Model;
+using BookStore.Pages;
 using BookStore.Tools;
 using System;
 using System.Collections.ObjectModel;
@@ -22,7 +23,7 @@ namespace BookStore.ViewModel
 
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
-            AddCustomerClick = new RelayCommand<Object>((p) => { return true; }, (p) => { CreateNewCustomer(); });
+            AddCustomerClick = new RelayCommand<Page>((p) => { return true; }, (p) => { CreateNewCustomer(p); });
             NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
             BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); UpdateBookInfor(); });
             PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
@@ -198,7 +199,7 @@ namespace BookStore.ViewModel
             }
         }
 
-        private void CreateNewCustomer()
+        private void CreateNewCustomer(Page p)
         {
             /*   (controls as Grid).Effect = new BlurEffect();
               // Splash.Visibility = Visibility.Visible;
@@ -210,7 +211,19 @@ namespace BookStore.ViewModel
                // Splash.Visibility = Visibility.Collapsed;
                (controls as Grid).Effect = null;
 
-   */     
+   */
+
+            var tmpPg = p as InvoicePage;
+
+            tmpPg.Grid.Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
+            var tmp = new AddCustomerWindow();
+            tmp.ShowDialog();
+
+            // Splash.Visibility = Visibility.Collapsed;
+            tmpPg.Grid.Effect = null;
         }
         private void SetCard(KHACHHANG value)
         {

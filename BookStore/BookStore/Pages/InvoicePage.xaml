@@ -19,7 +19,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}" 
        
         DataContext="{StaticResource InvoiceVM}" 
-        x:Name="InvoiceWD"
+        x:Name="InvoicePG"
         Height="1000"
         Width="1600"
       Title="InvoicePage">
@@ -101,10 +101,11 @@
                                 Margin="0 0 500 163"
                              BadgeColorZoneMode="SecondaryMid">
                             <Button
-                                    Click="Button_Click"                        
+                                                   
                                     Background="White"
                                     Foreground="#6432a8"
                                     Command="{Binding AddCustomerClick}"
+                                 CommandParameter="{Binding ElementName=InvoicePG}"
                                      Style="{StaticResource MaterialDesignRaisedDarkButton}"
                                    materialDesign:ButtonAssist.CornerRadius="10"
                                     Width="200"
