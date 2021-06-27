@@ -36,7 +36,14 @@ namespace BookStore.ViewModel
 
         public void loadEdit()
         {
+            if (SelectedInvoice == null)
+            {
+                return;
+            }
             InvoiceWindow invoiceWindow = new InvoiceWindow();
+            (invoiceWindow.DataContext as InvoiceViewModel).FlagIntent = 1;
+            (invoiceWindow.DataContext as InvoiceViewModel).Editor = SelectedInvoice;
+            (invoiceWindow.DataContext as InvoiceViewModel).LoadData();
             invoiceWindow.ShowDialog();
         }
 

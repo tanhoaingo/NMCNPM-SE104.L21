@@ -16,7 +16,17 @@ namespace BookStore.Model
         private Int64 _IntoMoney;
         private int _IDinDataBase;
         private CT_PNS _CTPNS;
+        private string _BookTypes;
+        private decimal? _InputPrice;
+        private decimal? _OutputPrice;
+        private int _MaSachInNeed;
+        private int _MaCTHDInNeed;
 
+        public decimal? OutputPrice { get => _OutputPrice; set { _OutputPrice = value; OnPropertyChanged(); } }
+        public int MaSachInNeed { get => _MaSachInNeed; set => _MaSachInNeed = value; }
+        public int MaCTHDInNeed { get => _MaCTHDInNeed; set => _MaCTHDInNeed = value; }
+        public decimal? InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
+        public string BookTypes { get => _BookTypes; set { _BookTypes = value; OnPropertyChanged(); } }
         public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
         public string Amount { get => _Amount; set { _Amount = value; OnPropertyChanged(); } }
         public Int64 IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }

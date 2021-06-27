@@ -515,7 +515,6 @@
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             ItemsSource="{Binding ListPriceOfBook, Mode=OneWay}"
-                            DisplayMemberPath="DonGiaNhap"
                             SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"
                             Height="60"
@@ -610,7 +609,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding }"
+                                            Text="{Binding BookTypes}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
@@ -630,7 +629,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate >
                                         <TextBlock
-                                            Text="{Binding CTPNS.DonGiaNhap}"
+                                            Text="{Binding OutputPrice}"
                                             FontSize="18">
                                         </TextBlock>
                                     </DataTemplate>
