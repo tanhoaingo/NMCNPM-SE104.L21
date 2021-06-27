@@ -24,4 +24,5 @@
     <viewmodel:AddUserViewModel x:Key="AddUserVM"></viewmodel:AddUserViewModel>
     <viewmodel:BCCNViewModel x:Key="BccnVM"></viewmodel:BCCNViewModel>
     <viewmodel:BCTViewModel x:Key="BctVM"></viewmodel:BCTViewModel>
+    <viewmodel:ListCustomerViewModel x:Key="ListCustomerVM"></viewmodel:ListCustomerViewModel>
 </ResourceDictionary>

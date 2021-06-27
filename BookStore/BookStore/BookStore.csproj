@@ -193,6 +193,7 @@
     <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
     <Compile Include="ViewModel\ListBillViewModel.cs" />
     <Compile Include="ViewModel\ListBookEntryViewModel.cs" />
+    <Compile Include="ViewModel\ListCustomerViewModel.cs" />
     <Compile Include="ViewModel\ListInvoiceViewModel.cs" />
     <Compile Include="ViewModel\ListUserViewModel.cs" />
     <Compile Include="ViewModel\NewMainViewModel1.cs" />
@@ -240,6 +241,9 @@
     </Compile>
     <Compile Include="View\ListBookEntryWindow.xaml.cs">
       <DependentUpon>ListBookEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ListCustomerWindow.xaml.cs">
+      <DependentUpon>ListCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ListInvoiceWindow.xaml.cs">
       <DependentUpon>ListInvoiceWindow.xaml</DependentUpon>
@@ -361,6 +365,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ListCustomerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ListInvoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -452,10 +460,8 @@
     <Resource Include="Source\Image\icon.png" />
     <Resource Include="Source\Image\as1.png" />
     <Resource Include="Source\Image\bookInsert.jpg" />
-
     <Resource Include="Source\Image\adduser.png" />
     <Content Include="Source\Image\card1.png" />
-
     <Content Include="Model\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
