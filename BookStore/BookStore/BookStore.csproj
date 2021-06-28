@@ -135,8 +135,17 @@
     <Compile Include="Model\KHACHHANG.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BCCNpage.xaml.cs">
+      <DependentUpon>BCCNpage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BCTpage.xaml.cs">
+      <DependentUpon>BCTpage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ListBookEntryPage.xaml.cs">
       <DependentUpon>ListBookEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ListCustomerPage.xaml.cs">
+      <DependentUpon>ListCustomerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ListInvoiceBillPage.xaml.cs">
       <DependentUpon>ListInvoiceBillPage.xaml</DependentUpon>
@@ -277,7 +286,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\BCCNpage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BCTpage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ListBookEntryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ListCustomerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
