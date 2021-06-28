@@ -100,6 +100,7 @@
           <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
           <Property Name="DienThoai" Type="nvarchar" MaxLength="15" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="TrangThai" Type="int" />
         </EntityType>
         <EntityType Name="NGUOIDUNG">
           <Key>
@@ -740,6 +741,7 @@
           <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DienThoai" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrangThai" Type="Int32" />
           <NavigationProperty Name="CT_BCCN" Relationship="MYDATABASEModel.FK_CT_BCCN_KHACHHANG" FromRole="KHACHHANG" ToRole="CT_BCCN" />
           <NavigationProperty Name="HOADONs" Relationship="MYDATABASEModel.FK_HOADON_KHACHHANG" FromRole="KHACHHANG" ToRole="HOADON" />
           <NavigationProperty Name="PHIEUTHUTIENs" Relationship="MYDATABASEModel.FK_PHIEUTHUTIEN_KHACHHANG" FromRole="KHACHHANG" ToRole="PHIEUTHUTIEN" />
@@ -1004,7 +1006,7 @@
           <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
           <End Type="MYDATABASEModel.THELOAI" Role="THELOAI" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1107,6 +1109,7 @@
           <EntitySetMapping Name="KHACHHANGs">
             <EntityTypeMapping TypeName="MYDATABASEModel.KHACHHANG">
               <MappingFragment StoreEntitySet="KHACHHANG">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="DienThoai" ColumnName="DienThoai" />
                 <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
