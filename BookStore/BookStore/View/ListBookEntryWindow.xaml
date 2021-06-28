@@ -80,7 +80,7 @@
                                 <DataGridTextColumn Binding="{Binding MaPhieuNhapSach}" Header="Mã PNS"/>
                                 <DataGridTextColumn Binding="{Binding MaSach}" Header="Mã sách"/>
                                 <DataGridTextColumn Binding="{Binding SoLuong}" Header="Số lượng"/>
-                                <DataGridTextColumn Binding="{Binding DonGiaNhap, StringFormat={}{0:#.##}}" Header="Đơn giá nhập"/>
+                                <DataGridTextColumn Binding="{Binding DonGiaNhap, StringFormat={}{0:N0}}" Header="Đơn giá nhập"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>

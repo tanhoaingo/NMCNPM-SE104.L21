@@ -400,14 +400,15 @@
                         </TextBox>
                         <TextBox
                             x:Name="InputPriceTextBox"
-                            Text="{Binding InputPrice, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Text="{Binding InputPrice, Mode=TwoWay, StringFormat={}{0:N0}}"
                             materialDesign:HintAssist.Hint="Đơn Giá Nhập"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                             FontSize="20"
                             MinWidth="180"
                             Height="60"
-                            VerticalAlignment="Center" >
+                            VerticalAlignment="Center" 
+                            Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewTextInput" >
                                     <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />

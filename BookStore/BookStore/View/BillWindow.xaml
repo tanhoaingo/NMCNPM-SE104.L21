@@ -141,13 +141,13 @@
                         VerticalAlignment="Center" Width="150" />
 
                         <TextBox
-                        Text="{Binding PaidAmount, Mode=TwoWay}"
-                        Margin="35,20,30,20"
+                        Text="{Binding PaidAmount, Mode=TwoWay,StringFormat={}{0:N0}}"
+                        Margin="35,20,30,10"
                         FontSize="15"
                         materialDesign:HintAssist.Hint="Số tiền thu"
                         
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Width="150" />
+                        VerticalAlignment="Center" Width="150" Height="50" />
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewTextInput" >
                                 <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
