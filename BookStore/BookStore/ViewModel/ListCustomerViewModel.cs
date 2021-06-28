@@ -37,6 +37,7 @@ namespace BookStore.ViewModel
                     var tmpCus = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.MaKhachHang == SelectedItem.MaKhachHang).FirstOrDefault();
                     tmpCus.TrangThai = 1;
                     DataProvider.Ins.DB.SaveChanges();
+                    LoadListCustomer();
                 }
                 else
                 {

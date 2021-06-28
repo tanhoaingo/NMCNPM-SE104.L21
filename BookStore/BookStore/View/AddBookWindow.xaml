@@ -32,7 +32,15 @@
                                    CommandParameter="{Binding ElementName=AddBookWD}">
             </i:InvokeCommandAction>
         </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded" >
+            <i:InvokeCommandAction Command="{Binding LoadWindowCommand}"
+                                   CommandParameter="{Binding ElementName=AddBookWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
+    
+    
+    
     <Grid >
         
         <Grid.RowDefinitions>
@@ -46,6 +54,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock
+            x:Name="TitleBookItent"
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
@@ -143,7 +152,7 @@
             <TextBox
                 Grid.Column="1"
                 Grid.Row="0"
-                Text="{Binding BookName}"
+                Text="{Binding BookName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                 FontSize="20"
                 VerticalAlignment="Center"
                 Margin="20,22,10,22" Height="33">
@@ -184,20 +193,18 @@
 
 
             <ComboBox
-                  Grid.Column="1"
+                Grid.Column="1"
                 Grid.Row="1"   Margin="20,1,0,22"
-                            materialDesign:HintAssist.Hint="Thể loại"
-                
-                            x:Name="name1"
-                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                            IsEditable="True"
-                            ItemsSource="{Binding ListCategory}"
-                            SelectedItem="{Binding SelectCategory,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            FontSize="20"
-                            Height="50"
-                            MinWidth="180"
-                
-                            VerticalAlignment="Center">
+                materialDesign:HintAssist.Hint="Thể loại"            
+                x:Name="name1"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                IsEditable="True"
+                ItemsSource="{Binding ListCategory}"
+                SelectedItem="{Binding SelectCategory,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"
+                Height="50"
+                MinWidth="180"
+                VerticalAlignment="Center">
                            
             </ComboBox>
             <!--<Border
@@ -222,18 +229,17 @@
             </Border>-->
 
             <ComboBox
-                  Grid.Column="1"
+                Grid.Column="1"
                 Grid.Row="2"   Margin="20,1,0,22"
-                            materialDesign:HintAssist.Hint="Tác giả"
-                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                            IsEditable="True"
-                            ItemsSource="{Binding ListAuthor}"
-                            SelectedItem="{Binding SelectAuthor,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            FontSize="20"
-                            Height="50"
-                            MinWidth="180"
-                            VerticalAlignment="Center">
-
+                materialDesign:HintAssist.Hint="Tác giả"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                IsEditable="True"
+                ItemsSource="{Binding ListAuthor}"
+                SelectedItem="{Binding SelectAuthor,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                FontSize="20"
+                Height="50"
+                MinWidth="180"
+                VerticalAlignment="Center">
             </ComboBox>
 
             <Button
@@ -373,12 +379,12 @@
                         BorderBrush="Transparent"
                         Foreground="#af91fa"
                         Background="White"
-                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
-            Height="50"
-            materialDesign:ButtonAssist.CornerRadius="25"
-                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Height="50"
+                        materialDesign:ButtonAssist.CornerRadius="25"
+                        ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
                         <TextBlock
-                 Text="Hủy" FontSize="22" FontWeight="Bold" />
+                        Text="Hủy" FontSize="22" FontWeight="Bold" />
                     </Button>
 
                     <Button
@@ -386,14 +392,14 @@
                         BorderBrush="Transparent"
                         Command="{Binding ConfirmButtonClickCommand}"
                         CommandParameter="{Binding ElementName=AddBookWD}"
-                         Foreground="White"
+                        Foreground="White"
                         Background="#af91fa"
-                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
-            Height="50"
-            materialDesign:ButtonAssist.CornerRadius="25"
-                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Height="50"
+                        materialDesign:ButtonAssist.CornerRadius="25"
+                        ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
                         <TextBlock
-                 Text="Hoàn tất" FontSize="22" FontWeight="Bold" />
+                        Text="Hoàn tất" FontSize="22" FontWeight="Bold" />
                     </Button>
                 </StackPanel>
 

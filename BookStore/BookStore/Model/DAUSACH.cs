@@ -27,6 +27,7 @@ namespace BookStore.Model
         public string TenSach { get; set; }
         public Nullable<int> LuongTon { get; set; }
         public byte[] HinhAnhSach { get; set; }
+        public Nullable<int> TrangThai { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_BCT> CT_BCT { get; set; }
