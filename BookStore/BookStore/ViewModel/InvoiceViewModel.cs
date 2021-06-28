@@ -31,7 +31,7 @@ namespace BookStore.ViewModel
             AddCustomerClick = new RelayCommand<Page>((p) => { return true; }, (p) => { CreateNewCustomer(p); });
 
             BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); UpdateBookInfor(); });
-            PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); UpdateAmountBook();  });
+            PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AmountTextChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount(); });
@@ -122,7 +122,7 @@ namespace BookStore.ViewModel
 
                 foreach (var v in Items)
                 {
-                    var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                    var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == v.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == v.DauSach.MaDauSach)).FirstOrDefault();
                     var CTHD = new CT_HD() { DonGiaBan = v.OutputPrice, MaHoaDon = HoaDon.MaHoaDon, SoLuong = int.Parse(v.Amount), MaSach = tmpCTPNS.MaSach };
                     DataProvider.Ins.DB.CT_HD.Add(CTHD);
                     v.IDinDataBase = CTHD.MaCT_HD;
@@ -183,15 +183,18 @@ namespace BookStore.ViewModel
                 SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
 
                 Items.Remove(SelectedItem);
-                ClearAfterAdd();
+                ClearAfterAde();
             }
 
 
             if (FlagIntent == 1)
             {
                 SumAmount -= SelectedItem.IntoMoney;
-                LeftAmount = (SumAmount - Int64.Parse(PaidAmount));
+
+                LeftAmount = (SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount));
+
                 if (SumAmount>0) Editor.TongTien = SumAmount;
+
                 if (LeftAmount<=0)
                 {
                     Editor.SoTienTra = Editor.TongTien;
@@ -205,22 +208,21 @@ namespace BookStore.ViewModel
                     Editor.ConLai = LeftAmount;
                 }
 
-                DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
-                DataProvider.Ins.DB.DAUSACHes.First(x => x.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
+                var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
                 var tmpCTHD = DataProvider.Ins.DB.CT_HD.First(x => (x.MaSach == SelectedItem.MaSachInNeed) && (x.MaHoaDon == Editor.MaHoaDon));
                 DataProvider.Ins.DB.CT_HD.Remove(tmpCTHD);
+
                 Items.Remove(SelectedItem);
+                ClearAfterAde();
             }
 
         }
 
         private void EditDetail()
         {
-            /*            SelectedItem.DauSach = SelectedBook;
-                        SelectedItem.Amount = Amount;
-                        SelectedItem.OutputPrice = SelectedPriceOfBook;
-                        SelectedItem.IntoMoney = IntoMoney;*/
-
             if (SelectedItem.DauSach.MaDauSach == SelectedBook.MaDauSach)
             {
                 if (SelectedItem.OutputPrice == SelectedPriceOfBook)
@@ -282,7 +284,7 @@ namespace BookStore.ViewModel
                                         SelectedItem.Amount = Amount;
                                         SelectedItem.OutputPrice = SelectedPriceOfBook;
                                         SelectedItem.IntoMoney = IntoMoney;
-                                        ClearAfterAdd();
+                                        ClearAfterAde();
                                         return;
                                     }
                                 }
@@ -307,7 +309,7 @@ namespace BookStore.ViewModel
                                     SelectedItem.Amount = Amount;
                                     SelectedItem.OutputPrice = SelectedPriceOfBook;
                                     SelectedItem.IntoMoney = IntoMoney;
-                                    ClearAfterAdd();
+                                    ClearAfterAde();
                                 }
                                 else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon + int.Parse(SelectedItem.Amount) < int.Parse(Amount))
                                 {
@@ -379,7 +381,7 @@ namespace BookStore.ViewModel
                                         SelectedItem.Amount = Amount;
                                         SelectedItem.OutputPrice = SelectedPriceOfBook;
                                         SelectedItem.IntoMoney = IntoMoney;
-                                        ClearAfterAdd();
+                                        ClearAfterAde();
                                         return;
                                     }
                                 }
@@ -402,7 +404,7 @@ namespace BookStore.ViewModel
                                     SelectedItem.Amount = Amount;
                                     SelectedItem.OutputPrice = SelectedPriceOfBook;
                                     SelectedItem.IntoMoney = IntoMoney;
-                                    ClearAfterAdd();
+                                    ClearAfterAde();
                                 }
                                 else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < int.Parse(Amount))
                                 {
@@ -474,7 +476,7 @@ namespace BookStore.ViewModel
                                     SelectedItem.Amount = Amount;
                                     SelectedItem.OutputPrice = SelectedPriceOfBook;
                                     SelectedItem.IntoMoney = IntoMoney;
-                                    ClearAfterAdd();
+                                    ClearAfterAde();
                                     return;
                                 }
                             }
@@ -497,7 +499,7 @@ namespace BookStore.ViewModel
                                 SelectedItem.Amount = Amount;
                                 SelectedItem.OutputPrice = SelectedPriceOfBook;
                                 SelectedItem.IntoMoney = IntoMoney;
-                                ClearAfterAdd();
+                                ClearAfterAde();
                             }
                             else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < int.Parse(Amount))
                             {
@@ -532,10 +534,8 @@ namespace BookStore.ViewModel
                 {
                     SumAmount += v.IntoMoney;
                 }
-                if (PaidAmount != null)
-                {
-                    LeftAmount = SumAmount - Int64.Parse(PaidAmount);
-                }
+
+                LeftAmount = SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount);
             }
 
         }
@@ -590,7 +590,7 @@ namespace BookStore.ViewModel
                             {
                                 var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, BookTypes = GetTypesString(SelectedBook.THELOAIs), OutputPrice = SelectedPriceOfBook, IntoMoney = IntoMoney };
                                 Items.Add(CT_HD);
-                                ClearAfterAdd();
+                                ClearAfterAde();
                                 return;
                             }
                         }
@@ -606,7 +606,7 @@ namespace BookStore.ViewModel
                             DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
                             var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, BookTypes = GetTypesString(SelectedBook.THELOAIs), OutputPrice = SelectedPriceOfBook, IntoMoney = IntoMoney };
                             Items.Add(CT_HD);
-                            ClearAfterAdd();
+                            ClearAfterAde();
                         }
                         else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < int.Parse(Amount))
                         {
@@ -621,7 +621,7 @@ namespace BookStore.ViewModel
             }
         }
 
-        private void ClearAfterAdd()
+        private void ClearAfterAde()
         {
             SelectedBook = null;
             SelectedPriceOfBook = null;
@@ -696,12 +696,12 @@ namespace BookStore.ViewModel
                 Staff = DataProvider.Ins.DB.NGUOIDUNGs.First(x => x.MaNguoiDung == Editor.MaNguoiLap);
                 foreach (var v in Editor.CT_HD)
                 {
-                    var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == v.SACH.MaDauSach);
+                    var tmpMBook = DataProvider.Ins.DB.SACHes.First(x => x.MaSach == v.MaSach);
                     Items.Add(new Item_CT_HD()
                     {
                         ID = Items.Count + 1,
-                        DauSach = tmpMBook,
-                        BookTypes = GetTypesString(tmpMBook.THELOAIs),
+                        DauSach = tmpMBook.DAUSACH,
+                        BookTypes = GetTypesString(tmpMBook.DAUSACH.THELOAIs),
                         OutputPrice = v.DonGiaBan,
                         Amount = v.SoLuong.ToString(),
                         IntoMoney = Rules.Instance.ConvertDecimal_nullToInt64(v.DonGiaBan) * Rules.Instance.ConvertInt_nullToInt64(v.SoLuong),
@@ -724,27 +724,29 @@ namespace BookStore.ViewModel
             }
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////
 
         public override void CleanUpData()
         {
             base.CleanUpData();
             FlagIntent = 0;
-            SelectedBook = null;
             BookTypes = string.Empty;
             IntoMoney = 0;
             Amount = string.Empty;
             OutputPrice = 0;
             InvoiceDate = null;
-            Items = null;
+            //Items = null;
+            Items.Clear();
             ListBook = null;
             ListCustomer = null;
             Staff = null;
             Editor = null;
             SumAmount = 0;
             LeftAmount = 0;
-            PaidAmount = "0";
+            PaidAmount = string.Empty;
             SelectedCustomer = null;
             SelectedPriceOfBook = null;
+            SelectedBook = null;
         }
 
         
@@ -824,7 +826,7 @@ namespace BookStore.ViewModel
         private decimal? _SelectedPriceOfBook;
         private Int64 _IntoMoney;
         private Int64 _SumAmount;
-        private String _PaidAmount;
+        private string _PaidAmount;
         private Int64 _LeftAmount;
         private Item_CT_HD _SelectedItem;
         private DateTime? _InvoiceDate;
@@ -871,7 +873,7 @@ namespace BookStore.ViewModel
 
         public long SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
 
-        public String PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
+        public string PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
         public long LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
         
