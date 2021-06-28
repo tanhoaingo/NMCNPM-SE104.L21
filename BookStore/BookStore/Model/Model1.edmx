@@ -539,7 +539,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MYDATABASEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="MYDATABASEEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MYDATABASEEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="BAOCAOCONGNOes" EntityType="MYDATABASEModel.BAOCAOCONGNO" />
           <EntitySet Name="BAOCAOTONs" EntityType="MYDATABASEModel.BAOCAOTON" />
           <EntitySet Name="CHUCNANGs" EntityType="MYDATABASEModel.CHUCNANG" />
@@ -1009,7 +1009,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MYDATABASEModelStoreContainer" CdmEntityContainer="MYDATABASEEntities">
+        <EntityContainerMapping StorageEntityContainer="MYDATABASEModelStoreContainer" CdmEntityContainer="MYDATABASEEntities" >
           <EntitySetMapping Name="BAOCAOCONGNOes">
             <EntityTypeMapping TypeName="MYDATABASEModel.BAOCAOCONGNO">
               <MappingFragment StoreEntitySet="BAOCAOCONGNO">

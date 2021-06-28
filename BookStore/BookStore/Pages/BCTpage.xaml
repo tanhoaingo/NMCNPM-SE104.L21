@@ -1,0 +1,106 @@
+﻿<Page x:Class="BookStore.Pages.BCTpage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:cv ="clr-namespace:BookStore.Converters"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+      xmlns:local="clr-namespace:BookStore.Pages"
+      d:DesignHeight="950"
+      d:DesignWidth="1600"
+      DataContext="{StaticResource BctVM}"
+      Name="BCTWD"
+      Title="BCTpage">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=BCTWD}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closing" >
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}"
+                                       CommandParameter="{Binding ElementName=BCTWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="8">
+        <Grid>
+            <StackPanel Orientation="Vertical">
+
+                <Grid Height="650">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="480"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <DatePicker   
+                        Grid.Row="1"
+                        SelectedDate="{Binding Date, StringFormat = 'dd/MM/yyyy'}"
+                         Width="180"
+                        Height="50"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        materialDesign:HintAssist.Hint="Ngày báo cáo"
+                        Style="{StaticResource MaterialDesignOutlinedDatePicker}" IsEnabled="True" Margin="397,20,423,10" />
+                    <Grid Height="80" Grid.Row="0" VerticalAlignment="Top" Margin="0,0,10,0">
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                            Text="Lập báo cáo tồn" VerticalAlignment="Center"
+                            FontSize="45"
+                            Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.342,0.369" Height="56" Margin="319,14,320,10" />
+                    </Grid>
+                    <Border Margin="140,5,140,0" Background="GhostWhite" BorderBrush="Black" BorderThickness="3" Grid.Row="2">
+                        <DataGrid ItemsSource="{Binding BaoCaoTonSource, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Selected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="180" CanUserReorderColumns="False" IsReadOnly="False"  >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding maDauSach, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã đầu sách"/>
+                                <DataGridTextColumn Binding="{Binding tonDau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Tồn đầu" />
+                                <DataGridTextColumn Binding="{Binding phatSinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Phát sinh"/>
+                                <DataGridTextColumn Binding="{Binding tonCuoi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Tồn cuối"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                </Grid>
+                <Grid Height="61">
+                    <Button x:Name="BtnSave"
+  Style="{StaticResource MaterialDesignOutlinedButton}"
+  ToolTip="MaterialDesignOutlinedButton"
+  Content="LƯU BÁO CÁO" Margin="239,10,583,19">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ButtonSaveClickCommand}"
+                                   CommandParameter="{Binding ElementName=BtnSave}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button x:Name="BtnExport"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        ToolTip="MaterialDesignOutlinedButton"
+                        Content="XUẤT FILE EXCEL" Margin="558,10,264,19">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ButtonExportClickCommand}"
+                                    CommandParameter="{Binding ElementName=BtnExport}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Page>

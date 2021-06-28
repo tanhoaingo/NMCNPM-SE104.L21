@@ -20,7 +20,7 @@ namespace BookStore.ViewModel
             SelectionChangedCommand = new RelayCommand<DataGrid>((p) => { return true; }, (p) => { loadDetail(); });
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadEdit(); });
         }
-
+        //
         public void loadDetail()
         {
 

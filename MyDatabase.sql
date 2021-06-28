@@ -415,3 +415,20 @@ ADD ChoPhepThuLonHonNo BIT
 
 INSERT INTO THAMSO (LuongNhapToiThieu, LuongTonToiThieu, SoNoToiDa, LuongTonToiThieuSauBan, ChoPhepThuLonHonNo)
 VALUES (150, 300, 20000, 20, 1)
+
+/*=============================================================================*/ 
+/*Log 7 database*/
+/*=============================================================================*/ 
+ALTER TABLE CT_BCT 
+DROP CONSTRAINT FK_CT_BCT_SACH 
+
+ALTER TABLE CT_BCT
+DROP COLUMN MaSach
+
+ALTER TABLE CT_BCT
+ADD MaDauSach INT NOT NULL
+
+ALTER TABLE CT_BCT 
+ADD CONSTRAINT
+FK_CT_BCT_DAUSACH 
+FOREIGN KEY (MaDauSach) REFERENCES DAUSACH (MaDauSach)

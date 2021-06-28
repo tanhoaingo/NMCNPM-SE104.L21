@@ -96,12 +96,12 @@
                             Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.342,0.369" Height="32" Margin="370,10,380,-2" />
                     </Grid>
                     <Border Margin="136,45,136,-5" Background="GhostWhite" BorderBrush="Black" BorderThickness="3" Grid.Row="0">
-                        <DataGrid ItemsSource="{Binding ListBill, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBill, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="180" CanUserReorderColumns="False" IsReadOnly="True"  >
+                        <DataGrid ItemsSource="{Binding ListBill, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBill, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="180" CanUserReorderColumns="False" IsReadOnly="True"  >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding MaPhieuThuTien, Mode=TwoWay}" Header="Mã phiếu thu tiền"/>
-                                <DataGridTextColumn Binding="{Binding MaKhachHang, Mode=TwoWay}" Header="Mã khách hàng"/>
-                                <DataGridTextColumn Binding="{Binding NgayThuTien, Mode=TwoWay, StringFormat = 'dd/MM/yyyy'}" Header="Ngày thu tiền" />
-                                <DataGridTextColumn Binding="{Binding SoTienThu, Mode=TwoWay}" Header="Số tiền thu"/>
+                                <DataGridTextColumn Binding="{Binding MaPhieuThuTien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã phiếu thu tiền"/>
+                                <DataGridTextColumn Binding="{Binding MaKhachHang, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã khách hàng"/>
+                                <DataGridTextColumn Binding="{Binding NgayThuTien, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat = 'dd/MM/yyyy'}" Header="Ngày thu tiền" />
+                                <DataGridTextColumn Binding="{Binding SoTienThu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Số tiền thu"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
