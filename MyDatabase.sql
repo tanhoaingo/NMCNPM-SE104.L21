@@ -434,8 +434,15 @@ FK_CT_BCT_DAUSACH
 FOREIGN KEY (MaDauSach) REFERENCES DAUSACH (MaDauSach)
 
 /*=============================================================================*/ 
-/*Log 7 database*/
+/*Log 8 database*/
 /*=============================================================================*/ 
 
 ALTER TABLE KHACHHANG
+ADD TrangThai INT DEFAULT 0
+
+/*=============================================================================*/ 
+/*Log 9 database*/
+/*=============================================================================*/ 
+
+ALTER TABLE DAUSACH
 ADD TrangThai INT DEFAULT 0

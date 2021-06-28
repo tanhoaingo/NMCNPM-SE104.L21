@@ -77,6 +77,7 @@
           <Property Name="TenSach" Type="nvarchar" MaxLength="50" />
           <Property Name="LuongTon" Type="int" />
           <Property Name="HinhAnhSach" Type="image" />
+          <Property Name="TrangThai" Type="int" />
         </EntityType>
         <EntityType Name="HOADON">
           <Key>
@@ -715,6 +716,7 @@
           <NavigationProperty Name="SACHes" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="MYDATABASEModel.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
           <NavigationProperty Name="THELOAIs" Relationship="MYDATABASEModel.TT_TL" FromRole="DAUSACH" ToRole="THELOAI" />
+          <Property Name="TrangThai" Type="Int32" />
         </EntityType>
         <EntityType Name="HOADON">
           <Key>
@@ -1086,6 +1088,7 @@
           <EntitySetMapping Name="DAUSACHes">
             <EntityTypeMapping TypeName="MYDATABASEModel.DAUSACH">
               <MappingFragment StoreEntitySet="DAUSACH">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="HinhAnhSach" ColumnName="HinhAnhSach" />
                 <ScalarProperty Name="LuongTon" ColumnName="LuongTon" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
