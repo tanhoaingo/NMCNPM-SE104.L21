@@ -24,6 +24,14 @@
         FontSize="20"
         x:Name="AddCustomerWD">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadWindowCommand}"
+                                               CommandParameter="{Binding ElementName=AddCustomerWD}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="59*"></RowDefinition>
@@ -40,6 +48,7 @@
             <ColumnDefinition Width="331*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock
+            x:Name="TextTitle"
             TextWrapping="Wrap"
             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
             Text="Thêm khách hàng" 
