@@ -58,7 +58,7 @@ namespace BookStore.ViewModel
         {
             SelectedDetail.Book = SelectedBook;
             SelectedDetail.Amount = Amount;
-           // SelectedDetail.InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice);
+            SelectedDetail.InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice);
             SelectedDetail.IntoMoney = IntoMoney;
         }
 
@@ -72,7 +72,7 @@ namespace BookStore.ViewModel
             Authors = GetAuthorsString(SelectedDetail.Book.TACGIAs);
             Types = GetTypesString(SelectedDetail.Book.THELOAIs);
             Amount = SelectedDetail.Amount;
-           // InputPrice = Rules.Instance.ConvertDecimal_nullToInt64(SelectedDetail.InputPrice).ToString();
+            InputPrice = Rules.Instance.ConvertDecimal_nullToInt64(SelectedDetail.InputPrice).ToString();
             IntoMoney = SelectedDetail.IntoMoney;
         }
 
@@ -236,7 +236,7 @@ namespace BookStore.ViewModel
                 ID = Items.Count() + 1,
                 Authors = Authors,
                 Types = Types,
-               // InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice),
+                InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice),
                 IntoMoney = IntoMoney
             };
             Items.Add(tmp);
@@ -249,7 +249,7 @@ namespace BookStore.ViewModel
             {
                 return;
             }
-            //IntoMoney = Rules.Instance.ConvertStringAmountToInt64(Amount) * Rules.Instance.ConvertStringAmountToInt64(InputPrice);
+            IntoMoney = Rules.Instance.ConvertStringAmountToInt64(Amount) * Rules.Instance.ConvertStringAmountToInt64(InputPrice);
 
         }
 
@@ -262,7 +262,7 @@ namespace BookStore.ViewModel
             Authors = string.Empty;
             IntoMoney = 0;
             Amount = string.Empty;
-            //InputPrice = string.Empty;
+            InputPrice = string.Empty;
             EntryBookDate = null;
             Items = null;
             ListBook = null;
@@ -288,7 +288,7 @@ namespace BookStore.ViewModel
         private string _Authors;
         private Int64 _IntoMoney;
         private string _Amount;
-        private Int64 _InputPrice;
+        private string _InputPrice;
         private DateTime? _EntryBookDate;
         private ObservableCollection<Item_CT_PNS> _Items;
         private ObservableCollection<DAUSACH> _ListBook;
@@ -305,7 +305,7 @@ namespace BookStore.ViewModel
         public long IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
         public string Amount { get => _Amount; set { _Amount = value; OnPropertyChanged(); } }
         public DateTime? EntryBookDate { get => _EntryBookDate; set { _EntryBookDate = value; OnPropertyChanged(); } }
-        public Int64 InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
+        public string InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; OnPropertyChanged(); } }
         public ObservableCollection<Item_CT_PNS> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
         public NGUOIDUNG Staff { get => _Staff; set { _Staff = value; OnPropertyChanged(); } }
