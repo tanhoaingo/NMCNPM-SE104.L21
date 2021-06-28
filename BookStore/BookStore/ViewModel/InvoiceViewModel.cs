@@ -26,12 +26,12 @@ namespace BookStore.ViewModel
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
 
-            NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateSoNoCustomer();  });
+            NameCustomerSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => {});
 
             AddCustomerClick = new RelayCommand<Page>((p) => { return true; }, (p) => { CreateNewCustomer(p); });
 
             BookSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateListPriceOfBook(); UpdateBookInfor(); });
-            PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); UpdateAmountBook(); });
+            PriceSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AmountTextChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { UpdateIntoMoneyValue(); });
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount(); });
@@ -41,22 +41,11 @@ namespace BookStore.ViewModel
             ExitButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
             PaidAmountTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { UpdateResultAMount(); });
         }
-
-
-        private void UpdateSoNoCustomer()
-        {
-            if (SelectedCustomer != null && FlagIntent==0 && SelectedCustomer.SoNo>0)
-            {
-                MessageBox.Show("Khách hàng đang nợ " + SelectedCustomer.SoNo + "! Vui lòng thanh toán nợ!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(SelectedCustomer.SoNo);
-            }
-        }
-
         private void UpdateAmountBook()
         {
             if (SelectedBook != null)
             {
-                Amount = (DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedBook.TenSach).LuongTon - 20).ToString();
+                Amount = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon.ToString();
             }
             else
             {
@@ -109,35 +98,38 @@ namespace BookStore.ViewModel
                 }
 
 
-                if (LeftAmount > 20000)
+                if (LeftAmount+SelectedCustomer.SoNo > 20000)
                 {
-                    MessageBox.Show("Số tiền nợ không được vượt quá 20000!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Số tiền nợ không được vượt quá 20000!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
-                var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
+                var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = Int64.Parse(PaidAmount), ConLai = LeftAmount, TongTien = SumAmount };
                 DataProvider.Ins.DB.HOADONs.Add(HoaDon);
-                DataProvider.Ins.DB.SaveChanges();
 
 
                 if (HoaDon.ConLai >= 0 && HoaDon.ConLai <= 20000)
                 {
-                    DataProvider.Ins.DB.KHACHHANGs.First(x => x.MaKhachHang == HoaDon.MaKhachHang).SoNo = HoaDon.ConLai;
-                    DataProvider.Ins.DB.SaveChanges();
+                    if (SelectedCustomer.SoNo>0)
+                    {
+                        DataProvider.Ins.DB.KHACHHANGs.First(x => x.MaKhachHang == HoaDon.MaKhachHang).SoNo += HoaDon.ConLai;
+                    }
+                    else if (SelectedCustomer.SoNo==0)
+                    {
+                        DataProvider.Ins.DB.KHACHHANGs.First(x => x.MaKhachHang == HoaDon.MaKhachHang).SoNo = HoaDon.ConLai;
+                    }
                 }
-
-
 
                 foreach (var v in Items)
                 {
-
-                    var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.First(x => x.SACH.DAUSACH.TenSach == v.DauSach.TenSach);
+                    var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == v.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == v.DauSach.MaDauSach)).FirstOrDefault();
                     var CTHD = new CT_HD() { DonGiaBan = v.OutputPrice, MaHoaDon = HoaDon.MaHoaDon, SoLuong = int.Parse(v.Amount), MaSach = tmpCTPNS.MaSach };
                     DataProvider.Ins.DB.CT_HD.Add(CTHD);
-                    DataProvider.Ins.DB.SaveChanges();
                     v.IDinDataBase = CTHD.MaCT_HD;
                 }
+
                 MessageBox.Show("Lập hóa đơn thành công!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                DataProvider.Ins.DB.SaveChanges();
                 CleanUpData();
             }
             if (FlagIntent == 1)
@@ -166,7 +158,7 @@ namespace BookStore.ViewModel
 
         private bool DeleteDetailButtonNeed()
         {
-            if (SelectedItem == null || SelectedCustomer == null || InvoiceDate == null)
+            if (SelectedItem == null)
             {
                 return false;
             }
@@ -175,7 +167,7 @@ namespace BookStore.ViewModel
 
         private bool EditDetailButtonNeed()
         {
-            if (SelectedItem == null || SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || SelectedCustomer == null || InvoiceDate == null || FlagIntent==1)
+            if (SelectedItem == null || SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || FlagIntent==1)
             {
                 return false;
             }
@@ -186,17 +178,23 @@ namespace BookStore.ViewModel
         {
             if (FlagIntent == 0)
             {
-                DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
-                //DataProvider.Ins.DB.SaveChanges();
+                var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
                 Items.Remove(SelectedItem);
+                ClearAfterAde();
             }
 
 
             if (FlagIntent == 1)
             {
                 SumAmount -= SelectedItem.IntoMoney;
-                LeftAmount = (SumAmount - PaidAmount);
+
+                LeftAmount = (SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount));
+
                 if (SumAmount>0) Editor.TongTien = SumAmount;
+
                 if (LeftAmount<=0)
                 {
                     Editor.SoTienTra = Editor.TongTien;
@@ -210,30 +208,323 @@ namespace BookStore.ViewModel
                     Editor.ConLai = LeftAmount;
                 }
 
-                DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedItem.DauSach.TenSach).LuongTon += int.Parse(SelectedItem.Amount);
+                var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
                 var tmpCTHD = DataProvider.Ins.DB.CT_HD.First(x => (x.MaSach == SelectedItem.MaSachInNeed) && (x.MaHoaDon == Editor.MaHoaDon));
                 DataProvider.Ins.DB.CT_HD.Remove(tmpCTHD);
+
                 Items.Remove(SelectedItem);
+                ClearAfterAde();
             }
 
         }
 
         private void EditDetail()
         {
-            SelectedItem.DauSach = SelectedBook;
-            SelectedItem.Amount = Amount;
-            SelectedItem.OutputPrice = SelectedPriceOfBook;
-            SelectedItem.IntoMoney = IntoMoney;
+            if (SelectedItem.DauSach.MaDauSach == SelectedBook.MaDauSach)
+            {
+                if (SelectedItem.OutputPrice == SelectedPriceOfBook)
+                {
+                    var minRemain = 0;
+                    var nowRemain = SelectedBook.LuongTon ?? 0;
+                    nowRemain += int.Parse(SelectedItem.Amount);
+
+                    if (DataProvider.Ins.DB.THAMSOes.ToList().Count() > 0)
+                    {
+                        minRemain = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongTonToiThieuSauBan ?? 0;
+                    }
+                    if (int.Parse(Amount) > (DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon + int.Parse(SelectedItem.Amount) - minRemain))
+                    {
+                        MessageBox.Show(string.Format("Lượng tồn tối thiểu của đầu sách sau khi bán phải là {0} ! \n\nLượng tồn hiện tại: {1}", minRemain, nowRemain), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    else
+                    {
+                        var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedPriceOfBook * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedBook.MaDauSach)).ToList();
+
+                        if (tmpCTPNS.Count() > 1)
+                        {
+                            var tmpAmount = int.Parse(Amount);
+                            var tmpSumLuongTon = 0;
+                            foreach (var v in tmpCTPNS)
+                            {
+                                tmpSumLuongTon += DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                            }
+                            tmpSumLuongTon += int.Parse(SelectedItem.Amount);
+                            if (tmpSumLuongTon < tmpAmount)
+                            {
+                                MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + tmpSumLuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                var tmpCTPNS1 = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS1.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                                SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
+
+                                foreach (var v in tmpCTPNS)
+                                {
+                                    if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= tmpAmount)
+                                    {
+                                        DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                        DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                        tmpAmount = 0;
+                                    }
+                                    else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < tmpAmount && DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon > 0)
+                                    {
+                                        tmpAmount -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                                        DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon;
+                                        DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon = 0;
+                                    }
+                                    if (tmpAmount == 0)
+                                    {
+                                        SelectedItem.DauSach = SelectedBook;
+                                        SelectedItem.Amount = Amount;
+                                        SelectedItem.OutputPrice = SelectedPriceOfBook;
+                                        SelectedItem.IntoMoney = IntoMoney;
+                                        ClearAfterAde();
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        else if (tmpCTPNS.Count() == 1)
+                        {
+                            foreach (var v in tmpCTPNS)
+                            {
+                                var tmpLuongTon = DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon + int.Parse(SelectedItem.Amount);
+
+                                if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon + int.Parse(SelectedItem.Amount) >= int.Parse(Amount))
+                                {
+                                    var tmpCTPNS1 = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                                    DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS1.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                                    SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
+
+                                    DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                                    DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                                    SelectedItem.DauSach = SelectedBook;
+                                    SelectedItem.Amount = Amount;
+                                    SelectedItem.OutputPrice = SelectedPriceOfBook;
+                                    SelectedItem.IntoMoney = IntoMoney;
+                                    ClearAfterAde();
+                                }
+                                else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon + int.Parse(SelectedItem.Amount) < int.Parse(Amount))
+                                {
+                                    MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + tmpLuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Lỗi");
+                        }
+                    }
+                }
+                else
+                {
+                    var minRemain = 0;
+                    var nowRemain = SelectedBook.LuongTon ?? 0;
+                    nowRemain += int.Parse(SelectedItem.Amount);
+
+                    if (DataProvider.Ins.DB.THAMSOes.ToList().Count() > 0)
+                    {
+                        minRemain = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongTonToiThieuSauBan ?? 0;
+                    }
+                    if (int.Parse(Amount) > (DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon + int.Parse(SelectedItem.Amount) - minRemain))
+                    {
+                        MessageBox.Show(string.Format("Lượng tồn tối thiểu của đầu sách sau khi bán phải là {0} ! \n\nLượng tồn hiện tại: {1}", minRemain, nowRemain), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    else
+                    {
+                        var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedPriceOfBook * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedBook.MaDauSach)).ToList();
+
+                        if (tmpCTPNS.Count() > 1)
+                        {
+                            var tmpAmount = int.Parse(Amount);
+                            var tmpSumLuongTon = 0;
+                            foreach (var v in tmpCTPNS)
+                            {
+                                tmpSumLuongTon += DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                            }
+                            if (tmpSumLuongTon < tmpAmount)
+                            {
+                                MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + tmpSumLuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                var tmpCTPNS1 = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS1.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                                SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
+
+                                foreach (var v in tmpCTPNS)
+                                {
+                                    if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= tmpAmount)
+                                    {
+                                        DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                        DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                        tmpAmount = 0;
+                                    }
+                                    else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < tmpAmount && DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon > 0)
+                                    {
+                                        tmpAmount -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                                        DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon;
+                                        DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon = 0;
+                                    }
+                                    if (tmpAmount == 0)
+                                    {
+                                        SelectedItem.DauSach = SelectedBook;
+                                        SelectedItem.Amount = Amount;
+                                        SelectedItem.OutputPrice = SelectedPriceOfBook;
+                                        SelectedItem.IntoMoney = IntoMoney;
+                                        ClearAfterAde();
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                        else if (tmpCTPNS.Count() == 1)
+                        {
+                            foreach (var v in tmpCTPNS)
+                            {
+                                if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= int.Parse(Amount))
+                                {
+                                    var tmpCTPNS1 = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                                    DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS1.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                                    SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
+
+                                    DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                                    DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                                    SelectedItem.DauSach = SelectedBook;
+                                    SelectedItem.Amount = Amount;
+                                    SelectedItem.OutputPrice = SelectedPriceOfBook;
+                                    SelectedItem.IntoMoney = IntoMoney;
+                                    ClearAfterAde();
+                                }
+                                else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < int.Parse(Amount))
+                                {
+                                    MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Lỗi");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var minRemain = 0;
+                var nowRemain = SelectedBook.LuongTon ?? 0;
+
+                if (DataProvider.Ins.DB.THAMSOes.ToList().Count() > 0)
+                {
+                    minRemain = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongTonToiThieuSauBan ?? 0;
+                }
+                if (int.Parse(Amount) > (DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon - minRemain))
+                {
+                    MessageBox.Show(string.Format("Lượng tồn tối thiểu của đầu sách sau khi bán phải là {0} ! \n\nLượng tồn hiện tại: {1}", minRemain, nowRemain), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedPriceOfBook * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedBook.MaDauSach)).ToList();
+
+                    if (tmpCTPNS.Count() > 1)
+                    {
+                        var tmpAmount = int.Parse(Amount);
+                        var tmpSumLuongTon = 0;
+                        foreach (var v in tmpCTPNS)
+                        {
+                            tmpSumLuongTon += DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                        }
+                        if (tmpSumLuongTon < tmpAmount)
+                        {
+                            MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + tmpSumLuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            var tmpCTPNS1 = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                            DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS1.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                            SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
+
+                            foreach (var v in tmpCTPNS)
+                            {
+                                if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= tmpAmount)
+                                {
+                                    DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                    DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                    tmpAmount = 0;
+                                }
+                                else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < tmpAmount && DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon > 0)
+                                {
+                                    tmpAmount -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                                    DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon;
+                                    DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon = 0;
+                                }
+                                if (tmpAmount == 0)
+                                {
+                                    SelectedItem.DauSach = SelectedBook;
+                                    SelectedItem.Amount = Amount;
+                                    SelectedItem.OutputPrice = SelectedPriceOfBook;
+                                    SelectedItem.IntoMoney = IntoMoney;
+                                    ClearAfterAde();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    else if (tmpCTPNS.Count() == 1)
+                    {
+                        foreach (var v in tmpCTPNS)
+                        {
+                            if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= int.Parse(Amount))
+                            {
+                                var tmpCTPNS1 = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedItem.OutputPrice * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedItem.DauSach.MaDauSach)).FirstOrDefault();
+                                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == tmpCTPNS1.MaSach).FirstOrDefault().LuongTon += int.Parse(SelectedItem.Amount);
+                                SelectedItem.DauSach.LuongTon += int.Parse(SelectedItem.Amount);
+
+
+                                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                                DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                                SelectedItem.DauSach = SelectedBook;
+                                SelectedItem.Amount = Amount;
+                                SelectedItem.OutputPrice = SelectedPriceOfBook;
+                                SelectedItem.IntoMoney = IntoMoney;
+                                ClearAfterAde();
+                            }
+                            else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < int.Parse(Amount))
+                            {
+                                MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi");
+                    }
+                }
+            }
+
+            
+
         }
 
         private void UpdateResultAMount()
         {
 
             if (FlagIntent==0)
-
             {
-                SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(SelectedCustomer.SoNo);
-                //PaidAmount = 0;
+                SumAmount = 0;
+                //PaidAmount = "0";
                 //LeftAmount = 0;
                 if (Items == null)
                 {
@@ -243,29 +534,106 @@ namespace BookStore.ViewModel
                 {
                     SumAmount += v.IntoMoney;
                 }
-                LeftAmount = SumAmount - PaidAmount;
+
+                LeftAmount = SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount);
             }
 
         }
 
         private void AddDetail()
         {
-            if (int.Parse(Amount) > (DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedBook.TenSach).LuongTon - 20))
+            var minRemain = 0;
+            var nowRemain = SelectedBook.LuongTon ?? 0;
+
+            if (DataProvider.Ins.DB.THAMSOes.ToList().Count() > 0)
             {
-                MessageBox.Show("Số lượng tồn không đủ!");
+                minRemain = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongTonToiThieuSauBan ?? 0;
+            }
+            if (int.Parse(Amount) > (DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon - minRemain))
+            {
+                MessageBox.Show(string.Format("Lượng tồn tối thiểu của đầu sách sau khi bán phải là {0} ! \n\nLượng tồn hiện tại: {1}", minRemain, nowRemain), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             else
             {
-                var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, BookTypes = GetTypesString(SelectedBook.THELOAIs), OutputPrice = SelectedPriceOfBook, IntoMoney = IntoMoney };
-                Items.Add(CT_HD);
-                DataProvider.Ins.DB.SACHes.First(x => x.DAUSACH.TenSach == SelectedBook.TenSach).LuongTon -= int.Parse(Amount);
-                //DataProvider.Ins.DB.SaveChanges();
+                var tmpCTPNS = DataProvider.Ins.DB.CT_PNS.Where(x => (x.DonGiaNhap == SelectedPriceOfBook * 100 / 105) && (x.SACH.DAUSACH.MaDauSach == SelectedBook.MaDauSach)).ToList();
+
+                if (tmpCTPNS.Count() > 1)
+                {
+                    var tmpAmount = int.Parse(Amount);
+                    var tmpSumLuongTon = 0;
+                    foreach (var v in tmpCTPNS)
+                    {
+                        tmpSumLuongTon += DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                    }
+                    if(tmpSumLuongTon<tmpAmount)
+                    {
+                        MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + tmpSumLuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        foreach (var v in tmpCTPNS)
+                        {
+                            if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= tmpAmount)
+                            {
+                                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= tmpAmount;
+                                tmpAmount = 0;
+                            }
+                            else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < tmpAmount && DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon > 0)
+                            {
+                                tmpAmount -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon ?? default(int);
+                                DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon;
+                                DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon = 0;
+                            }
+                            if (tmpAmount == 0)
+                            {
+                                var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, BookTypes = GetTypesString(SelectedBook.THELOAIs), OutputPrice = SelectedPriceOfBook, IntoMoney = IntoMoney };
+                                Items.Add(CT_HD);
+                                ClearAfterAde();
+                                return;
+                            }
+                        }
+                    } 
+                }
+                else if (tmpCTPNS.Count() == 1)
+                {
+                    foreach (var v in tmpCTPNS)
+                    {
+                        if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon >= int.Parse(Amount))
+                        {
+                            DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                            DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon -= int.Parse(Amount);
+                            var CT_HD = new Item_CT_HD() { DauSach = SelectedBook, ID = Items.Count() + 1, Amount = Amount, BookTypes = GetTypesString(SelectedBook.THELOAIs), OutputPrice = SelectedPriceOfBook, IntoMoney = IntoMoney };
+                            Items.Add(CT_HD);
+                            ClearAfterAde();
+                        }
+                        else if (DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon < int.Parse(Amount))
+                        {
+                            MessageBox.Show(string.Format("Lượng tồn không đủ! \n\nLượng tồn hiện tại: " + DataProvider.Ins.DB.SACHes.Where(x => x.MaSach == v.MaSach).FirstOrDefault().LuongTon), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Lỗi");
+                }
             }
+        }
+
+        private void ClearAfterAde()
+        {
+            SelectedBook = null;
+            SelectedPriceOfBook = null;
+            Amount = null;
+            BookTypes = null;
+            IntoMoney = 0;
+            SelectedItem = null;
         }
 
         private bool AddDetailButtonNeed()
         {
-            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || int.Parse(Amount) == 0 || SelectedCustomer==null || InvoiceDate==null || FlagIntent == 1)
+            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || SelectedPriceOfBook == null || int.Parse(Amount) == 0 || FlagIntent == 1)
             {
                 return false;
             }
@@ -296,7 +664,7 @@ namespace BookStore.ViewModel
             {
                 return;
             }
-            var tmp = DataProvider.Ins.DB.CT_PNS.Where(x => x.SACH.DAUSACH.TenSach == SelectedBook.TenSach).ToList();
+            var tmp = DataProvider.Ins.DB.CT_PNS.Where(x => x.SACH.DAUSACH.MaDauSach == SelectedBook.MaDauSach).ToList();
             if (tmp == null)
             {
                 return;
@@ -328,12 +696,12 @@ namespace BookStore.ViewModel
                 Staff = DataProvider.Ins.DB.NGUOIDUNGs.First(x => x.MaNguoiDung == Editor.MaNguoiLap);
                 foreach (var v in Editor.CT_HD)
                 {
-                    var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == v.SACH.MaDauSach);
+                    var tmpMBook = DataProvider.Ins.DB.SACHes.First(x => x.MaSach == v.MaSach);
                     Items.Add(new Item_CT_HD()
                     {
                         ID = Items.Count + 1,
-                        DauSach = tmpMBook,
-                        BookTypes = GetTypesString(tmpMBook.THELOAIs),
+                        DauSach = tmpMBook.DAUSACH,
+                        BookTypes = GetTypesString(tmpMBook.DAUSACH.THELOAIs),
                         OutputPrice = v.DonGiaBan,
                         Amount = v.SoLuong.ToString(),
                         IntoMoney = Rules.Instance.ConvertDecimal_nullToInt64(v.DonGiaBan) * Rules.Instance.ConvertInt_nullToInt64(v.SoLuong),
@@ -350,33 +718,35 @@ namespace BookStore.ViewModel
                     }
                 }
                 SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.TongTien);
-                PaidAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.SoTienTra);
+                PaidAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.SoTienTra).ToString();
                 LeftAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.ConLai);
                 return;
             }
         }
 
+        //////////////////////////////////////////////////////////////////////////////////////
 
         public override void CleanUpData()
         {
             base.CleanUpData();
             FlagIntent = 0;
-            SelectedBook = null;
             BookTypes = string.Empty;
             IntoMoney = 0;
             Amount = string.Empty;
             OutputPrice = 0;
             InvoiceDate = null;
-            Items = null;
+            //Items = null;
+            Items.Clear();
             ListBook = null;
             ListCustomer = null;
             Staff = null;
             Editor = null;
             SumAmount = 0;
             LeftAmount = 0;
-            PaidAmount = 0;
+            PaidAmount = string.Empty;
             SelectedCustomer = null;
             SelectedPriceOfBook = null;
+            SelectedBook = null;
         }
 
         
@@ -456,7 +826,7 @@ namespace BookStore.ViewModel
         private decimal? _SelectedPriceOfBook;
         private Int64 _IntoMoney;
         private Int64 _SumAmount;
-        private Int64 _PaidAmount;
+        private string _PaidAmount;
         private Int64 _LeftAmount;
         private Item_CT_HD _SelectedItem;
         private DateTime? _InvoiceDate;
@@ -503,7 +873,7 @@ namespace BookStore.ViewModel
 
         public long SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
 
-        public long PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
+        public string PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
         public long LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
         
