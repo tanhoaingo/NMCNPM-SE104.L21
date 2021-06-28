@@ -1,14 +1,143 @@
 ﻿<Page x:Class="BookStore.Pages.ListCustomerPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:cv ="clr-namespace:BookStore.Converters"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        DataContext="{StaticResource ListCustomerVM}" 
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
       xmlns:local="clr-namespace:BookStore.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="950"
+      d:DesignWidth="1600"
       Title="ListCustomerPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="199*"></RowDefinition>
+            <RowDefinition Height="256*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <materialDesign:Card Margin="30,30,30,10">
+            <Grid>
+
+                <TextBox
+                    materialDesign:HintAssist.Hint="Mã khách hàng"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="25" Margin="72,10,1210,282"
+                    Text="{Binding SelectedItem.MaKhachHang}"
+                    IsReadOnly="True"/>
+
+                <TextBox
+                    materialDesign:HintAssist.Hint="Tên khách hàng"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="25" Margin="72,86,1110,206"
+                    Text="{Binding SelectedItem.HoTenKhachHang}"
+                    IsReadOnly="True"/>
+
+                <TextBox
+                    materialDesign:HintAssist.Hint="Số điện thoại"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="25" Margin="427,86,772,206"
+                    Text="{Binding SelectedItem.DienThoai}"
+                    IsReadOnly="True"/>
+
+                <TextBox
+                    materialDesign:HintAssist.Hint="Địa chỉ"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="25" Margin="72,160,772,130"
+                    Text="{Binding SelectedItem.DiaChi}"
+                    IsReadOnly="True"/>
+
+                <TextBox
+                    materialDesign:HintAssist.Hint="Email"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="25" Margin="72,235,772,60"
+                    Text="{Binding SelectedItem.Email}"
+                    IsReadOnly="True"/>
+
+                <TextBox
+                    materialDesign:HintAssist.Hint="Số tiền nợ"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="35" Margin="850,72,472,198"
+                    Text="{Binding SelectedItem.SoNo, StringFormat={}{0:#.##}}"
+                    IsReadOnly="True"/>
+
+                <Button 
+                    Margin="1132,92,186,212" Height="Auto"
+                    Content="Thanh toán nợ"
+                    FontSize="25"
+                    Command="{Binding CreateBillButtonClickCommand}">
+                </Button>
+
+                <Button 
+                    Margin="814,220,566,60" Height="Auto"
+                    Content="Thêm "
+                    FontSize="25"
+                    Command="{Binding AddCustomerButtonClickCommand}">
+                </Button>
+
+                <Button 
+                    Margin="1016,220,364,60" Height="Auto"
+                    Content="Sửa "
+                    FontSize="25"
+                    Command="{Binding EditCustomerButtonClickCommand}">
+                </Button>
+
+                <Button 
+                    Margin="1220,220,160,60" Height="Auto"
+                    Content="Xóa "
+                    FontSize="25"
+                    Command="{Binding DeleteCustomerButtonClickCommand}">
+                </Button>
+
+            </Grid>
+        </materialDesign:Card>
+        <Border Grid.Row="1" Margin="30" BorderBrush="Black" BorderThickness="1">
+            <Grid >
+                <TextBox
+                    materialDesign:HintAssist.Hint="Tìm kiếm"
+                    FontSize="30"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Height="50" Margin="75,10,653,390"/>
+                <Button Height="Auto" Margin="916,10,530,390">
+                    <materialDesign:PackIcon
+                        Kind="Search"
+                        Height="50"
+                        Width="50">
+                    </materialDesign:PackIcon>
+                </Button>
+                <Border BorderBrush="Black" BorderThickness="1" Margin="75,100,0,10" HorizontalAlignment="Left" Width="1163">
+                    <DataGrid ItemsSource="{Binding ListCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" 
+                              CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True"
+                              SelectedItem="{Binding SelectedItem}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding MaKhachHang}" Header="Mã khách hàng"/>
+                            <DataGridTextColumn Binding="{Binding HoTenKhachHang}" Header="Tên khách hàng"/>
+                            <DataGridTextColumn Binding="{Binding DienThoai}" Header="Số điện thoại"/>
+                            <DataGridTextColumn Binding="{Binding DiaChi}" Header="Địa chỉ"/>
+                            <DataGridTextColumn Binding="{Binding Email}" Header="Email"/>
+                            <DataGridTextColumn Binding="{Binding SoNo, StringFormat={}{0:#.##}}" Header="Tiền nợ"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

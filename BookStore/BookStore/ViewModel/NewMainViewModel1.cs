@@ -50,6 +50,18 @@ namespace BookStore.ViewModel
             {
                 Btn_DanhSachPhieuNhap(p);
             });
+            BCTCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Btn_bbt(p);
+            });
+            BCCNCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                btn_bccn(p);
+            });
+            ListCustomerCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Btn_listcustomer(p);
+            });
 
 
         }
@@ -125,6 +137,33 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
+           private void Btn_listcustomer(Window p)
+        {
+            var tmpWd = p as NewMainWindow;
+            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListCustomerPage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Thay đổi quy định";
+        }
+           private void btn_bccn(Window p)
+        {
+            var tmpWd = p as NewMainWindow;
+            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCCNpage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Thay đổi quy định";
+        }
+           private void Btn_bbt(Window p)
+        {
+            var tmpWd = p as NewMainWindow;
+            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCTpage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Thay đổi quy định";
+        }
 
 
         //IECommand
@@ -136,6 +175,9 @@ namespace BookStore.ViewModel
         public ICommand RuleCommand { get; set; }
         public ICommand ListBillCommand { get; set; }
         public ICommand ListBookEntryCommand { get; set; }
+        public ICommand ListCustomerCommand { get; set; }
+        public ICommand BCCNCommand { get; set; }
+        public ICommand BCTCommand { get; set; }
         public ICommand mainSource { get; set; }
 
 

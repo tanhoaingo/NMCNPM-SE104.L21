@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MYDATABASE_Entities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MYDATABASEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BAOCAOCONGNO">
           <Key>
             <PropertyRef Name="MaBaoCaoCongNo" />
@@ -18,6 +18,14 @@
           </Key>
           <Property Name="MaBaoCaoTon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Thang" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenChucNang" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenManHinhDuocLoad" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CT_BCCN">
           <Key>
@@ -36,10 +44,10 @@
           </Key>
           <Property Name="MaCT_BCT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaBaoCaoTon" Type="int" Nullable="false" />
+          <Property Name="MaSach" Type="int" Nullable="false" />
           <Property Name="TonDau" Type="int" />
           <Property Name="PhatSinh" Type="int" />
           <Property Name="TonCuoi" Type="int" />
-          <Property Name="MaDauSach" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CT_HD">
           <Key>
@@ -60,14 +68,6 @@
           <Property Name="MaSach" Type="int" Nullable="false" />
           <Property Name="SoLuong" Type="int" />
           <Property Name="DonGiaNhap" Type="money" />
-        </EntityType>
-        <EntityType Name="CHUCNANG">
-          <Key>
-            <PropertyRef Name="MaChucNang" />
-          </Key>
-          <Property Name="MaChucNang" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TenChucNang" Type="nvarchar" MaxLength="50" />
-          <Property Name="TenManHinhDuocLoad" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DAUSACH">
           <Key>
@@ -158,22 +158,6 @@
           <Property Name="MaTacGia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenTacGia" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="TT_TG">
-          <Key>
-            <PropertyRef Name="MaDauSach" />
-            <PropertyRef Name="MaTacGia" />
-          </Key>
-          <Property Name="MaDauSach" Type="int" Nullable="false" />
-          <Property Name="MaTacGia" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TT_TL">
-          <Key>
-            <PropertyRef Name="MaTheLoai" />
-            <PropertyRef Name="MaDauSach" />
-          </Key>
-          <Property Name="MaTheLoai" Type="int" Nullable="false" />
-          <Property Name="MaDauSach" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="THAMSO">
           <Key>
             <PropertyRef Name="MaThamSo" />
@@ -191,6 +175,22 @@
           </Key>
           <Property Name="MaTheLoai" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenTheLoai" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TT_TG">
+          <Key>
+            <PropertyRef Name="MaDauSach" />
+            <PropertyRef Name="MaTacGia" />
+          </Key>
+          <Property Name="MaDauSach" Type="int" Nullable="false" />
+          <Property Name="MaTacGia" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TT_TL">
+          <Key>
+            <PropertyRef Name="MaTheLoai" />
+            <PropertyRef Name="MaDauSach" />
+          </Key>
+          <Property Name="MaTheLoai" Type="int" Nullable="false" />
+          <Property Name="MaDauSach" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_CT_BCCN_BAOCAOCONGNO">
           <End Role="BAOCAOCONGNO" Type="Self.BAOCAOCONGNO" Multiplicity="1" />
@@ -228,15 +228,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CT_BCT_DAUSACH">
-          <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="1" />
+        <Association Name="FK_CT_BCT_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
           <End Role="CT_BCT" Type="Self.CT_BCT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DAUSACH">
-              <PropertyRef Name="MaDauSach" />
+            <Principal Role="SACH">
+              <PropertyRef Name="MaSach" />
             </Principal>
             <Dependent Role="CT_BCT">
-              <PropertyRef Name="MaDauSach" />
+              <PropertyRef Name="MaSach" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -432,14 +432,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="MYDATABASE_EntitiesStoreContainer">
+        <EntityContainer Name="MYDATABASEModelStoreContainer">
           <EntitySet Name="BAOCAOCONGNO" EntityType="Self.BAOCAOCONGNO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BAOCAOTON" EntityType="Self.BAOCAOTON" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHUCNANG" EntityType="Self.CHUCNANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_BCCN" EntityType="Self.CT_BCCN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_BCT" EntityType="Self.CT_BCT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_HD" EntityType="Self.CT_HD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_PNS" EntityType="Self.CT_PNS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CHUCNANG" EntityType="Self.CHUCNANG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DAUSACH" EntityType="Self.DAUSACH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HOADON" EntityType="Self.HOADON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="KHACHHANG" EntityType="Self.KHACHHANG" Schema="dbo" store:Type="Tables" />
@@ -450,10 +450,10 @@
           <EntitySet Name="PHIEUTHUTIEN" EntityType="Self.PHIEUTHUTIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SACH" EntityType="Self.SACH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TACGIA" EntityType="Self.TACGIA" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TT_TG" EntityType="Self.TT_TG" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TT_TL" EntityType="Self.TT_TL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THELOAI" EntityType="Self.THELOAI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TT_TG" EntityType="Self.TT_TG" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TT_TL" EntityType="Self.TT_TL" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CT_BCCN_BAOCAOCONGNO" Association="Self.FK_CT_BCCN_BAOCAOCONGNO">
             <End Role="BAOCAOCONGNO" EntitySet="BAOCAOCONGNO" />
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
@@ -466,8 +466,8 @@
             <End Role="BAOCAOTON" EntitySet="BAOCAOTON" />
             <End Role="CT_BCT" EntitySet="CT_BCT" />
           </AssociationSet>
-          <AssociationSet Name="FK_CT_BCT_DAUSACH" Association="Self.FK_CT_BCT_DAUSACH">
-            <End Role="DAUSACH" EntitySet="DAUSACH" />
+          <AssociationSet Name="FK_CT_BCT_SACH" Association="Self.FK_CT_BCT_SACH">
+            <End Role="SACH" EntitySet="SACH" />
             <End Role="CT_BCT" EntitySet="CT_BCT" />
           </AssociationSet>
           <AssociationSet Name="FK_CT_HD_HOADON" Association="Self.FK_CT_HD_HOADON">
@@ -539,7 +539,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MYDATABASE_Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MYDATABASEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="BAOCAOCONGNO">
           <Key>
             <PropertyRef Name="MaBaoCaoCongNo" />
@@ -555,6 +555,15 @@
           <Property Name="MaBaoCaoTon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Thang" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CT_BCT" Relationship="Self.FK_CT_BCT_BAOCAOTON" FromRole="BAOCAOTON" ToRole="CT_BCT" />
+        </EntityType>
+        <EntityType Name="CHUCNANG">
+          <Key>
+            <PropertyRef Name="MaChucNang" />
+          </Key>
+          <Property Name="MaChucNang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenChucNang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenManHinhDuocLoad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NHOMNGUOIDUNGs" Relationship="Self.PHANQUYEN" FromRole="CHUCNANG" ToRole="NHOMNGUOIDUNG" />
         </EntityType>
         <EntityType Name="CT_BCCN">
           <Key>
@@ -575,12 +584,12 @@
           </Key>
           <Property Name="MaCT_BCT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaBaoCaoTon" Type="Int32" Nullable="false" />
+          <Property Name="MaSach" Type="Int32" Nullable="false" />
           <Property Name="TonDau" Type="Int32" />
           <Property Name="PhatSinh" Type="Int32" />
           <Property Name="TonCuoi" Type="Int32" />
-          <Property Name="MaDauSach" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BAOCAOTON" Relationship="Self.FK_CT_BCT_BAOCAOTON" FromRole="CT_BCT" ToRole="BAOCAOTON" />
-          <NavigationProperty Name="DAUSACH" Relationship="Self.FK_CT_BCT_DAUSACH" FromRole="CT_BCT" ToRole="DAUSACH" />
+          <NavigationProperty Name="SACH" Relationship="Self.FK_CT_BCT_SACH" FromRole="CT_BCT" ToRole="SACH" />
         </EntityType>
         <EntityType Name="CT_HD">
           <Key>
@@ -606,15 +615,6 @@
           <NavigationProperty Name="PHIEUNHAPSACH" Relationship="Self.FK_CT_PNS_PHIEUNHAPSACH" FromRole="CT_PNS" ToRole="PHIEUNHAPSACH" />
           <NavigationProperty Name="SACH" Relationship="Self.FK_CT_PNS_SACH" FromRole="CT_PNS" ToRole="SACH" />
         </EntityType>
-        <EntityType Name="CHUCNANG">
-          <Key>
-            <PropertyRef Name="MaChucNang" />
-          </Key>
-          <Property Name="MaChucNang" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenChucNang" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TenManHinhDuocLoad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHOMNGUOIDUNGs" Relationship="Self.PHANQUYEN" FromRole="CHUCNANG" ToRole="NHOMNGUOIDUNG" />
-        </EntityType>
         <EntityType Name="DAUSACH">
           <Key>
             <PropertyRef Name="MaDauSach" />
@@ -623,7 +623,6 @@
           <Property Name="TenSach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LuongTon" Type="Int32" />
           <Property Name="HinhAnhSach" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="CT_BCT" Relationship="Self.FK_CT_BCT_DAUSACH" FromRole="DAUSACH" ToRole="CT_BCT" />
           <NavigationProperty Name="SACHes" Relationship="Self.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="Self.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
           <NavigationProperty Name="THELOAIs" Relationship="Self.TT_TL" FromRole="DAUSACH" ToRole="THELOAI" />
@@ -706,6 +705,7 @@
           <Property Name="MaSach" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaDauSach" Type="Int32" Nullable="false" />
           <Property Name="LuongTon" Type="Int32" />
+          <NavigationProperty Name="CT_BCT" Relationship="Self.FK_CT_BCT_SACH" FromRole="SACH" ToRole="CT_BCT" />
           <NavigationProperty Name="CT_HD" Relationship="Self.FK_CT_HD_SACH" FromRole="SACH" ToRole="CT_HD" />
           <NavigationProperty Name="CT_PNS" Relationship="Self.FK_CT_PNS_SACH" FromRole="SACH" ToRole="CT_PNS" />
           <NavigationProperty Name="DAUSACH" Relationship="Self.FK_SACH_DAUSACH" FromRole="SACH" ToRole="DAUSACH" />
@@ -773,15 +773,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CT_BCT_DAUSACH">
-          <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="1" />
+        <Association Name="FK_CT_BCT_SACH">
+          <End Role="SACH" Type="Self.SACH" Multiplicity="1" />
           <End Role="CT_BCT" Type="Self.CT_BCT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DAUSACH">
-              <PropertyRef Name="MaDauSach" />
+            <Principal Role="SACH">
+              <PropertyRef Name="MaSach" />
             </Principal>
             <Dependent Role="CT_BCT">
-              <PropertyRef Name="MaDauSach" />
+              <PropertyRef Name="MaSach" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -917,14 +917,14 @@
           <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="*" />
           <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="MYDATABASEEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MYDATABASEEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BAOCAOCONGNOes" EntityType="Self.BAOCAOCONGNO" />
           <EntitySet Name="BAOCAOTONs" EntityType="Self.BAOCAOTON" />
+          <EntitySet Name="CHUCNANGs" EntityType="Self.CHUCNANG" />
           <EntitySet Name="CT_BCCN" EntityType="Self.CT_BCCN" />
           <EntitySet Name="CT_BCT" EntityType="Self.CT_BCT" />
           <EntitySet Name="CT_HD" EntityType="Self.CT_HD" />
           <EntitySet Name="CT_PNS" EntityType="Self.CT_PNS" />
-          <EntitySet Name="CHUCNANGs" EntityType="Self.CHUCNANG" />
           <EntitySet Name="DAUSACHes" EntityType="Self.DAUSACH" />
           <EntitySet Name="HOADONs" EntityType="Self.HOADON" />
           <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
@@ -948,8 +948,8 @@
             <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
             <End Role="CT_BCCN" EntitySet="CT_BCCN" />
           </AssociationSet>
-          <AssociationSet Name="FK_CT_BCT_DAUSACH" Association="Self.FK_CT_BCT_DAUSACH">
-            <End Role="DAUSACH" EntitySet="DAUSACHes" />
+          <AssociationSet Name="FK_CT_BCT_SACH" Association="Self.FK_CT_BCT_SACH">
+            <End Role="SACH" EntitySet="SACHes" />
             <End Role="CT_BCT" EntitySet="CT_BCT" />
           </AssociationSet>
           <AssociationSet Name="FK_CT_HD_HOADON" Association="Self.FK_CT_HD_HOADON">
@@ -1010,9 +1010,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MYDATABASE_EntitiesStoreContainer" CdmEntityContainer="MYDATABASEEntities">
+        <EntityContainerMapping StorageEntityContainer="MYDATABASEModelStoreContainer" CdmEntityContainer="MYDATABASEEntities1">
           <EntitySetMapping Name="BAOCAOCONGNOes">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.BAOCAOCONGNO">
+            <EntityTypeMapping TypeName="MYDATABASEModel.BAOCAOCONGNO">
               <MappingFragment StoreEntitySet="BAOCAOCONGNO">
                 <ScalarProperty Name="MaBaoCaoCongNo" ColumnName="MaBaoCaoCongNo" />
                 <ScalarProperty Name="Thang" ColumnName="Thang" />
@@ -1020,15 +1020,24 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BAOCAOTONs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.BAOCAOTON">
+            <EntityTypeMapping TypeName="MYDATABASEModel.BAOCAOTON">
               <MappingFragment StoreEntitySet="BAOCAOTON">
                 <ScalarProperty Name="MaBaoCaoTon" ColumnName="MaBaoCaoTon" />
                 <ScalarProperty Name="Thang" ColumnName="Thang" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CHUCNANGs">
+            <EntityTypeMapping TypeName="MYDATABASEModel.CHUCNANG">
+              <MappingFragment StoreEntitySet="CHUCNANG">
+                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+                <ScalarProperty Name="TenManHinhDuocLoad" ColumnName="TenManHinhDuocLoad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CT_BCCN">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.CT_BCCN">
+            <EntityTypeMapping TypeName="MYDATABASEModel.CT_BCCN">
               <MappingFragment StoreEntitySet="CT_BCCN">
                 <ScalarProperty Name="MaCT_BCCN" ColumnName="MaCT_BCCN" />
                 <ScalarProperty Name="MaBaoCaoCongNo" ColumnName="MaBaoCaoCongNo" />
@@ -1040,19 +1049,19 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CT_BCT">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.CT_BCT">
+            <EntityTypeMapping TypeName="MYDATABASEModel.CT_BCT">
               <MappingFragment StoreEntitySet="CT_BCT">
                 <ScalarProperty Name="MaCT_BCT" ColumnName="MaCT_BCT" />
                 <ScalarProperty Name="MaBaoCaoTon" ColumnName="MaBaoCaoTon" />
+                <ScalarProperty Name="MaSach" ColumnName="MaSach" />
                 <ScalarProperty Name="TonDau" ColumnName="TonDau" />
                 <ScalarProperty Name="PhatSinh" ColumnName="PhatSinh" />
                 <ScalarProperty Name="TonCuoi" ColumnName="TonCuoi" />
-                <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CT_HD">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.CT_HD">
+            <EntityTypeMapping TypeName="MYDATABASEModel.CT_HD">
               <MappingFragment StoreEntitySet="CT_HD">
                 <ScalarProperty Name="MaCT_HD" ColumnName="MaCT_HD" />
                 <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
@@ -1063,7 +1072,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CT_PNS">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.CT_PNS">
+            <EntityTypeMapping TypeName="MYDATABASEModel.CT_PNS">
               <MappingFragment StoreEntitySet="CT_PNS">
                 <ScalarProperty Name="MaCT_PNS" ColumnName="MaCT_PNS" />
                 <ScalarProperty Name="MaPhieuNhapSach" ColumnName="MaPhieuNhapSach" />
@@ -1073,17 +1082,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CHUCNANGs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.CHUCNANG">
-              <MappingFragment StoreEntitySet="CHUCNANG">
-                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
-                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
-                <ScalarProperty Name="TenManHinhDuocLoad" ColumnName="TenManHinhDuocLoad" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DAUSACHes">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.DAUSACH">
+            <EntityTypeMapping TypeName="MYDATABASEModel.DAUSACH">
               <MappingFragment StoreEntitySet="DAUSACH">
                 <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
@@ -1093,7 +1093,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HOADONs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.HOADON">
+            <EntityTypeMapping TypeName="MYDATABASEModel.HOADON">
               <MappingFragment StoreEntitySet="HOADON">
                 <ScalarProperty Name="MaHoaDon" ColumnName="MaHoaDon" />
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
@@ -1106,7 +1106,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="KHACHHANGs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.KHACHHANG">
+            <EntityTypeMapping TypeName="MYDATABASEModel.KHACHHANG">
               <MappingFragment StoreEntitySet="KHACHHANG">
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
                 <ScalarProperty Name="HoTenKhachHang" ColumnName="HoTenKhachHang" />
@@ -1118,7 +1118,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NGUOIDUNGs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.NGUOIDUNG">
+            <EntityTypeMapping TypeName="MYDATABASEModel.NGUOIDUNG">
               <MappingFragment StoreEntitySet="NGUOIDUNG">
                 <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
                 <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
@@ -1129,7 +1129,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NHOMNGUOIDUNGs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.NHOMNGUOIDUNG">
+            <EntityTypeMapping TypeName="MYDATABASEModel.NHOMNGUOIDUNG">
               <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
                 <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
                 <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
@@ -1137,7 +1137,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHIEUNHAPSACHes">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.PHIEUNHAPSACH">
+            <EntityTypeMapping TypeName="MYDATABASEModel.PHIEUNHAPSACH">
               <MappingFragment StoreEntitySet="PHIEUNHAPSACH">
                 <ScalarProperty Name="MaPhieuNhapSach" ColumnName="MaPhieuNhapSach" />
                 <ScalarProperty Name="NgayNhap" ColumnName="NgayNhap" />
@@ -1146,7 +1146,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHIEUTHUTIENs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.PHIEUTHUTIEN">
+            <EntityTypeMapping TypeName="MYDATABASEModel.PHIEUTHUTIEN">
               <MappingFragment StoreEntitySet="PHIEUTHUTIEN">
                 <ScalarProperty Name="MaPhieuThuTien" ColumnName="MaPhieuThuTien" />
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
@@ -1156,7 +1156,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SACHes">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.SACH">
+            <EntityTypeMapping TypeName="MYDATABASEModel.SACH">
               <MappingFragment StoreEntitySet="SACH">
                 <ScalarProperty Name="MaSach" ColumnName="MaSach" />
                 <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
@@ -1165,7 +1165,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TACGIAs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.TACGIA">
+            <EntityTypeMapping TypeName="MYDATABASEModel.TACGIA">
               <MappingFragment StoreEntitySet="TACGIA">
                 <ScalarProperty Name="MaTacGia" ColumnName="MaTacGia" />
                 <ScalarProperty Name="TenTacGia" ColumnName="TenTacGia" />
@@ -1173,7 +1173,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="THAMSOes">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.THAMSO">
+            <EntityTypeMapping TypeName="MYDATABASEModel.THAMSO">
               <MappingFragment StoreEntitySet="THAMSO">
                 <ScalarProperty Name="MaThamSo" ColumnName="MaThamSo" />
                 <ScalarProperty Name="LuongNhapToiThieu" ColumnName="LuongNhapToiThieu" />
@@ -1185,14 +1185,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="THELOAIs">
-            <EntityTypeMapping TypeName="MYDATABASE_Entities.THELOAI">
+            <EntityTypeMapping TypeName="MYDATABASEModel.THELOAI">
               <MappingFragment StoreEntitySet="THELOAI">
                 <ScalarProperty Name="MaTheLoai" ColumnName="MaTheLoai" />
                 <ScalarProperty Name="TenTheLoai" ColumnName="TenTheLoai" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="PHANQUYEN" TypeName="MYDATABASE_Entities.PHANQUYEN" StoreEntitySet="PHANQUYEN">
+          <AssociationSetMapping Name="PHANQUYEN" TypeName="MYDATABASEModel.PHANQUYEN" StoreEntitySet="PHANQUYEN">
             <EndProperty Name="CHUCNANG">
               <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
             </EndProperty>
@@ -1200,7 +1200,7 @@
               <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TT_TG" TypeName="MYDATABASE_Entities.TT_TG" StoreEntitySet="TT_TG">
+          <AssociationSetMapping Name="TT_TG" TypeName="MYDATABASEModel.TT_TG" StoreEntitySet="TT_TG">
             <EndProperty Name="DAUSACH">
               <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
             </EndProperty>
@@ -1208,7 +1208,7 @@
               <ScalarProperty Name="MaTacGia" ColumnName="MaTacGia" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="TT_TL" TypeName="MYDATABASE_Entities.TT_TL" StoreEntitySet="TT_TL">
+          <AssociationSetMapping Name="TT_TL" TypeName="MYDATABASEModel.TT_TL" StoreEntitySet="TT_TL">
             <EndProperty Name="DAUSACH">
               <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
             </EndProperty>

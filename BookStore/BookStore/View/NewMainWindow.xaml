@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:BookStore.View"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="NewMainWindow" Height="1080" Width="1920"
+        Title="NewMainWindow" Height="1280" Width="1920"
          TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -313,6 +313,62 @@
                                     >
                                 <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="CogRefreshOutline"  VerticalAlignment="Center" Margin="10 0" />
                                 <TextBlock Text="Thay đổi quy định" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Button>
+                    </ListViewItem>
+
+ <ListViewItem Height="80" Padding="0">
+                        <ListViewItem.Style>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Style.Triggers>
+
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Foreground" Value="Beige" />
+                                        <Setter Property="Background" Value="Olive" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <Button
+                             CommandParameter="{Binding ElementName=NewHomeWD}"
+                            Command="{Binding BCCNCommand}"
+                            BorderBrush="Transparent"  BorderThickness="0" Height="auto" 
+                                Background="Transparent">
+
+                            <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 
+                                    >
+                                <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="AlertBoxOutline"  VerticalAlignment="Center" Margin="10 0" />
+                                <TextBlock Text="Báo cáo công nợ" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Button>
+                    </ListViewItem>
+
+ <ListViewItem Height="80" Padding="0">
+                        <ListViewItem.Style>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Style.Triggers>
+
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Foreground" Value="Beige" />
+                                        <Setter Property="Background" Value="Olive" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <Button
+                             CommandParameter="{Binding ElementName=NewHomeWD}"
+                            Command="{Binding BCTCommand}"
+                            BorderBrush="Transparent"  BorderThickness="0" Height="auto" 
+                                Background="Transparent">
+
+                            <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 
+                                    >
+                                <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="CogRefreshOutline"  VerticalAlignment="Center" Margin="10 0" />
+                                <TextBlock Text="Báo cáo tồn" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
 
                             </StackPanel>
                         </Button>
