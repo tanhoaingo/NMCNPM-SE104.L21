@@ -25,4 +25,18 @@
     <viewmodel:BCCNViewModel x:Key="BccnVM"></viewmodel:BCCNViewModel>
     <viewmodel:BCTViewModel x:Key="BctVM"></viewmodel:BCTViewModel>
     <viewmodel:ListCustomerViewModel x:Key="ListCustomerVM"></viewmodel:ListCustomerViewModel>
+
+    <ControlTemplate x:Key="textBoxErrorTemplate">
+        <StackPanel>
+            <AdornedElementPlaceholder x:Name="placeholder"/>
+            <TextBlock 
+                DockPanel.Dock="Bottom" 
+                Foreground="#FFF44336"
+                MaxWidth="220"
+                Text="Vui lòng nhập giá trị"
+                TextWrapping="Wrap" 
+                HorizontalAlignment="Left"/>
+        </StackPanel>
+    </ControlTemplate>
+    
 </ResourceDictionary>
