@@ -26,10 +26,22 @@ namespace BookStore.ViewModel
 
         void SaveRule()
         {
+            var DauSach = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
+            var min = DauSach.Min(x => x.LuongTon);
             if (ListParameter[0].ChoPhepThuLonHonNo == null || ListParameter[0].LuongTonToiThieuSauBan == null || ListParameter[0].SoNoToiDa == null || ListParameter[0].LuongTonToiThieu == null || ListParameter[0].LuongNhapToiThieu == null)
-                MessageBox.Show("Vui lòng nhập đủ thông tin !");
-            else
+            { MessageBox.Show("Vui lòng nhập đủ thông tin !");
+                return;
+            }
+            if (ListParameter[0].LuongTonToiThieu > min)
             {
+                MessageBox.Show("Lượng tồn tối thiểu không được lớn hơn " + min.ToString());
+                return;
+            }
+            if (ListParameter[0].LuongTonToiThieuSauBan > min)
+            {
+                MessageBox.Show("Lượng tồn tối thiểu sau bán không được lớn hơn " + min.ToString());
+                return;
+            }
                 THAMSO parameter = DataProvider.Ins.DB.THAMSOes.First();
                 parameter.LuongNhapToiThieu = ListParameter[0].LuongNhapToiThieu;
                 parameter.LuongTonToiThieu = ListParameter[0].LuongTonToiThieu;
@@ -37,8 +49,7 @@ namespace BookStore.ViewModel
                 parameter.SoNoToiDa = ListParameter[0].SoNoToiDa;
                 parameter.ChoPhepThuLonHonNo = ListParameter[0].ChoPhepThuLonHonNo;
                 DataProvider.Ins.DB.SaveChanges();
-                MessageBox.Show("Lưu thành công");
-            }
+                MessageBox.Show("Lưu thành công");           
         }
     }
 }

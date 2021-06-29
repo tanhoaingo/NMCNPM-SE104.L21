@@ -69,11 +69,32 @@ namespace BookStore.ViewModel
             EditBookButtonClickCommand = new RelayCommand<Page>((p) => { return EditBookNeed(); }, (p) => { EditBook(p); });
             DeleteBookButtonClickCommand = new RelayCommand<Page>((p) => { return DeleteBookNeed(); }, (p) => { DeleteBook(p); });
             SearchTextChangedCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { Refresh(p); });
+
+            SeeDetailCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { SeeDetail(p); });
+
+            SelectBookCommand = new RelayCommand<Page>((p) => { return SelectedMBook != null; }, (p) => { AfterSelectedBook(p); });
+            ExitSelectCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { CloseWindow(); });
+        }
+
+        private void CloseWindow()
+        {
+            LBWD.Close();
+        }
+
+        private void AfterSelectedBook(Page p)
+        {
+            LBWD.Close();
+
         }
 
         private void Refresh(Page p)
         {
             CollectionViewSource.GetDefaultView(ListBooks).Refresh();
+        }
+        private void test1()
+        {
+            MessageBox.Show("hong");
+          
         }
 
         private bool DeleteBookNeed()
@@ -125,7 +146,7 @@ namespace BookStore.ViewModel
 
         public void LoadListBooks()
         {
-            ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
+            ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.TrangThai == 0));
         }
 
         public void LoadPage(BookPage p)
@@ -275,7 +296,42 @@ namespace BookStore.ViewModel
             tmpPg.Grid.Effect = null;
         }
 
-        private void EditBook(Page p)
+        private void SeeDetail(Page p)
+        {
+            if(SelectedMBook == null)
+            {
+                MessageBox.Show("Chọn chi tiết hóa đơn trước");
+                return;
+            }
+            var tmpPg = p as BookPage;
+
+            tmpPg.Grid.Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
+            var tmp = new BookDetailWindow();
+            var tmpVM = tmp.DataContext as BookDetailViewModel;
+
+            foreach (var s in DataProvider.Ins.DB.SACHes)
+            {
+                if (s.MaDauSach == SelectedMBook.MaDauSach)
+                {
+                    Sach = s;
+                    break;
+                }
+            }
+
+            tmpVM.EditBook = SelectedMBook;
+            tmpVM.EditBookInfor = Sach;
+            tmpVM.LoadData();
+            tmp.ShowDialog();
+
+            LoadListBooks();
+
+            // Splash.Visibility = Visibility.Collapsed;
+            tmpPg.Grid.Effect = null;
+        }
+        private void  EditBook(Page p)
         {
             var tmpPg = p as BookPage;
 
@@ -296,6 +352,31 @@ namespace BookStore.ViewModel
             tmpPg.Grid.Effect = null;
         }
 
+        private void IsAllowedInput(TextCompositionEventArgs e)
+        {
+
+            if (SelectedOption == "Tên sách" || SelectedOption == "Thể loại" || SelectedOption == "Tác giả")
+            {
+               
+            }
+            else if (SelectedOption == "Đơn giá")
+            {
+                e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
+            }
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        public override void CleanUpData()
+        {
+            base.CleanUpData();
+            SelectedMBook = null;
+            LBWD = null;
+            Temp = null;
+        }
 
 
         public ICollectionView ListBooksCollectionView { get; set; }
@@ -305,6 +386,13 @@ namespace BookStore.ViewModel
         public ICommand DeleteBookButtonClickCommand { get; set; }
         public ICommand SearchTextChangedCommand { get; set; }
 
+        public ICommand SeeDetailCommand { get; set; }
+         
+
+        public ICommand SelectBookCommand { get; set; }
+        public ICommand ExitSelectCommand { get; set; }
+
+
         private string _ListBooksFiller = string.Empty;
         private string _SelectedOption;
         private ObservableCollection<string> _ListOptionsSearch;
@@ -312,6 +400,11 @@ namespace BookStore.ViewModel
         private ObservableCollection<string> _Temp;
         private int _FlagIntent;
         private DAUSACH _SelectedMBook;
+
+        private SACH _sach;
+
+        private ListBookWindow _LBWD;
+
 
 
         public string ListBooksFiller { get => _ListBooksFiller; set{ _ListBooksFiller = value; OnPropertyChanged(nameof(ListBooksFiller)); ListBooksCollectionView.Refresh(); } }
@@ -322,5 +415,10 @@ namespace BookStore.ViewModel
         public ObservableCollection<string> Temp { get => _Temp; set { _Temp = value; OnPropertyChanged(); } }
         public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
         public DAUSACH SelectedMBook { get => _SelectedMBook; set => _SelectedMBook = value; }
+
+        public SACH Sach { get => _sach; set => _sach = value; }
+
+        public ListBookWindow LBWD { get => _LBWD; set => _LBWD = value; }
+
     }
 }

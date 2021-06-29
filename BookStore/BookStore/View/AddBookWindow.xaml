@@ -376,6 +376,7 @@
                     <Button
                         Width="150"
                         Command="{Binding CancelButtonClickCommand}"
+                        CommandParameter="{Binding ElementName=AddBookWD}"
                         BorderBrush="Transparent"
                         Foreground="#af91fa"
                         Background="White"

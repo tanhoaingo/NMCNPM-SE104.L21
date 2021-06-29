@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
 namespace BookStore.ViewModel
 {
     public class BCCNViewModel : BaseViewModel
@@ -26,8 +26,10 @@ namespace BookStore.ViewModel
             else
                 Selected = new ChiTietBaoCaoCongNo();
             CloseWindowCommand = new RelayCommand<BCCNWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
+
             ButtonSaveClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Save(p); });
-            ButtonExportClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Export(); });
+            ButtonExportClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => {/* Export(); */});
+
         }
         public class ChiTietBaoCaoCongNo
         {
@@ -69,10 +71,12 @@ namespace BookStore.ViewModel
             var BCCN = new ObservableCollection<BAOCAOCONGNO>(DataProvider.Ins.DB.BAOCAOCONGNOes);
             foreach (var item in BaoCaoCongNoSource)
             {
+
                 DataProvider.Ins.DB.CT_BCCN.Add(new CT_BCCN() { MaBaoCaoCongNo = BCCN.Last().MaBaoCaoCongNo, MaKhachHang = item.maKH, NoDau = item.noDau, NoCuoi = item.noCuoi, NoMoi = item.noMoi, DaThu = item.daThu });
+
             }
             DataProvider.Ins.DB.SaveChanges();
-            if (MessageBox.Show("Bạn muốn thoát khỏi ứng dụng ?", "Thông báo", MessageBoxButton.OK) == MessageBoxResult.OK)
+            if (MessageBox.Show("Lập báo cáo thành công", "Thông báo", MessageBoxButton.OK) == MessageBoxResult.OK)
             {
                 Grid grid1 = p.Parent as Grid;
                 Border border1 = grid1.Parent as Border;
@@ -82,7 +86,7 @@ namespace BookStore.ViewModel
                 window.Close();
             }
         }
-        void Export()
+      /*  void Export()
         {
 
             Excel.Application excel = new Excel.Application();
@@ -177,7 +181,7 @@ namespace BookStore.ViewModel
                         break;
                 }
             }
-        }
+        }*/
         public ICommand CloseWindowCommand { get; set; }
         public ICommand ButtonSaveClickCommand { get; set; }
         public ICommand ButtonExportClickCommand { get; set; }

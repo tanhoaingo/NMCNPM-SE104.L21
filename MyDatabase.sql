@@ -465,3 +465,6 @@ ALTER TABLE CT_BCT
   ALTER TABLE CT_BCCN
  ADD DaThu money
 
+ alter table nguoidung add trangthai int default 0
+ 
+

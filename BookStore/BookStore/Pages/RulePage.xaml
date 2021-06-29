@@ -31,10 +31,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="8">
+    <Border Background="White" BorderBrush="Black" BorderThickness="0">
         <Grid>
             <StackPanel Orientation="Vertical">
-                <Grid Height="80">
+                <!--<Grid Height="80">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Source/Image/change.png" Height="80" Width="80" Margin="60,0,0,0"></Image>
                         <TextBlock
@@ -44,103 +44,210 @@
                 FontSize="30"
                 Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
                     </StackPanel>
-                </Grid>
+                </Grid>-->
                 <Grid Height="50"></Grid>
-                <Grid Height="40">
-                    <StackPanel Orientation="Horizontal">
+                <Grid Height="250">
+                    <!--<StackPanel Orientation="Horizontal">
                         <Image Source="/Source/Image/book.png" Height="40" Width="40" Margin="30,0,0,0"></Image>
                         <TextBlock
-                TextWrapping="Wrap"
-                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                Text="Quy định phiếu nhập sách" Margin="10,10,10,10"
-                FontSize="20"
-                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
-                </Grid>
-                <Grid Height="80">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox
-                        Text="{Binding ListParameter[0].LuongNhapToiThieu, Mode=TwoWay}"
-                        Margin="50,20,30,20"
-                        FontSize="15"
-                        materialDesign:HintAssist.Hint="Lượng nhập tối thiểu"                       
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Width="150" />
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Quy định phiếu nhập sách" Margin="10,10,10,10"
+                    FontSize="20"
+                    Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
+                    </StackPanel>-->
+                    <materialDesign:Card Margin="35 15" Background="White" BorderBrush="White" 
+                                         BorderThickness="0"
+                                        
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                                         UniformCornerRadius="15" >
+                        <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                            <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Quy định phiếu nhập sách" Margin="20,30,10,20"
+                    FontSize="20"
+                    Foreground="#DD2D39A8" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="50" >
+                                    <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Lượng nhập tối thiểu"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Foreground="#DD2D39A8" FontWeight="Normal"/>
+                                    <TextBox  Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                          BorderBrush="#6432a8"
+                                          Width="150"
+                                          FontSize="18"                                             
+                                           FontWeight="Bold"
+                                              Text="{Binding ListParameter[0].LuongNhapToiThieu, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          Margin="35 0"
 
-                        <TextBox
-                        Text="{Binding ListParameter[0].LuongTonToiThieu, Mode=TwoWay}"
-                        Margin="35,20,30,20"
-                        FontSize="15"
-                        materialDesign:HintAssist.Hint="Lượng tồn tối thiểu"                       
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Width="150" />
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewTextInput" >
-                                <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                                          />
 
-                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="50,20,10,10" Height="50" >
+                                    <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Lượng tồn tối thiểu"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Foreground="#DD2D39A8" FontWeight="Normal"/>
+                                    <TextBox  Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                          BorderBrush="#6432a8"
+                                          Width="150"
+                                          FontSize="18"
+                                              
+                                                 
+                                              FontWeight="Bold" TextAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Text="{Binding ListParameter[0].LuongTonToiThieu, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          Margin="35 0"
+
+                                          />
+
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
                 </Grid>
-                <Grid Height="40">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Source/Image/bill3.png" Height="40" Width="40" Margin="30,0,0,0"></Image>
+
+               
+
+                <Grid Height="250">
+                    <!--<StackPanel Orientation="Horizontal">
+                        <Image Source="/Source/Image/book.png" Height="40" Width="40" Margin="30,0,0,0"></Image>
                         <TextBlock
-                TextWrapping="Wrap"
-                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                Text="Quy định lập hóa đơn" Margin="10,10,10,10"
-                FontSize="20"
-                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
-                </Grid>
-                <Grid Height="80">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox
-                        Text="{Binding ListParameter[0].SoNoToiDa, Mode=TwoWay}"
-                        Margin="50,20,30,20"
-                        FontSize="15"
-                        materialDesign:HintAssist.Hint="Tiền nợ tối đa"                       
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Width="150" />
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Quy định phiếu nhập sách" Margin="10,10,10,10"
+                    FontSize="20"
+                    Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
+                    </StackPanel>-->
+                    <materialDesign:Card Margin="35 15" Background="White" BorderBrush="White" 
+                                         BorderThickness="0"
+                                        
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                                         UniformCornerRadius="15" >
+                        <StackPanel Orientation="Vertical"  Margin="20 0 0 0">
+                            <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Quy định lập hóa đơn" Margin="20,30,10,20"
+                    FontSize="20"
+                    Foreground="#DD2D39A8" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="50" >
+                                    <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Lượng nợ tối đa"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Foreground="#DD2D39A8" FontWeight="Normal"/>
+                                    <TextBox  Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                          BorderBrush="#6432a8"
+                                          Width="150"
+                                          FontSize="18"
+                                              
+                                             
+                                              FontWeight="Bold" TextAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Text="{Binding ListParameter[0].SoNoToiDa, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          Margin="35 0"
 
-                        <TextBox
-                        Text="{Binding ListParameter[0].LuongTonToiThieuSauBan, Mode=TwoWay}"
-                        Margin="35,20,30,20"
-                        FontSize="15"
-                        materialDesign:HintAssist.Hint="Lượng tồn tối thiểu"                       
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Width="150" />
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewTextInput" >
-                                <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                                          />
 
-                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Margin="50,20,10,10" Height="50" >
+                                    <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Lượng tồn tối thiểu sau bán"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Foreground="#DD2D39A8" FontWeight="Normal"/>
+                                    <TextBox  Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                          BorderBrush="#6432a8"
+                                          Width="150"
+                                          FontSize="18"
+                                              
+                                                 
+                                              FontWeight="Bold" TextAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Text="{Binding ListParameter[0].LuongTonToiThieuSauBan, Mode=TwoWay}"
+                                          VerticalAlignment="Center"
+                                          Margin="35 0"
+
+                                          />
+
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
                 </Grid>
-                <Grid Height="40">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Source/Image/money.png" Height="40" Width="40" Margin="30,0,0,0"></Image>
+
+
+                <Grid Height="250">
+                    <!--<StackPanel Orientation="Horizontal">
+                        <Image Source="/Source/Image/book.png" Height="40" Width="40" Margin="30,0,0,0"></Image>
                         <TextBlock
-                TextWrapping="Wrap"
-                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                Text="Quy định phiếu thu tiền" Margin="10,10,10,10"
-                FontSize="20"
-                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-                    </StackPanel>
-                </Grid>
-                <Grid Height="80">
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox
-                            
-                            FontSize="20"                           
-                            Margin="45,10,20,10"
-    Name="CheckBox"
-    IsChecked="{Binding ListParameter[0].ChoPhepThuLonHonNo, Mode=TwoWay}"
-    Content="Số tiền thu vượt quá số tiền nợ" />
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Quy định phiếu nhập sách" Margin="10,10,10,10"
+                    FontSize="20"
+                    Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
+                    </StackPanel>-->
+                    <materialDesign:Card Margin="35 15" Background="White" BorderBrush="White" 
+                                         BorderThickness="0"
+                                        
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth1" 
+                                         UniformCornerRadius="15" >
+                        <StackPanel Orientation="Vertical" Margin="20 0 0 0">
+                            <TextBlock
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Quy định phiếu thu tiền" Margin="20,30,10,20"
+                    FontSize="20"
+                    Foreground="#DD2D39A8" FontWeight="Bold"/>
+                            <StackPanel Orientation="Horizontal" >
+                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="50" >
+                                    <TextBlock
+                                        Margin="10 8 0 0"
+                    TextWrapping="Wrap"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Text="Số tiền thu vượt quá số tiền nợ"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Foreground="#DD2D39A8" FontWeight="Normal"/>
+                                    <CheckBox
+                                    Width="30" 
+                                        Height="30"                          
+                                    Margin="45,0,20,0"
+                                    Name="CheckBox"
+                                    IsChecked="{Binding ListParameter[0].ChoPhepThuLonHonNo, Mode=TwoWay}"
+                                    >
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="2" ScaleY="2" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                </StackPanel>
 
-                    </StackPanel>
+                              
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
                 </Grid>
+                
+              
                 <Grid Height="30"></Grid>
                 <Grid Height="80" Margin="0,0,0,0">
                     <StackPanel Orientation="Horizontal">
@@ -186,6 +293,29 @@
                             <TextBlock
                  Text="Hoàn tất" FontSize="22" FontWeight="Bold" />
                         </Button>
+                        <!--<Button
+                        x:Name="SaveButton"
+                Background="#66ff33"
+                Height="Auto" Margin="160,15,0,15" Width="150">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding SaveButtonClickCommand}"
+                                   CommandParameter="{Binding ElementName=SaveButton}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <StackPanel
+                    Orientation="Horizontal"
+                    Width="150">
+                                <materialDesign:PackIcon
+                        Kind="ContentSave"
+                        Width="36"
+                        Height="36"/>
+                                <TextBlock
+                        Text="Lưu"
+                        FontSize="30"
+                        Margin="15,0,0,0"/>
+                            </StackPanel>
+                        </Button>-->
                     </StackPanel>
 
                 </Grid>

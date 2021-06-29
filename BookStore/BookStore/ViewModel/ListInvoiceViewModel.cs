@@ -19,6 +19,7 @@ namespace BookStore.ViewModel
             SelectedInvoice = null;
             SelectionChangedCommand = new RelayCommand<DataGrid>((p) => { return true; }, (p) => { loadDetail(); });
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadEdit(); });
+            ButtonKHClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadKH(); });
         }
         //
         public void loadDetail()
@@ -33,28 +34,41 @@ namespace BookStore.ViewModel
                 }
             }
         }
-
+        public void loadKH()
+        {
+            if (SelectedInvoice == null)
+                return;
+            else
+            {
+                var khachHang = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
+                var kh = khachHang.Where(x => x.MaKhachHang == SelectedInvoice.MaKhachHang).First();
+                CustomerWindow window = new CustomerWindow(kh);
+                window.ShowDialog();
+            }    
+        }
         public void loadEdit()
         {
             if (SelectedInvoice == null)
             {
                 return;
             }
-            InvoiceWindow invoiceWindow = new InvoiceWindow();
-            (invoiceWindow.DataContext as InvoiceViewModel).FlagIntent = 1;
-            (invoiceWindow.DataContext as InvoiceViewModel).Editor = SelectedInvoice;
-            (invoiceWindow.DataContext as InvoiceViewModel).LoadData();
-            invoiceWindow.ShowDialog();
+            InvoiceWindow tmpWD = new InvoiceWindow();
+            var tmVM = tmpWD.DataContext as InvoiceViewModel;
+            tmVM.FlagIntent = 1;
+            tmVM.Editor = SelectedInvoice;
+            tmVM.LoadData();
+            tmpWD.ShowDialog();
         }
 
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand ButtonEditClickCommand { get; set; }
+        public ICommand ButtonKHClickCommand { get; set; }
 
         private ObservableCollection<HOADON> _ListInvoice;
         private ObservableCollection<CT_HD> _Detail;
         private HOADON _SelectedInvoice;
 
-        public ObservableCollection<HOADON> ListInvoice { get => _ListInvoice; set => _ListInvoice = value; }
+        public ObservableCollection<HOADON> ListInvoice { get => _ListInvoice; set { _ListInvoice = value; OnPropertyChanged(); } }
         public ObservableCollection<CT_HD> Detail { get => _Detail; set { _Detail = value; OnPropertyChanged(); } }
         public HOADON SelectedInvoice { get => _SelectedInvoice; set { _SelectedInvoice = value; OnPropertyChanged(); } }
     }

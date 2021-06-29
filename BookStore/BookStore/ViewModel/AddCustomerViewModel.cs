@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace BookStore.ViewModel
 {
@@ -24,9 +25,16 @@ namespace BookStore.ViewModel
         }
 
 
-        private void LoadWindow(AddCustomerWindow p)
+        public void LoadWindow(AddCustomerWindow p)
         {
-            p.TextTitle.Text = "Sửa thông tin khách hàng";
+            if (FLagItent == 0)
+            {
+                p.TextTitle.Text = "Thêm khách hàng";
+            }
+            else
+            {
+                p.TextTitle.Text = "Sửa thông tin khách hàng";
+            }
         }
 
         private void CancelAddCustomer(AddCustomerWindow p)
@@ -83,11 +91,17 @@ namespace BookStore.ViewModel
                     p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
                     return;
                 }
-                var kh = new KHACHHANG() { HoTenKhachHang = TenKhachHang, DienThoai = SDT, DiaChi = DiaChi, Email = Email, SoNo = 0 };
+                var kh = new KHACHHANG() { HoTenKhachHang = TenKhachHang, DienThoai = SDT, DiaChi = DiaChi, Email = Email, SoNo = 0, TrangThai = 0};
                 DataProvider.Ins.DB.KHACHHANGs.Add(kh);
                 DataProvider.Ins.DB.SaveChanges();
+                _CreatedCustomer = kh;
+                TenKhachHang = string.Empty;
+                SDT = string.Empty;
+                Email = string.Empty;
+                DiaChi = string.Empty;
                 p.ErrorAddCustomer.Text = "Thêm khách hàng thành công!";
-                p.ErrorAddCustomer.Visibility = System.Windows.Visibility.Visible;
+                p.ErrorAddCustomer.Foreground = Brushes.Green;
+                p.ErrorAddCustomer.Visibility = Visibility.Visible;
                 _FlagIsSaved = true;
             }
             else if (FLagItent == 1)
@@ -128,6 +142,7 @@ namespace BookStore.ViewModel
         private int _FLagItent;
         private int _EditID;
         private string _EditSDT;
+        private KHACHHANG _CreatedCustomer;
         public string TenKhachHang { get => _TenKhachHang; set { _TenKhachHang = value; OnPropertyChanged(); } }
         public string SDT { get => _SDT; set { _SDT = value; OnPropertyChanged(); } }
         public string Email { get => _Email; set { _Email = value; OnPropertyChanged(); } }
@@ -136,5 +151,6 @@ namespace BookStore.ViewModel
         public int FLagItent { get => _FLagItent; set => _FLagItent = value; }
         public int EditID { get => _EditID; set => _EditID = value; }
         public string EditSDT { get => _EditSDT; set => _EditSDT = value; }
+        public KHACHHANG CreatedCustomer { get => _CreatedCustomer; set => _CreatedCustomer = value; }
     }
 }

@@ -105,6 +105,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\MoneyConverter.cs" />
+    <Compile Include="DesignControls\UserControlMenuItem.xaml.cs">
+      <DependentUpon>UserControlMenuItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\BAOCAOCONGNO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -184,6 +187,15 @@
     <Compile Include="Pages\BCTpage.xaml.cs">
       <DependentUpon>BCTpage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BookEntryPage.xaml.cs">
+      <DependentUpon>BookEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BookPage.xaml.cs">
+      <DependentUpon>BookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InvoicePage.xaml.cs">
+      <DependentUpon>InvoicePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ListBookEntryPage.xaml.cs">
       <DependentUpon>ListBookEntryPage.xaml</DependentUpon>
     </Compile>
@@ -211,8 +223,10 @@
     <Compile Include="ViewModel\AddUserViewModel.cs" />
     <Compile Include="ViewModel\BCCNViewModel.cs" />
     <Compile Include="ViewModel\BCTViewModel.cs" />
+    <Compile Include="ViewModel\BookDetailViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
+    <Compile Include="ViewModel\ItemMenu.cs" />
     <Compile Include="ViewModel\ListBillViewModel.cs" />
     <Compile Include="ViewModel\ListBookEntryViewModel.cs" />
     <Compile Include="ViewModel\ListCustomerViewModel.cs" />
@@ -220,6 +234,7 @@
     <Compile Include="ViewModel\ListUserViewModel.cs" />
     <Compile Include="ViewModel\NewMainViewModel1.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\SubItem.cs" />
     <Compile Include="View\AddAuthorWindow.xaml.cs">
       <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
     </Compile>
@@ -246,11 +261,17 @@
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RowToIndexConverter.cs" />
+    <Compile Include="View\BookDetailWindow.xaml.cs">
+      <DependentUpon>BookDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BookEntryWindow.xaml.cs">
       <DependentUpon>BookEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ChangeRulesWindow.xaml.cs">
       <DependentUpon>ChangeRulesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CustomerWindow.xaml.cs">
+      <DependentUpon>CustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
@@ -292,10 +313,20 @@
     <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\NewMainViewWindowOF.xaml.cs">
+      <DependentUpon>NewMainViewWindowOF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NewMainWindow.xaml.cs">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OfficialMainWindow.xaml.cs">
+      <DependentUpon>OfficialMainWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="DesignControls\menuControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DesignControls\UserControlMenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -387,11 +418,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BookDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BookEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ChangeRulesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -459,7 +498,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\NewMainViewWindowOF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NewMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OfficialMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -560,15 +607,6 @@
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
       <VersionMajor>2</VersionMajor>
       <VersionMinor>8</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Excel">
-      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>9</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>

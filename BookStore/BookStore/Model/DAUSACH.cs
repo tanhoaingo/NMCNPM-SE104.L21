@@ -9,10 +9,11 @@
 
 namespace BookStore.Model
 {
+    using BookStore.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class DAUSACH
+    public partial class DAUSACH :BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DAUSACH()
@@ -24,7 +25,7 @@ namespace BookStore.Model
         }
     
         public int MaDauSach { get; set; }
-        public string TenSach { get; set; }
+        private string _TenSach;
         public Nullable<int> LuongTon { get; set; }
         public byte[] HinhAnhSach { get; set; }
         public Nullable<int> TrangThai { get; set; }
@@ -37,5 +38,6 @@ namespace BookStore.Model
         public virtual ICollection<TACGIA> TACGIAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<THELOAI> THELOAIs { get; set; }
+        public string TenSach { get => _TenSach; set { _TenSach = value; OnPropertyChanged(); } }
     }
 }

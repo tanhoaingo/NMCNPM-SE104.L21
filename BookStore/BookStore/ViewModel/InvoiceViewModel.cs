@@ -18,11 +18,10 @@ namespace BookStore.ViewModel
         {
           
             _cardVisible = Visibility.Hidden;
-            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
+            InvoiceDate = DateTime.Now;
+            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0 && x.TrangThai == 0));
             Items = CreateData();
-            ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
-
-
+            LoadKhachHang();
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
             AddingNewItemCommand = new RelayCommand<Object>((p) => { return true; }, (p) => { });
 
@@ -36,16 +35,22 @@ namespace BookStore.ViewModel
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount(); });
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailButtonNeed(); }, (p) => { DeleteDetail(); UpdateResultAMount(); });
-            CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => CloseInvoice(p));
-            SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook());
+            CancelButtonClickCommand = new RelayCommand<Page>((p) => { return true; }, (p) => CloseInvoice(p));
+            SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook(p));
             ExitButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
             PaidAmountTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { UpdateResultAMount(); });
+        }
+
+        private void LoadKhachHang()
+        {
+            ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs.Where(x => x.TrangThai == 0));
+
         }
         private void UpdateAmountBook()
         {
             if (SelectedBook != null)
             {
-                Amount = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach).FirstOrDefault().LuongTon.ToString();
+                Amount = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == SelectedBook.MaDauSach && x.TrangThai == 0).FirstOrDefault().LuongTon.ToString();
             }
             else
             {
@@ -73,16 +78,22 @@ namespace BookStore.ViewModel
             p.Close();
         }
 
-        private void SearchBook()
+        private void SearchBook(Window p)
         {
-            var tmp = new ListBookWindow { };
+            var tmp = new ListBookWindow();
+            var tmpVM = tmp.DataContext as ListBookViewModel;
+            tmpVM.LBWD = tmp;
+            tmpVM.FlagIntent = 1;
+            tmpVM.LoadPage(tmp.BPage);
             tmp.ShowDialog();
-            var res_tmp = tmp.DataContext as ListBookViewModel;
+            SelectedBook = tmpVM.SelectedMBook;
+            tmpVM.CleanUpData();
         }
 
-        private void CloseInvoice(Window p)
+        private void CloseInvoice(Page p)
         {
-            p.Close();
+            (p.DataContext as InvoiceViewModel).CleanUpData();
+        //    p.Close();
         }
 
 
@@ -524,8 +535,6 @@ namespace BookStore.ViewModel
             if (FlagIntent==0)
             {
                 SumAmount = 0;
-                //PaidAmount = "0";
-                //LeftAmount = 0;
                 if (Items == null)
                 {
                     return;
@@ -534,8 +543,16 @@ namespace BookStore.ViewModel
                 {
                     SumAmount += v.IntoMoney;
                 }
-
                 LeftAmount = SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount);
+                if(LeftAmount <0 )
+                {
+                    LeftAmount = 0;
+                }
+                RightAmount = Rules.Instance.ConvertStringAmountToInt64(PaidAmount) - SumAmount;
+                if (RightAmount < 0)
+                {
+                    RightAmount = 0;
+                }
             }
 
         }
@@ -689,6 +706,7 @@ namespace BookStore.ViewModel
 
         public void LoadData()
         {
+            LoadKhachHang();
             if (FlagIntent == 1)
             {
                 Items = new ObservableCollection<Item_CT_HD> { };
@@ -772,7 +790,11 @@ namespace BookStore.ViewModel
             // Splash.Visibility = Visibility.Visible;
 
             var tmp = new AddCustomerWindow();
+            var tmpVM = tmp.DataContext as AddCustomerViewModel;
+            tmpVM.FLagItent = 0;
             tmp.ShowDialog();
+            LoadKhachHang();
+            SelectedCustomer = tmpVM.CreatedCustomer;
 
             // Splash.Visibility = Visibility.Collapsed;
             tmpPg.Grid.Effect = null;
@@ -848,13 +870,14 @@ namespace BookStore.ViewModel
         private Visibility _cardVisible;
         private Grid _grid;
         private string _StaffName;
+        private decimal _RightAmount;
 
 
         public ObservableCollection<Item_CT_HD> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
 
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; } }
 
-        public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set => _ListCustomer = value; }
+        public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set { _ListCustomer = value; OnPropertyChanged(); } }
 
         public KHACHHANG SelectedCustomer { get => _SelectedCustomer; set { _SelectedCustomer = value; SetCard(value); OnPropertyChanged(); } }
 
@@ -900,5 +923,7 @@ namespace BookStore.ViewModel
         public DateTime? InvoiceDate { get => _InvoiceDate; set { _InvoiceDate = value; OnPropertyChanged(); } }
 
         public string BookTypes { get => _BookTypes; set { _BookTypes = value; OnPropertyChanged(); } }
+
+        public decimal RightAmount { get => _RightAmount; set { _RightAmount = value; OnPropertyChanged(); } }
     }
 }
