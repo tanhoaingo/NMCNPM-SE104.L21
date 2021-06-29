@@ -680,13 +680,13 @@
                                     </TextBox>
                                     <ComboBox
                             x:Name="NamePriceCombobox"
-                            IsEditable="True"
                             materialDesign:HintAssist.Hint="Đơn Giá"
                             Margin="30 10"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             ItemsSource="{Binding ListPriceOfBook, Mode=OneWay,StringFormat={}{0:N0}}"
-                            
-                            SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ItemStringFormat="{}{0:N0}"
+                                        IsEditable="False"
+                            SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N0}}"
                             FontSize="20"
                             Height="60"
                             MinWidth="160"

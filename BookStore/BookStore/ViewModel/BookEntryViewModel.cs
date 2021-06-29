@@ -1,4 +1,5 @@
 ﻿using BookStore.Model;
+using BookStore.Pages;
 using BookStore.Tools;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,17 @@ namespace BookStore.ViewModel
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailNeed(); }, (p) => { EditDetail(); });
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailNeed(); }, (p) => { DeleteDetail(); });
             AmountTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateIntoMoney(); });
+            CancelButtonClickCommand = new RelayCommand<BookEntryPage>((p) => { return true; }, (p) => { Cancel(p); });
+        }
+
+        private void Cancel(BookEntryPage p)
+        {
+            SelectedBook = null;
+            InputPrice = 0;
+            Amount = 0;
+            UpdateIntoMoney();
+            Items = null;
+            UpdateSumAmount();
         }
 
         private bool DeleteDetailNeed()
@@ -254,6 +266,10 @@ namespace BookStore.ViewModel
         private void UpdateSumAmount()
         {
             SumAmount = 0;
+            if(Items == null)
+            {
+                return;
+            }
             foreach (var v in Items)
             {
                 SumAmount += v.IntoMoney ?? 0;
@@ -282,7 +298,7 @@ namespace BookStore.ViewModel
             InputPrice = 0;
             EntryBookDate = null;
             Items = null;
-            ListBook = null;
+            //ListBook = null;
             Staff = null;
             Editor = null;
             SumAmount = 0;
@@ -299,6 +315,7 @@ namespace BookStore.ViewModel
         public ICommand EditDetailClickCommand { get; set; }
         public ICommand DeleteDetailClickCommand { get; set; }
         public ICommand AmountTextChangedCommand { get; set; }
+        public ICommand CancelButtonClickCommand { get; set; }
 
         private int _FlagIntent;
         private DAUSACH _SelectedBook;
