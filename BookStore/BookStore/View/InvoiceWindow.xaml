@@ -516,7 +516,7 @@
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             ItemsSource="{Binding ListPriceOfBook, Mode=OneWay}"
-                            SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}"
                             FontSize="20"
                             Height="60"
                             MinWidth="160"

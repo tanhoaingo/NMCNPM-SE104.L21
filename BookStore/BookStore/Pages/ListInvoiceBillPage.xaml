@@ -32,99 +32,42 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="0">
-        <Grid>
-            <StackPanel Orientation="Vertical">
 
-                <Grid Height="770">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="360"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="360"/>
-                    </Grid.RowDefinitions>
-                    <Grid Height="40" Grid.Row="0" VerticalAlignment="Top" Margin="10,15,0,0">
-                        <TextBlock
-                TextWrapping="Wrap"
-                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                Text="Danh sách hóa đơn"  VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                FontSize="26"
-                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="426,10,428,-2" />
-                    </Grid>
-                    <materialDesign:Card  UniformCornerRadius="10" Margin="150,80,150,0"
-                                          Background="White" BorderThickness="3" Grid.Row="0">
-                        <DataGrid Background="White" x:Name="HDdatagrid" ItemsSource="{Binding ListInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInvoice,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="130" CanUserReorderColumns="False" IsReadOnly="True" SelectionMode="Single">
+    <Grid>
+        <Border Margin="60,60,60,90" BorderThickness="1" Background="#FF8F8787">
+            <Grid Background="White">
+
+                <Button x:Name="BtnEdit"
+  ToolTip="MaterialDesignOutlinedButton"
+  Content="SỬA HOÁ ĐƠN" Margin="1249,10,40,793" Height="Auto" Background="#FFF02B2B" Foreground="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ButtonEditClickCommand}"
+                                   CommandParameter="{Binding ElementName=BtnLoadDetail}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Grid Margin="40,74,40,716" Background="#FF0952BB">
+                    <TextBlock
+                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                            Text="Danh sách phiếu nhập sách" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            FontSize="25"
+                            Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
+                </Grid>
+                <Border Margin="40,132,40,426" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
+                    <Grid>
+                        <DataGrid x:Name="HDdatagrid" ItemsSource="{Binding ListInvoice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedInvoice,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" SelectionMode="Single">
                             <DataGrid.Columns>
-                                <DataGridTextColumn  FontSize="18" Width="180" Binding="{Binding MaHoaDon}" Header="Mã hóa đơn">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn  FontSize="18" Width="250" Binding="{Binding MaKhachHang}" Header="Mã khách hàng">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn  FontSize="18" Binding="{Binding NgayLapHoaDon}" Header="Ngày lập" Width="180">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn  FontSize="18" Width="180" Binding="{Binding TongTien}" Header="Tổng tiền">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn  FontSize="18" Width="150" Binding="{Binding SoTienTra}" Header="Số tiền trả">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn  FontSize="18" Width="150" Binding="{Binding ConLai}" Header="Còn lại">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
-                                <DataGridTextColumn   FontSize="18" Width="150" Binding="{Binding MaNguoiLap}" Header="Mã người lập">
-                                    <DataGridColumn.HeaderStyle>
-                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
-                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="FontWeight" Value="Normal"/>
-                                            <Setter Property="FontSize" Value="20"/>
-                                        </Style>
-                                    </DataGridColumn.HeaderStyle>
-                                </DataGridTextColumn>
+                                <DataGridTextColumn Binding="{Binding MaHoaDon}" Header="Mã hóa đơn"/>
+                                <DataGridTextColumn Binding="{Binding MaKhachHang}" Header="Mã khách hàng" />
+                                <DataGridTextColumn Binding="{Binding NgayLapHoaDon}" Header="Ngày lập"/>
+                                <DataGridTextColumn Binding="{Binding TongTien}" Header="Tổng tiền"/>
+                                <DataGridTextColumn Binding="{Binding SoTienTra}" Header="Số tiền trả"/>
+                                <DataGridTextColumn Binding="{Binding ConLai}" Header="Còn lại"/>
+                                <DataGridTextColumn Binding="{Binding MaNguoiLap}" Header="Mã người lập"/>
+
                             </DataGrid.Columns>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
@@ -133,18 +76,14 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DataGrid>
-                    </materialDesign:Card>
-                    <Grid Height="40" Grid.Row="2" VerticalAlignment="Top" Margin="0,20,10,0">
-                        <TextBlock
-                            TextWrapping="Wrap"
-                            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                            Text="Chi tiết hóa đơn"  VerticalAlignment="Center"
-                HorizontalAlignment="Center"
-                FontSize="26"
-                Foreground="#DD2D39A8" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Height="32" Margin="443,10,441,-2" />
+
                     </Grid>
-                    <materialDesign:Card  UniformCornerRadius="10" Margin="196,85,196,-5" Background="White" BorderBrush="Black" BorderThickness="3" Grid.Row="2">
-                        <DataGrid Background="White" ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="130" CanUserReorderColumns="False" IsReadOnly="True"  >
+                </Border>
+                <Border Margin="40,485,40,50" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
+                    <Grid>
+
+                        <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="220" CanUserReorderColumns="False" IsReadOnly="True"  >
+
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding MaCT_HD}" Header="Mã CTHD"
                                                       FontSize="18" Width="180">
@@ -203,38 +142,19 @@
                                 </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
-                    </materialDesign:Card>
-                </Grid>
-                <Grid Height="135">
-                    <!--<Button x:Name="BtnEdit"
-  Style="{StaticResource MaterialDesignOutlinedButton}"
-  ToolTip="MaterialDesignOutlinedButton"
-  Content="SỬA HOÁ ĐƠN" Margin="422,10,424,19">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding ButtonEditClickCommand}"
-                                   CommandParameter="{Binding ElementName=BtnLoadDetail}">
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>-->
 
-                    <Button
-                        Padding="20"
-                        Margin="586,32,624,33"
-                        Command="{Binding ButtonEditClickCommand}"
-                        BorderBrush="Transparent"
-                        Foreground="#af91fa"
-                        Background="White"
-                 Style="{StaticResource MaterialDesignRaisedDarkButton}"
-            Height="70"
-            materialDesign:ButtonAssist.CornerRadius="25"
-                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners">
-                        <TextBlock
-                 Text="SỬA PHIẾU NHẬP SÁCH" FontSize="22" FontWeight="Bold" />
-                    </Button>
+                    </Grid>
+                </Border>
+                <Grid Margin="40,427,40,363" Background="#FF0952BB">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                        Text="Chi tiết phiếu nhập sách" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        FontSize="25"
+                        Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
+
                 </Grid>
-            </StackPanel>
-        </Grid>
-    </Border>
+            </Grid>
+        </Border>
+    </Grid>
 </Page>

@@ -432,3 +432,36 @@ ALTER TABLE CT_BCT
 ADD CONSTRAINT
 FK_CT_BCT_DAUSACH 
 FOREIGN KEY (MaDauSach) REFERENCES DAUSACH (MaDauSach)
+
+/*=============================================================================*/ 
+/*Log 8 database*/
+/*=============================================================================*/ 
+
+ALTER TABLE KHACHHANG
+ADD TrangThai INT DEFAULT 0
+
+/*=============================================================================*/ 
+/*Log 9 database*/
+/*=============================================================================*/ 
+
+ALTER TABLE DAUSACH
+ADD TrangThai INT DEFAULT 0
+
+/*=============================================================================*/ 
+/*Log 10 database*/
+/*=============================================================================*/ 
+
+ALTER TABLE CT_BCT
+ DROP COLUMN PhatSinh 
+ ALTER TABLE CT_BCT
+ ADD NhapVao int 
+ ALTER TABLE CT_BCT
+ ADD BanRa int 
+
+  ALTER TABLE CT_BCCN
+ DROP column PhatSinh 
+ ALTER TABLE CT_BCCN
+ ADD NoMoi money 
+  ALTER TABLE CT_BCCN
+ ADD DaThu money
+

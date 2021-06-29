@@ -1012,7 +1012,7 @@
           <End Type="MYDATABASEModel.DAUSACH" Role="DAUSACH" Multiplicity="*" />
           <End Type="MYDATABASEModel.THELOAI" Role="THELOAI" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

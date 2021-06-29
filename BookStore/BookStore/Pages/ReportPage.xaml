@@ -1,0 +1,150 @@
+﻿<Page x:Class="BookStore.Pages.ReportPage"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookStore.Pages"
+      xmlns:wpf="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:ei ="http://schemas.microsoft.com/expression/2010/interactions"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}" 
+       
+          DataContext="{StaticResource ReportVM}"
+       
+        x:Name="mainWindow"
+        Height="1000"
+        Width="1600"
+      Title="ListInvoiceBillPage">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Border Margin="60,34,60,36" BorderThickness="1" Background="#FF8F8787" RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0.134"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0.998"/>
+                </TransformGroup>
+            </Border.RenderTransform>
+            <Grid Background="White">
+                <ComboBox
+                        x:Name="BCCNMonthCombobox"
+                        materialDesign:HintAssist.Hint="Tháng" 
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"                        
+                        ItemsSource="{Binding MonthItemSource}"
+                        SelectedItem="{Binding SelectedMonthBCCN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Top" Width="150"
+                        Margin="40,500,1288,0" Height="40">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding BCCNSelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=BCCNMonthCombobox}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <ComboBox
+                        x:Name="BCTMonthCombobox"
+                        materialDesign:HintAssist.Hint="Tháng" 
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        IsEditable="True"                        
+                        ItemsSource="{Binding MonthItemSource}"
+                        SelectedItem="{Binding SelectedMonthBCT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="15"
+                        VerticalAlignment="Top" Width="150"
+                        Margin="40,18,1288,0" Height="40">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding BCTSelectionChangedCommand}"
+                                    CommandParameter="{Binding ElementName=BCTMonthCombobox}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <Button x:Name="BtnBCT"
+  ToolTip="MaterialDesignOutlinedButton"
+  Content="LẬP BÁO CÁO TỒN" Margin="1249,10,40,879" Height="Auto" Background="#FF23A216" Foreground="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ButtonBCTClickCommand}"
+                                   CommandParameter="{Binding ElementName=BtnLoadDetail}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Grid Margin="40,74,40,793" Background="#FF0952BB">
+                    <TextBlock
+                            TextWrapping="Wrap"
+                            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                            Text="Báo cáo tồn" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            FontSize="25"
+                            Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
+                </Grid>
+                <Border Margin="40,132,40,498" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
+                    <Grid>
+                        <DataGrid x:Name="PNSdatagrid" ItemsSource="{Binding BaoCaoTonSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedEntryBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" SelectionMode="Single" FontFamily="Roboto" Background="{x:Null}" FontSize="18" EnableRowVirtualization="False" BorderBrush="#FF6496C8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding maDauSach}" Header="Mã đầu sách" Width="140"/>
+                                <DataGridTextColumn Binding="{Binding Sach}" Header="Tên sách" Width="250"/>
+                                <DataGridTextColumn Binding="{Binding tonDau}" Header="Tồn đầu"/>
+                                <DataGridTextColumn Binding="{Binding nhapVao}" Header="Nhập vào"/>
+                                <DataGridTextColumn Binding="{Binding banRa}" Header="Bán ra"/>
+                                <DataGridTextColumn Binding="{Binding tonCuoi}" Header="Tồn cuối"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+                <Border Margin="40,619,40,10" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
+                    <Grid>
+
+                        <DataGrid ItemsSource="{Binding BaoCaoCongNoSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" FontSize="18"  >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding maKH}" Header="Mã khách hàng"/>
+                                <DataGridTextColumn Binding="{Binding khachHang}" Header="Tên khách hàng" Width="250"/>
+                                <DataGridTextColumn Binding="{Binding noDau}" Header="Nợ đầu"/>
+                                <DataGridTextColumn Binding="{Binding noMoi}" Header="Nợ mới"/>
+                                <DataGridTextColumn Binding="{Binding daThu}" Header="Đã thu"/>
+                                <DataGridTextColumn Binding="{Binding noCuoi}" Header="Nợ cuối"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </Border>
+                <Grid Margin="40,561,40,309" Background="#FF0952BB">
+                    <TextBlock
+                        TextWrapping="Wrap"
+                        Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                        Text="Báo cáo công nợ" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        FontSize="25"
+                        Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
+                </Grid>
+                <Button x:Name="BtnBCCN"
+                    ToolTip="MaterialDesignOutlinedButton"
+                    Content="LẬP BÁO CÁO CÔNG NỢ" Margin="1249,500,40,389" Height="Auto" Background="#FF23A216" Foreground="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ButtonBCCNClickCommand}"
+                                CommandParameter="{Binding ElementName=BtnBCCN}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
