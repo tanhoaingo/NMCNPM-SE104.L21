@@ -24,6 +24,7 @@ namespace BookStore.ViewModel
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
             Items = new ObservableCollection<Item_CT_PNS>();
             EntryBookDate = DateTime.Now;
+            Staff = User.Ins.nguoiDung;
 
             CloseWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) => { this.CleanUpData(); });
             InputPriceTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateIntoMoney(); });

@@ -59,7 +59,7 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    BaoCaoTonSource.Add(new ChiTietBaoCaoTon() { maDauSach = item.MaDauSach, nhapVao = chiTietPNS.Where(x => (maSach.Contains(x.MaSach) && maPhieuNhap.Contains(x.MaPhieuNhapSach))).Sum(x => x.SoLuong), tonDau = 0, tonCuoi = item.LuongTon });
+                    BaoCaoTonSource.Add(new ChiTietBaoCaoTon() { maDauSach = item.MaDauSach, nhapVao = chiTietPNS.Where(x => (maSach.Contains(x.MaSach) && maPhieuNhap.Contains(x.MaPhieuNhapSach))).Sum(x => x.SoLuong), tonDau = 0, tonCuoi = item.LuongTon, banRa = CTHD.Where(x => (maHD.Contains(x.MaHoaDon) && maSach.Contains(x.MaSach))).Sum(x => x.SoLuong) });
                 }
             }
         }

@@ -16,9 +16,16 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         x:Name="NewHomeWD"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         DataContext="{StaticResource NewMain}"
         >
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}"
+                                                       CommandParameter="{Binding ElementName=NewHomeWD}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid x:Name="grid" >
         <Grid.RowDefinitions>
             <RowDefinition Height="403*"/>

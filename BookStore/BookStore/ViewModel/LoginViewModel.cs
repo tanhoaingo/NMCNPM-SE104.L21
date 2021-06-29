@@ -34,6 +34,8 @@ namespace BookStore.ViewModel
             var count = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == UserName && x.MatKhau == Password).Count();
             if (count > 0)
             {
+                var user = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == UserName).First();
+                User.Ins.nguoiDung = user;
                 IsLogin = true;
                 p.Close();
             }

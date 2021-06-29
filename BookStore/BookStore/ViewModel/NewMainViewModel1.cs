@@ -1,4 +1,6 @@
-﻿using BookStore.View;
+﻿using BookStore.Model;
+using BookStore.Pages;
+using BookStore.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,52 @@ namespace BookStore.ViewModel
 {
     class NewMainViewModel1 : BaseViewModel
     {
-
+        public bool Isloaded = false;
+        public ICommand LoadedWindowCommand { get; set; }
         public NewMainViewModel1()
         {
-          
+
+            LoadedWindowCommand = new RelayCommand<OfficialMainWindow>((p) => { return true; }, (p) =>
+            {
+                Isloaded = true;
+                if (p == null)
+                    return;
+                p.Hide();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.ShowDialog();
+
+                if (loginWindow.DataContext == null)
+                {
+                    return;
+                }
+                var loginVM = loginWindow.DataContext as LoginViewModel;
+
+                if (loginVM.IsLogin)
+                {
+                    p.Show();
+                    string foreFocus = "#FFFFFF";
+                    string backFocus = "#6485FF";
+                    var tmpP = new InvoicePage();
+                    p.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    p.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+                    p.MainFrame.Content = tmpP;
+                    p.MainTitle.Text = "Hóa đơn bán sách";
+                    (tmpP.DataContext as InvoiceViewModel).Staff = User.Ins.nguoiDung;
+
+                    if(User.Ins.nguoiDung.NHOMNGUOIDUNG.TenNhom == "Nhân Viên")
+                    {
+                        p.btnQuyDinh.IsEnabled = false;
+                        p.btnDShoaDon.IsEnabled = false;
+                        
+                    }
+                }
+                else
+                {
+
+                    p.Close();
+                }
+            }
+                );
             MouseLeaveCommand = new RelayCommand<Button>(p => true, p => MouseLeave(p));
             GetUidCommand = new RelayCommand<Button>(p => true, p => { _uid = p.Uid; Hover(p); });
             BtnCommand = new RelayCommand<OfficialMainWindow>(p => true, p => Btn_Click(p));
@@ -81,20 +125,21 @@ namespace BookStore.ViewModel
             switch (index)
             {
                 case 0:
-
+                    var tmpP = new InvoicePage();
                     window.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
                     window.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
-                    tmpWd.MainFrame.Navigate(new Uri("../Pages/InvoicePage.xaml", UriKind.Relative));
+                    tmpWd.MainFrame.Content = tmpP;
                     tmpWd.MainTitle.Text = "Hóa đơn bán sách";
+                    (tmpP.DataContext as InvoiceViewModel).Staff = User.Ins.nguoiDung;
                     break;
 
                 case 1:
+                    var tmp2P = new BookEntryPage();
                     window.btnPhieuNhap.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
                     window.btnPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
-
-                    
-                    tmpWd.MainFrame.Navigate(new Uri("../Pages/BookEntryPage.xaml", UriKind.Relative));
+                    tmpWd.MainFrame.Content = tmp2P;
                     tmpWd.MainTitle.Text = "Phiếu nhập sách";
+                    (tmp2P.DataContext as BookEntryViewModel).Staff = User.Ins.nguoiDung;
                     break;
                 case 2:
 
