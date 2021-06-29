@@ -50,7 +50,10 @@ namespace BookStore.ViewModel
             {
                 Btn_DanhSachPhieuNhap(p);
             });
-
+            ReportCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Btn_Report(p);
+            });
 
         }
         private void Btn_PhieuNhap(Window p)
@@ -125,6 +128,15 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
+        private void Btn_Report(Window p)
+        {
+            var tmpWd = p as NewMainWindow;
+            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/ProfitPage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Báo cáo tháng";
+        }
 
 
         //IECommand
@@ -137,6 +149,7 @@ namespace BookStore.ViewModel
         public ICommand ListBillCommand { get; set; }
         public ICommand ListBookEntryCommand { get; set; }
         public ICommand mainSource { get; set; }
+        public ICommand ReportCommand { get; set; }
 
 
         private void navigator()

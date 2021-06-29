@@ -276,7 +276,9 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <Button BorderBrush="Transparent"  BorderThickness="0" Command="{Binding BtnInvoiceCommand}" Height="auto" 
+                        <Button 
+                            CommandParameter="{Binding ElementName=NewHomeWD}"
+                            BorderBrush="Transparent"  BorderThickness="0" Command="{Binding ReportCommand}" Height="auto" 
                                 Background="Transparent">
 
                             <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 

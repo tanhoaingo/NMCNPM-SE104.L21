@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BookStore.View
+namespace BookStore.Pages
 {
     /// <summary>
-    /// Interaction logic for ListUserWindow.xaml
+    /// Interaction logic for ListUserPage.xaml
     /// </summary>
-    public partial class ListUserWindow : Window
+    public partial class ListUserPage : Page
     {
-        public ListUserWindow()
+        public ListUserPage()
         {
             InitializeComponent();
         }

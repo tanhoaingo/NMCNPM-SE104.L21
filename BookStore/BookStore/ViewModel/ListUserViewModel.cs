@@ -26,9 +26,8 @@ namespace BookStore.ViewModel
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Edit(); });
             ButtonDeleteClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Delete(); });
             ButtonAddClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Add(); });
-            CloseWindowCommand = new RelayCommand<ListUserWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
+            //CloseWindowCommand = new RelayCommand<ListUserWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
         }
-
         public void Edit()
         {
             if (SelectedUser.MatKhau == "" || SelectedUser.MatKhau == null)
