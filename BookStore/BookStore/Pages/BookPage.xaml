@@ -30,7 +30,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="34*"></RowDefinition>
-            <RowDefinition Height="33*"></RowDefinition>
+            <RowDefinition Height="36*"></RowDefinition>
             <RowDefinition Height="253*"></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -41,9 +41,9 @@
             HorizontalAlignment="Center"
             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
             Text="Danh Sách Đầu Sách"
-            FontSize="60"
+            FontSize="50"
             Foreground="#DD2D39A8" FontWeight="Bold" 
-            Height="72" Margin="474,15" Width="444"/>
+            Height="72" Margin="924,38,-52,96" Width="728" Grid.RowSpan="2"/>
 
         <materialDesign:Card Margin="30,10,30,0" Grid.Row="1">
             <Grid Margin="0,0,0,0">
@@ -75,7 +75,7 @@
                 <ComboBox
                     ItemsSource="{Binding ListOptionsSearch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     SelectedItem="{Binding SelectedOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Margin="10,18,0,18"
+                    Margin="10,18,27,18"
                     Grid.Column="1"
                     materialDesign:HintAssist.Hint="Tìm theo"
                     FontSize ="25"
@@ -83,7 +83,7 @@
                     VerticalAlignment="Center"
                     BorderBrush="Black"
                     BorderThickness="2"
-                    Padding="30,0,30,0" Height="52">
+                    Padding="30,0,30,0" Height="52" Grid.ColumnSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewTextInput" >
                             <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
@@ -94,16 +94,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
-                <Button 
-                    Grid.Column="2" 
-                    Height="Auto"
-                    Margin="30,18,10,19">
-                    <materialDesign:PackIcon
-                        Kind="Search"
-                        Width="25"
-                        Height="25">
-                    </materialDesign:PackIcon>
-                </Button>
+
 
                 <Grid 
                     Grid.Column="3" x:Name="IfSelectBook" Visibility="Hidden">
@@ -221,7 +212,7 @@
                                             TextAlignment="Center"
                                             FontSize="22">
                                         </TextBlock>
-                                        
+
                                     </Grid>
                                 </materialDesign:Card>
                             </Border>
