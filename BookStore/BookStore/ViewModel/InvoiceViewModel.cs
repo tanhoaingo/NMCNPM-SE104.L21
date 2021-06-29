@@ -115,7 +115,7 @@ namespace BookStore.ViewModel
                     return;
                 }
 
-                var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = Int64.Parse(PaidAmount), ConLai = LeftAmount, TongTien = SumAmount };
+                var HoaDon = new HOADON() { MaKhachHang = SelectedCustomer.MaKhachHang, MaNguoiLap = 1, NgayLapHoaDon = InvoiceDate, SoTienTra = PaidAmount, ConLai = LeftAmount, TongTien = SumAmount };
                 DataProvider.Ins.DB.HOADONs.Add(HoaDon);
 
 
@@ -202,7 +202,7 @@ namespace BookStore.ViewModel
             {
                 SumAmount -= SelectedItem.IntoMoney;
 
-                LeftAmount = (SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount));
+                LeftAmount = SumAmount - PaidAmount;
 
                 if (SumAmount>0) Editor.TongTien = SumAmount;
 
@@ -543,12 +543,12 @@ namespace BookStore.ViewModel
                 {
                     SumAmount += v.IntoMoney;
                 }
-                LeftAmount = SumAmount - Rules.Instance.ConvertStringAmountToInt64(PaidAmount);
+                LeftAmount = PaidAmount;
                 if(LeftAmount <0 )
                 {
                     LeftAmount = 0;
                 }
-                RightAmount = Rules.Instance.ConvertStringAmountToInt64(PaidAmount) - SumAmount;
+                RightAmount = PaidAmount - SumAmount;
                 if (RightAmount < 0)
                 {
                     RightAmount = 0;
@@ -736,7 +736,7 @@ namespace BookStore.ViewModel
                     }
                 }
                 SumAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.TongTien);
-                PaidAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.SoTienTra).ToString();
+                PaidAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.SoTienTra);
                 LeftAmount = Rules.Instance.ConvertDecimal_nullToInt64(Editor.ConLai);
                 return;
             }
@@ -761,7 +761,7 @@ namespace BookStore.ViewModel
             Editor = null;
             SumAmount = 0;
             LeftAmount = 0;
-            PaidAmount = string.Empty;
+            PaidAmount = 0;
             SelectedCustomer = null;
             SelectedPriceOfBook = null;
             SelectedBook = null;
@@ -846,10 +846,10 @@ namespace BookStore.ViewModel
         private ObservableCollection<decimal?> _ListPriceOfBook;
         private string _Amount;
         private decimal? _SelectedPriceOfBook;
-        private Int64 _IntoMoney;
-        private Int64 _SumAmount;
-        private string _PaidAmount;
-        private Int64 _LeftAmount;
+        private decimal _IntoMoney;
+        private decimal _SumAmount;
+        private decimal _PaidAmount;
+        private decimal _LeftAmount;
         private Item_CT_HD _SelectedItem;
         private DateTime? _InvoiceDate;
         private string _BookTypes;
@@ -892,13 +892,13 @@ namespace BookStore.ViewModel
 
         public decimal? SelectedPriceOfBook { get => _SelectedPriceOfBook; set { _SelectedPriceOfBook = value; OnPropertyChanged(); } }
 
-        public Int64 IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
+        public decimal IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
 
-        public long SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
+        public decimal SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
 
-        public string PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
+        public decimal PaidAmount { get => _PaidAmount; set { _PaidAmount = value; OnPropertyChanged(); } }
 
-        public long LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
+        public decimal LeftAmount { get => _LeftAmount; set { _LeftAmount = value; OnPropertyChanged(); } }
         
         public string CardName { get => _cardName; set { _cardName = value; OnPropertyChanged(); } }
         public string CardPhone { get => _cardPhone; set { _cardPhone = value; OnPropertyChanged(); } }

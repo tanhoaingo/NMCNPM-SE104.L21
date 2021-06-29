@@ -540,7 +540,7 @@
                         Grid.Row="0" Grid.Column="1" 
                         VerticalAlignment="Center"
                             FontWeight="Bold"
-                        Text="{Binding SumAmount, Mode=TwoWay}" FontSize="25" 
+                        Text="{Binding SumAmount, Mode=TwoWay, StringFormat={}{0:N0}}" FontSize="25" 
                         Width="150" >
                         </TextBlock>
                         <materialDesign:Card Grid.Row="1"
@@ -554,7 +554,8 @@
                         Grid.Row="1" Grid.Column="1" 
                         VerticalAlignment="Center"
                             FontWeight="Bold"
-                        Text="{Binding PaidAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
+                                Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                        Text="{Binding PaidAmount,StringFormat={}{0:N0}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
                         Width="150" >
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewTextInput" >
@@ -574,7 +575,7 @@
                         Grid.Row="2" Grid.Column="1" 
                             FontWeight="Bold"
                         VerticalAlignment="Center"
-                        Text="{Binding RightAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
+                        Text="{Binding RightAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" FontSize="25" 
                         Width="150" >
                         </TextBlock>
                         <TextBlock
@@ -583,7 +584,7 @@
                         Grid.Row="3" Grid.Column="1" 
                             FontWeight="Bold"
                         VerticalAlignment="Center"
-                        Text="{Binding LeftAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
+                        Text="{Binding LeftAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" FontSize="25" 
                         Width="150" >
                         </TextBlock>
                     </Grid>
@@ -665,6 +666,7 @@
                             FontSize="20"
                             MinWidth="100"
                             Height="60"
+                                        Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                             VerticalAlignment="Center" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="PreviewTextInput" >
@@ -682,7 +684,7 @@
                             materialDesign:HintAssist.Hint="Đơn Giá"
                             Margin="30 10"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                            ItemsSource="{Binding ListPriceOfBook, Mode=OneWay}"
+                            ItemsSource="{Binding ListPriceOfBook, Mode=OneWay,StringFormat={}{0:N0}}"
                             
                             SelectedItem="{Binding SelectedPriceOfBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"
@@ -704,7 +706,7 @@
                                 </WrapPanel>
                                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                                     <TextBox
-                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,StringFormat={}{0:N0}}"
                             materialDesign:HintAssist.Hint="Thành tiền"
                             Margin="20,20,0,20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"

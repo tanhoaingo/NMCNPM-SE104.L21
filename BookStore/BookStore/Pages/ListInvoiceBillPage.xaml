@@ -63,9 +63,9 @@
                                 <DataGridTextColumn Binding="{Binding MaHoaDon}" Header="Mã hóa đơn"/>
                                 <DataGridTextColumn Binding="{Binding MaKhachHang}" Header="Mã khách hàng" />
                                 <DataGridTextColumn Binding="{Binding NgayLapHoaDon}" Header="Ngày lập"/>
-                                <DataGridTextColumn Binding="{Binding TongTien}" Header="Tổng tiền"/>
-                                <DataGridTextColumn Binding="{Binding SoTienTra}" Header="Số tiền trả"/>
-                                <DataGridTextColumn Binding="{Binding ConLai}" Header="Còn lại"/>
+                                <DataGridTextColumn Binding="{Binding TongTien,StringFormat={}{0:N0}}" Header="Tổng tiền"/>
+                                <DataGridTextColumn Binding="{Binding SoTienTra, StringFormat={}{0:N0}}" Header="Số tiền trả"/>
+                                <DataGridTextColumn Binding="{Binding ConLai,StringFormat={}{0:N0}}" Header="Còn lại"/>
                                 <DataGridTextColumn Binding="{Binding MaNguoiLap}" Header="Mã người lập"/>
 
                             </DataGrid.Columns>
@@ -129,7 +129,7 @@
                                         </Style>
                                     </DataGridColumn.HeaderStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Binding="{Binding DonGiaBan}" Header="Đơn giá bán"
+                                <DataGridTextColumn Binding="{Binding DonGiaBan,StringFormat={}{0:N0}}" Header="Đơn giá bán"
                                                      FontSize="18" Width="180">
                                     <DataGridColumn.HeaderStyle>
                                         <Style   TargetType="{x:Type DataGridColumnHeader}"

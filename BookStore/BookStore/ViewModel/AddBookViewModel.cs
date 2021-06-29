@@ -77,18 +77,20 @@ namespace BookStore.ViewModel
 
         void createListAuthor()
         {
-            ListAuthor = new ObservableCollection<string>();
-            ListCategory = new ObservableCollection<string>();
+            var tmpListAuthor = new ObservableCollection<string>();
+            var tmpListCategory = new ObservableCollection<string>();
             var author = DataProvider.Ins.DB.TACGIAs;
             foreach(var i in author)
             {
-                ListAuthor.Add(i.TenTacGia);
+                tmpListAuthor.Add(i.TenTacGia);
             }
+            ListAuthor = new ObservableCollection<string>(tmpListAuthor.OrderBy(x => x));
             var category = DataProvider.Ins.DB.THELOAIs;
             foreach (var i in category)
             {
-                ListCategory.Add(i.TenTheLoai);
+                tmpListCategory.Add(i.TenTheLoai);
             }
+            ListCategory = new ObservableCollection<string>(tmpListCategory.OrderBy(x => x));
         }
 
         private void BookNameChanged(Window p)
@@ -323,6 +325,7 @@ namespace BookStore.ViewModel
                 if (!IsBookExist(tmpBook))
                 {
                     tmpBook.HinhAnhSach = BitmapSourceToByteArray(BookImage);
+                    tmpBook.TrangThai = 0;
 
                     DataProvider.Ins.DB.DAUSACHes.Add(tmpBook);
                     DataProvider.Ins.DB.SaveChanges();

@@ -323,7 +323,6 @@ namespace BookStore.ViewModel
             }
 
             tmpVM.EditBook = SelectedMBook;
-            tmpVM.EditBookInfor = Sach;
             tmpVM.LoadData();
             tmp.ShowDialog();
 

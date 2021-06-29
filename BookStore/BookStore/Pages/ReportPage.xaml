@@ -118,10 +118,10 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding maKH}" Header="Mã khách hàng"/>
                                 <DataGridTextColumn Binding="{Binding khachHang}" Header="Tên khách hàng" Width="250"/>
-                                <DataGridTextColumn Binding="{Binding noDau}" Header="Nợ đầu"/>
-                                <DataGridTextColumn Binding="{Binding noMoi}" Header="Nợ mới"/>
-                                <DataGridTextColumn Binding="{Binding daThu}" Header="Đã thu"/>
-                                <DataGridTextColumn Binding="{Binding noCuoi}" Header="Nợ cuối"/>
+                                <DataGridTextColumn Binding="{Binding noDau,StringFormat={}{0:N0}}" Header="Nợ đầu"/>
+                                <DataGridTextColumn Binding="{Binding noMoi,StringFormat={}{0:N0}}" Header="Nợ mới"/>
+                                <DataGridTextColumn Binding="{Binding daThu,StringFormat={}{0:N0}}" Header="Đã thu"/>
+                                <DataGridTextColumn Binding="{Binding noCuoi, StringFormat={}{0:N0}}" Header="Nợ cuối"/>
                                 <DataGridTextColumn Binding="{Binding ngayLap}" Header="Ngày lập" Width="220"/>
                             </DataGrid.Columns>
                         </DataGrid>
