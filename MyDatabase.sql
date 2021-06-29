@@ -464,3 +464,4 @@ ALTER TABLE CT_BCT
  ADD NoMoi money 
   ALTER TABLE CT_BCCN
  ADD DaThu money
+
