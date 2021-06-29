@@ -4,16 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-
-      <Diagram DiagramId="93e0bb4838cc4fbe9e8adef63b98f8cf" Name="Diagram1">
+      <Diagram DiagramId="341956c310c2420d9171b88007f536ea" Name="Diagram1">
         <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOCONGNO" Width="1.5" PointX="3.75" PointY="23" IsExpanded="true" />
-
         <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOTON" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MYDATABASEModel.CHUCNANG" Width="1.5" PointX="1.5" PointY="28.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.CT_BCCN" Width="1.5" PointX="6" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.CT_BCT" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.CT_HD" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.CT_PNS" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="MYDATABASEModel.CHUCNANG" Width="1.5" PointX="1.5" PointY="28.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.DAUSACH" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.HOADON" Width="1.5" PointX="3" PointY="19" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="17.25" IsExpanded="true" />
