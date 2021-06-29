@@ -80,10 +80,8 @@
                                     <TextBox  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                           BorderBrush="#6432a8"
                                           Width="150"
-                                          FontSize="18"
-                                              
-                                             
-                                              FontWeight="Bold"
+                                          FontSize="18"                                             
+                                           FontWeight="Bold"
                                               Text="{Binding ListParameter[0].LuongNhapToiThieu, Mode=TwoWay}"
                                           VerticalAlignment="Center"
                                           Margin="35 0"
@@ -96,7 +94,7 @@
                                     <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                    Text="Lượng nhập tối thiểu"
+                    Text="Lượng tồn tối thiểu"
                     VerticalAlignment="Center"
                     FontSize="18"
                     Foreground="#DD2D39A8" FontWeight="Normal"/>
@@ -173,7 +171,7 @@
                                     <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                    Text="Lượng tồn tối thiểu"
+                    Text="Lượng tồn tối thiểu sau bán"
                     VerticalAlignment="Center"
                     FontSize="18"
                     Foreground="#DD2D39A8" FontWeight="Normal"/>

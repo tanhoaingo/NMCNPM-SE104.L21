@@ -45,47 +45,47 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Grid Margin="100,789,40,0">
+                <Grid Margin="74,68,66,721">
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <TextBox
                         Text="{Binding SelectedUser.MaNguoiDung, UpdateSourceTrigger=PropertyChanged}"
                         IsEnabled="False"
-                        Margin="30,20,20,30"
-                        FontSize="15"
+                        Margin="30,10,20,30"
+                        FontSize="20"
   materialDesign:HintAssist.Hint="Mã người dùng"
                         
   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-  VerticalAlignment="Center" Width="140" />
+  VerticalAlignment="Center" Width="144" Height="49" />
                         <TextBox
                         Grid.Row="1"
                         Text="{Binding SelectedUser.TenDangNhap, UpdateSourceTrigger=PropertyChanged}"
                         IsEnabled="False"
-                        Margin="20,20,20,30"
-                        FontSize="15"
+                        Margin="20,10,20,30"
+                        FontSize="20"
   materialDesign:HintAssist.Hint="Tên đăng nhập"
                         
   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-  VerticalAlignment="Center" Width="140" />
+  VerticalAlignment="Center" Width="190" Height="49" />
                         <TextBox
                         Grid.Row="1"
                         Text="{Binding SelectedUser.MatKhau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         IsEnabled="True"
-                        Margin="20,20,20,30"
-                        FontSize="15"
+                        Margin="20,10,20,30"
+                        FontSize="20"
   materialDesign:HintAssist.Hint="Mật khẩu"
                         
   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-  VerticalAlignment="Center" Width="140" />
+  VerticalAlignment="Center" Width="185" Height="49" />
                         <TextBox
                         Grid.Row="1"
                         Text="{Binding SelectedUser.TenNguoiDung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         IsEnabled="True"
-                        Margin="20,20,20,30"
-                        FontSize="15"
+                        Margin="20,10,20,30"
+                        FontSize="20"
   materialDesign:HintAssist.Hint="Tên người dùng"
                         
   Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-  VerticalAlignment="Center" Width="140" />
+  VerticalAlignment="Center" Width="263" Height="49" />
                         <ComboBox 
                         x:Name="GroupCombobox"
                         materialDesign:HintAssist.Hint="Mã nhóm"
@@ -93,13 +93,22 @@
                         IsEditable="True"
                         ItemsSource="{Binding GroupUser}"
                         SelectedItem="{Binding SelectedUser.MaNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        FontSize="15"
+                        FontSize="20"
                         VerticalAlignment="Center"
-                        Margin="20,20,20,29" Height="41">
+                        Margin="20,10,20,29" Height="50" Width="117">
                         </ComboBox>
+                        <TextBox
+                            Text="{Binding SelectedUser.trangthai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="True"
+                            Margin="20,10,20,30"
+                            FontSize="20"
+                            materialDesign:HintAssist.Hint="Trạng thái"
+                        
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            VerticalAlignment="Center" Width="169" Height="49" />
                     </StackPanel>
                 </Grid>
-                <Grid Margin="100,79,100,741" Background="#FF0952BB">
+                <Grid Margin="100,162,100,658" Background="#FF0952BB">
                     <TextBlock
                             TextWrapping="Wrap"
                             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
@@ -107,7 +116,7 @@
                             FontSize="25"
                             Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
                 </Grid>
-                <Border Margin="100,137,100,112" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
+                <Border Margin="100,220,100,29" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
                     <Grid>
                         <DataGrid ItemsSource="{Binding ListUser, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedUser, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="220" CanUserReorderColumns="False" IsReadOnly="True" FontSize="18"  >
                             <DataGrid.Columns>
@@ -116,6 +125,7 @@
                                 <DataGridTextColumn Binding="{Binding MatKhau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat = 'dd/MM/yyyy'}" Header="Mật khẩu" />
                                 <DataGridTextColumn Binding="{Binding TenNguoiDung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Tên người dùng"/>
                                 <DataGridTextColumn Binding="{Binding MaNhom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã nhóm"/>
+                                <DataGridTextColumn Binding="{Binding trangthai, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Trạng thái"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

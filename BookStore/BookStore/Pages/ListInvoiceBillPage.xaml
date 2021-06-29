@@ -43,7 +43,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding ButtonEditClickCommand}"
-                                   CommandParameter="{Binding ElementName=BtnLoadDetail}">
+                                   CommandParameter="{Binding ElementName=BtnEdit}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -154,6 +154,16 @@
                         Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
 
                 </Grid>
+                <Button x:Name="BtnEdit_Copy"
+                    ToolTip="MaterialDesignOutlinedButton"
+                    Content="THÔNG TIN KHÁCH HÀNG" Margin="981,10,291,793" Height="Auto" Background="#FF0E8719" Foreground="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ButtonKHClickCommand}"
+                                CommandParameter="{Binding ElementName=BtnEdit_Copy}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </Grid>
         </Border>
     </Grid>

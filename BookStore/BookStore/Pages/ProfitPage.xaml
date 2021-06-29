@@ -52,7 +52,7 @@
                 <TextBlock  Grid.Row="2"
                             TextWrapping="Wrap"
                             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                            Text="             1               2               3               4               5                6               7               8               9              10             11             12" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Text="          1                2               3               4               5                6                7               8                9              10             11             12" VerticalAlignment="Center" HorizontalAlignment="Center"
                             FontSize="25"
                             Foreground="#FF0952BB" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Arial" Margin="10,335,0,10" Width="1468"/>
                 <chart1:ClusteredColumnChart        
@@ -62,7 +62,7 @@
                     ChartLegendVisibility="Hidden"
                     Padding="0"
                     SelectedBrush="Green"
-                    Background="Transparent" Margin="0,0,0,0">
+                    Background="Transparent" Margin="0,10,0,0">
                     <chart1:ClusteredColumnChart.Series >
                         <chart1:ChartSeries 
                                 ItemsSource="{Binding profitItemSource, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -170,6 +170,23 @@
                         </chart1:ClusteredColumnChart.Series>
                     </chart1:ClusteredColumnChart>
                 </Grid>
+                <ComboBox
+                    x:Name="YearCombobox_Copy"
+                    materialDesign:HintAssist.Hint="Năm" 
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    IsEditable="True"                        
+                    ItemsSource="{Binding YearItemSource2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding SelectedYear2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="15"
+                    VerticalAlignment="Top"
+                    Margin="1318,10,10,0" Height="40" Grid.Row="2">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding YearSelectionChangedCommand}"
+                                CommandParameter="{Binding ElementName=YearCombobox_Copy}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </Grid>
         </Border>
     </Grid>
