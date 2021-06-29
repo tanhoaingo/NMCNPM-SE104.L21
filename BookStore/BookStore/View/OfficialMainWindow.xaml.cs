@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,26 +10,19 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BookStore.ViewModel;
 
 namespace BookStore.View
 {
     /// <summary>
-    /// Interaction logic for NewMainWindow.xaml
+    /// Interaction logic for OfficialMainWindow.xaml
     /// </summary>
-    public partial class NewMainWindow : Window
+    public partial class OfficialMainWindow : Window
     {
-        
-        public NewMainWindow()
+        public OfficialMainWindow()
         {
             InitializeComponent();
-           
-
         }
-
-     
     }
 }

@@ -4,8 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+
       <Diagram DiagramId="93e0bb4838cc4fbe9e8adef63b98f8cf" Name="Diagram1">
         <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOCONGNO" Width="1.5" PointX="3.75" PointY="23" IsExpanded="true" />
+
         <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOTON" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.CT_BCCN" Width="1.5" PointX="6" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MYDATABASEModel.CT_BCT" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />

@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Navigation;
 
 namespace BookStore.ViewModel
@@ -15,219 +17,191 @@ namespace BookStore.ViewModel
 
         public NewMainViewModel1()
         {
-            BtnInvoiceCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_hoaDon(p);
-            });
-
-            BookEntryCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_PhieuNhap(p);
-            });
-
-            AuthorCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_TacGia(p);
-            });
-            SearchBookCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_NhapSach(p);
-            });
-
-            TypeBookCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_LoaiSach(p);
-            });
-            RuleCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_QuyDinh(p);
-            });
-            ListBillCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_DanhsachHoaDon(p);
-            });
-            ListBookEntryCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_DanhSachPhieuNhap(p);
-            });
-            BCTCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_bbt(p);
-            });
-            BCCNCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                btn_bccn(p);
-            });
-            ListCustomerCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_listcustomer(p);
-            });
-
-            ReportCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
-            {
-                Btn_Report(p);
-
-            });
-
-
+          
+            MouseLeaveCommand = new RelayCommand<Button>(p => true, p => MouseLeave(p));
+            GetUidCommand = new RelayCommand<Button>(p => true, p => { _uid = p.Uid; Hover(p); });
+            BtnCommand = new RelayCommand<OfficialMainWindow>(p => true, p => Btn_Click(p));
         }
-        private void Btn_PhieuNhap(Window p)
+
+        void MouseLeave(Button btn)
         {
-            var tmpWd = p as NewMainWindow;
+            if (btn.IsFocused)
+            {
+                return;
+            }
+            string foreground = "#6485FF";
+            string background = "#FFFFFF";
+            btn.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            btn.Background = (Brush)new BrushConverter().ConvertFrom(background);
+        }
+        public void Btn_Click(OfficialMainWindow window)
+        {
+            int index = int.Parse(Uid);
+
+
+            string foreground = "#6485FF";
+            string background = "#FFFFFF";
+            string foreFocus = "#FFFFFF";
+            string backFocus = "#6485FF";
+
+            window.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnPhieuNhap.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnDauSach.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnTacGia.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnTheLoai.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnDSKhachHang.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.BtnDsPhieuNhap.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnDShoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnDoanhThu.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnQuyDinh.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnBaoCaoTon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+
+            window.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnDauSach.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnTacGia.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnTheLoai.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnDSKhachHang.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.BtnDsPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnDShoaDon.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnDoanhThu.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnQuyDinh.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnBaoCaoTon.Background = (Brush)new BrushConverter().ConvertFrom(background);
+
+            var tmpWd = window as OfficialMainWindow;
             tmpWd.MainFrame.NavigationService.RemoveBackEntry();
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/BookEntryPage.xaml", UriKind.Relative));
+
             tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+            switch (index)
+            {
+                case 0:
 
-            tmpWd.MainTitle.Text = "Phiếu nhập sách";
-        }
-        private void Btn_hoaDon(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/InvoicePage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Hóa đơn bán sách";
-        }
-        private void Btn_NhapSach(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListUserPage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Tìm kiếm sách";
-        }
-        private void Btn_TacGia(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/AuthorPage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Danh sách dữ liệu tác giả";
-        }
-        private void Btn_LoaiSach(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/BookCategory.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Danh sách dữ liệu loại sách";
-        }
+                    window.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+                    break;
 
-        private void Btn_Report(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/ReportPage.xaml", UriKind.Relative));
-            tmpWd.MainTitle.Text = "Báo cáo tháng";
-        }
+                   
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/InvoicePage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Hóa đơn bán sách";
 
-        private void Btn_QuyDinh(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/RulePage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-        }
-          private void Btn_DanhSachPhieuNhap(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
+                case 1:
+                    window.btnPhieuNhap.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/BookEntryPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Phiếu nhập sách";
+                    break;
+                case 2:
+
+                    window.btnDauSach.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnDauSach.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+
+                    
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/BookPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Tìm kiếm sách";
+                    break;
+
+                case 3:
+
+                    window.btnTacGia.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnTacGia.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/AuthorPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Danh sách dữ liệu tác giả";
+                    break;
+                case 4:
+
+                    window.btnTheLoai.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnTheLoai.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/BookCategory.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Danh sách dữ liệu loại sách";
+                    break;
+                case 5:
+
+                    window.btnDSKhachHang.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnDSKhachHang.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/ListCustomerPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Danh sách khách hàng";
+                    break;
+                case 6:
+                    window.BtnDsPhieuNhap.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.BtnDsPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListBookEntryPage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-        }
-          private void Btn_DanhsachHoaDon(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-        }
-           private void Btn_listcustomer(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListCustomerPage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-        }
-           private void btn_bccn(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/ProfitPage.xaml", UriKind.Relative));
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-        }
-           private void Btn_bbt(Window p)
-        {
-            var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCTpage.xaml", UriKind.Relative));
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-        }
-         private void Btn_report(Window p)
-        {
-            /*var tmpWd = p as NewMainWindow;
-            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
-            tmpWd.MainFrame.NavigationService.Refresh();
-            tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCTpage.xaml", UriKind.Relative));
-            tmpWd.MainTitle.Text = "Thay đổi quy định";
-            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;*/
-        }
+
+            tmpWd.MainTitle.Text = "Danh sách phiếu nhập sách";
+                    break;
+
+                case 7:
+
+                    window.btnDShoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+                    window.btnDShoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/ListUserPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Danh sách Người dùng";
+                    break;
+                case 8:
+
+                    window.btnDoanhThu.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnDoanhThu.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/ProfitPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Báo cáo Doanh thu";
+                    break;
+                case 9:
+
+                    window.btnQuyDinh.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnQuyDinh.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/RulePage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Thay đổi quy định";
+                    break;
+
+                case 10:
+
+                    window.btnBaoCaoTon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnBaoCaoTon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/ReportPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Báo cáo tồn và công nợ";
+                    break;
+                default:
+                    break;
 
 
-        //IECommand
-        public ICommand BtnInvoiceCommand { get; set; }
-        public ICommand BtnReportCommand { get; set; }
-        public ICommand BookEntryCommand { get; set; }
-        public ICommand SearchBookCommand { get; set; }
-        public ICommand AuthorCommand { get; set; }
-        public ICommand TypeBookCommand { get; set; }
-        public ICommand RuleCommand { get; set; }
-        public ICommand ListBillCommand { get; set; }
-        public ICommand ListBookEntryCommand { get; set; }
-        public ICommand ListCustomerCommand { get; set; }
-        public ICommand BCCNCommand { get; set; }
-        public ICommand BCTCommand { get; set; }
+            }
+
+        }
+
+        void Hover(Button btn)
+        {
+            string foreFocus = "#FFFFFF";
+            string backFocus = "#6485FF";
+            btn.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+            btn.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+        }
+        
+         
+     
+
+
+       
         public ICommand mainSource { get; set; }
         public ICommand ReportCommand { get; set; }
 
+        public ICommand MouseLeaveCommand { get; set; }
+        public ICommand BtnCommand { get; set; }
 
-        private void navigator()
-        {
-            foreach (Window w in Application.Current.Windows)
-            {
+        public ICommand GetUidCommand { get; set; }
+        private string _uid;
+        public string Uid { get => _uid; set => _uid = value; }
 
-            }
-        }
+       
     }
 }

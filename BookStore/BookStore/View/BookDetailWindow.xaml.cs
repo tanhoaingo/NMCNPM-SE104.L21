@@ -9,26 +9,19 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BookStore.ViewModel;
 
 namespace BookStore.View
 {
     /// <summary>
-    /// Interaction logic for NewMainWindow.xaml
+    /// Interaction logic for BookDetailWindow.xaml
     /// </summary>
-    public partial class NewMainWindow : Window
+    public partial class BookDetailWindow : Window
     {
-        
-        public NewMainWindow()
+        public BookDetailWindow()
         {
             InitializeComponent();
-           
-
         }
-
-     
     }
 }

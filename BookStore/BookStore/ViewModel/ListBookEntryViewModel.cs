@@ -7,8 +7,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 
 namespace BookStore.ViewModel
 {
@@ -20,6 +22,7 @@ namespace BookStore.ViewModel
             SelectedEntryBook = null;
             SelectionChangedCommand = new RelayCommand<DataGrid>((p) => { return true; }, (p) => { loadDetail(); });
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadEdit(); });
+            SeeDetailCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { SeeDetail(p); });
         }
 
         private void LoadData()
@@ -37,6 +40,44 @@ namespace BookStore.ViewModel
                     Detail.Add(item);
                 }
             }
+        }
+       
+        
+        private void SeeDetail(Page p)
+        {
+            if (SelectedBook == null)
+            {
+                MessageBox.Show("Chọn chi tiết hóa đơn trước");
+                return;
+            }
+          
+            Cdata = _selectedBook.SACH.DAUSACH;
+            foreach( var s in DataProvider.Ins.DB.SACHes)
+            {
+                if (s.MaDauSach == Cdata.MaDauSach)
+                {
+                    Sach = s;
+                    break;
+                }
+            }
+            
+            var tmpPg = p as ListBookEntryPage;
+
+            tmpPg.Grid.Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
+            var tmp = new BookDetailWindow();
+            var tmpVM = tmp.DataContext as BookDetailViewModel;
+
+            tmpVM.EditBook = Cdata;
+            tmpVM.EditBookInfor = Sach;
+            tmpVM.LoadData();
+            tmp.ShowDialog();
+
+
+            // Splash.Visibility = Visibility.Collapsed;
+            tmpPg.Grid.Effect = null;
         }
 
         public void loadEdit()
@@ -69,13 +110,21 @@ namespace BookStore.ViewModel
 
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand ButtonEditClickCommand { get; set; }
+        public ICommand SeeDetailCommand { get; set; }
 
         private ObservableCollection<PHIEUNHAPSACH> _ListEntryBook;
         private ObservableCollection<CT_PNS> _Detail;
         private PHIEUNHAPSACH _SelectedEntryBook;
+        private CT_PNS _selectedBook;
 
         public ObservableCollection<PHIEUNHAPSACH> ListEntryBook { get => _ListEntryBook; set { _ListEntryBook = value; OnPropertyChanged(); } }
         public ObservableCollection<CT_PNS> Detail { get => _Detail; set { _Detail = value; OnPropertyChanged(); } }
         public PHIEUNHAPSACH SelectedEntryBook { get => _SelectedEntryBook; set { _SelectedEntryBook = value; OnPropertyChanged(); } }
+        public CT_PNS SelectedBook { get => _selectedBook; set { _selectedBook = value; OnPropertyChanged(); } }
+
+        private DAUSACH _cData;
+        public DAUSACH Cdata { get => _cData; set  { _cData = value; OnPropertyChanged(); } }
+        private SACH _sach;
+        public SACH Sach { get => _sach; set { _sach = value; OnPropertyChanged(); } }
     }
 }

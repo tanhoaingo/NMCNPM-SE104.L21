@@ -32,7 +32,7 @@
     </i:Interaction.Triggers>
 
 
-    <Grid>
+    <Grid x:Name="Grid">
         <Border Margin="60,60,60,90" BorderThickness="1" Background="#FF8F8787">
             <Grid Background="White">
 
@@ -47,6 +47,17 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <Button x:Name="BtnXemSach"
+  ToolTip="MaterialDesignOutlinedButton"
+  Content="Xem sách" Margin="859,24,30,779" Width="140" Height="Auto" Background="#6485FF" Foreground="White" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SeeDetailCommand}"
+                                   CommandParameter="{Binding ElementName=mainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
                 <Grid Margin="30,102,1104,688" Background="#FF0952BB">
                     <TextBlock
                             TextWrapping="Wrap"
@@ -57,7 +68,8 @@
                 </Grid>
                 <Border Margin="30,160,1104,90" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
                     <Grid>
-                        <DataGrid x:Name="PNSdatagrid" ItemsSource="{Binding ListEntryBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedEntryBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="220" CanUserReorderColumns="False" IsReadOnly="True" SelectionMode="Single" FontFamily="Roboto" Background="{x:Null}" FontSize="18" EnableRowVirtualization="False" BorderBrush="#FF6496C8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <DataGrid x:Name="PNSdatagrid" ItemsSource="{Binding ListEntryBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                  SelectedItem="{Binding SelectedEntryBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="220" CanUserReorderColumns="False" IsReadOnly="True" SelectionMode="Single" FontFamily="Roboto" Background="{x:Null}" FontSize="18" EnableRowVirtualization="False" BorderBrush="#FF6496C8" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding MaPhieuNhapSach}" Header="Mã PNS" Width="100"/>
                                 <DataGridTextColumn Binding="{Binding NgayNhap}" Header="Ngày nhập"/>
@@ -75,7 +87,12 @@
                 </Border>
                 <Border Margin="440,160,30,90" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
                     <Grid>
-                        <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" Background="{x:Null}" BorderBrush="#FF6496C8" FontSize="18" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+                        <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding SelectedBook  ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" 
+                                  ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" 
+                                  Background="{x:Null}" BorderBrush="#FF6496C8" FontSize="18"
+                                  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn FontSize="18" Width="170" Binding="{Binding MaCT_PNS}" Header="Mã CT_PNS">

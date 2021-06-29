@@ -25,6 +25,7 @@
     <viewmodel:BCCNViewModel x:Key="BccnVM"></viewmodel:BCCNViewModel>
     <viewmodel:BCTViewModel x:Key="BctVM"></viewmodel:BCTViewModel>
     <viewmodel:ListCustomerViewModel x:Key="ListCustomerVM"></viewmodel:ListCustomerViewModel>
+    <viewmodel:BookDetailViewModel x:Key="BookDetailVM"></viewmodel:BookDetailViewModel>
 
     <ControlTemplate x:Key="textBoxErrorTemplate">
         <StackPanel>

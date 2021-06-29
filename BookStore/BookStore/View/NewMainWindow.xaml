@@ -119,12 +119,12 @@
                         <Grid 
                               Height="auto" 
                                 Background="Transparent"
+                            
                                 >
+                           
 
                             <StackPanel Width="300" MinHeight="80" Orientation="Horizontal" Margin="0 0" 
                                     >
-                              
-                              
                                 <Expander x:Name="ExpanderMenu"  IsExpanded="False" Foreground="Red"
                   Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}">
 
@@ -133,7 +133,7 @@
                                             <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="0 0" />
                                             <TextBlock Text="Tra cứu sách" FontWeight="DemiBold" Foreground="#036652" FontSize="18" Margin="20 10" VerticalAlignment="Center"/>
                                         </StackPanel>
-                                       
+
                                     </Expander.Header>
                                     <ListView x:Name="ListViewMenu" FontSize="22"  Margin="0 0 0 0"
                       Foreground="#969696" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -443,7 +443,7 @@
 
                             <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 
                                     >
-                                <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="AlertBoxOutline"  VerticalAlignment="Center" Margin="10 0" />
+                                <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="CurrencyUsd"  VerticalAlignment="Center" Margin="10 0" />
                                 <TextBlock Text="Doanh thu" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
 
                             </StackPanel>
