@@ -73,10 +73,10 @@
                             <DataGrid ItemsSource="{Binding BaoCaoCongNoSource, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Selected, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="220" CanUserReorderColumns="False" IsReadOnly="False" BorderBrush="#FF6496C8" FontSize="18"  >
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding maKH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Mã khách hàng"/>
-                                    <DataGridTextColumn Binding="{Binding noDau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Nợ đầu" />
-                                    <DataGridTextColumn Binding="{Binding noMoi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Nợ mới"/>
-                                    <DataGridTextColumn Binding="{Binding daThu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Đã thu"/>
-                                    <DataGridTextColumn Binding="{Binding noCuoi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Nợ cuối"/>
+                                    <DataGridTextColumn Binding="{Binding noDau, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" Header="Nợ đầu" />
+                                    <DataGridTextColumn Binding="{Binding noMoi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" Header="Nợ mới"/>
+                                    <DataGridTextColumn Binding="{Binding daThu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N0}}" Header="Đã thu"/>
+                                    <DataGridTextColumn Binding="{Binding noCuoi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N0}}" Header="Nợ cuối"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>

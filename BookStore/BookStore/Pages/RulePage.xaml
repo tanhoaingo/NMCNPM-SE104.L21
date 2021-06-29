@@ -69,7 +69,7 @@
                     FontSize="20"
                     Foreground="#DD2D39A8" FontWeight="Bold"/>
                             <StackPanel Orientation="Horizontal" >
-                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="50" >
+                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="74" >
                                     <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
@@ -86,11 +86,18 @@
                                           VerticalAlignment="Center"
                                           Margin="35 0"
 
-                                          />
+                                          >
+                                        
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewTextInput" >
+                                            <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    </TextBox>
 
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="50,20,10,10" Height="50" >
+                                <StackPanel Orientation="Horizontal" Margin="50,20,10,10" Height="66" >
                                     <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
@@ -110,7 +117,13 @@
                                           VerticalAlignment="Center"
                                           Margin="35 0"
 
-                                          />
+                                          >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PreviewTextInput" >
+                                                <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
 
                                 </StackPanel>
                             </StackPanel>
@@ -143,7 +156,7 @@
                     FontSize="20"
                     Foreground="#DD2D39A8" FontWeight="Bold"/>
                             <StackPanel Orientation="Horizontal" >
-                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="50" >
+                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="70" >
                                     <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
@@ -163,11 +176,17 @@
                                           VerticalAlignment="Center"
                                           Margin="35 0"
 
-                                          />
+                                          >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PreviewTextInput" >
+                                                <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
 
                                 </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" Margin="50,20,10,10" Height="50" >
+                                <StackPanel Orientation="Horizontal" Margin="50,20,10,10" Height="69" >
                                     <TextBlock
                     TextWrapping="Wrap"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
@@ -187,7 +206,13 @@
                                           VerticalAlignment="Center"
                                           Margin="35 0"
 
-                                          />
+                                          >
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="PreviewTextInput" >
+                                                <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
 
                                 </StackPanel>
                             </StackPanel>
@@ -219,7 +244,7 @@
                     FontSize="20"
                     Foreground="#DD2D39A8" FontWeight="Bold"/>
                             <StackPanel Orientation="Horizontal" >
-                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="50" >
+                                <StackPanel Orientation="Horizontal" Margin="20,20,10,10" Height="70" >
                                     <TextBlock
                                         Margin="10 8 0 0"
                     TextWrapping="Wrap"

@@ -56,11 +56,11 @@ namespace BookStore.ViewModel
             {
                 if (maSachThangTruoc.Contains(item.MaKhachHang))
                 {
-                    BaoCaoCongNoSource.Add(new ChiTietBaoCaoCongNo() { maKH = item.MaKhachHang, noMoi = hoaDon.Where(x => (x.NgayLapHoaDon > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang).Sum(x => x.ConLai), daThu = phieuThuTien.Where(x => (x.NgayThuTien > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang).Sum(x => x.SoTienThu), noDau = ctThangTruoc.Where(x => x.MaKhachHang == item.MaKhachHang).First().NoCuoi, noCuoi = item.SoNo });
+                    BaoCaoCongNoSource.Add(new ChiTietBaoCaoCongNo() { maKH = item.MaKhachHang, noMoi = hoaDon.Where(x => (x.NgayLapHoaDon > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang).Sum(x => x.ConLai), daThu = phieuThuTien.Where(x => ((x.NgayThuTien > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang)).Sum(x => x.SoTienThu), noDau = ctThangTruoc.Where(x => x.MaKhachHang == item.MaKhachHang).First().NoCuoi, noCuoi = item.SoNo });
                 }
                 else
                 {
-                    BaoCaoCongNoSource.Add(new ChiTietBaoCaoCongNo() { maKH = item.MaKhachHang, noMoi = hoaDon.Where(x => (x.NgayLapHoaDon > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang).Sum(x => x.ConLai), daThu = phieuThuTien.Where(x => (x.NgayThuTien > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang).Sum(x => x.SoTienThu), noDau = 0, noCuoi = item.SoNo });
+                    BaoCaoCongNoSource.Add(new ChiTietBaoCaoCongNo() { maKH = item.MaKhachHang, noMoi = hoaDon.Where(x => (x.NgayLapHoaDon > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang).Sum(x => x.ConLai), daThu = phieuThuTien.Where(x => ((x.NgayThuTien > BCCN.Last().Thang) && x.MaKhachHang == item.MaKhachHang)).Sum(x => x.SoTienThu), noDau = 0, noCuoi = item.SoNo });
                 }
             }
         }

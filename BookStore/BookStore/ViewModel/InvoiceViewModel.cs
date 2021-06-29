@@ -16,7 +16,6 @@ namespace BookStore.ViewModel
     {
         public InvoiceViewModel()
         {
-          
             _cardVisible = Visibility.Hidden;
             InvoiceDate = DateTime.Now;
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0 && x.TrangThai == 0));

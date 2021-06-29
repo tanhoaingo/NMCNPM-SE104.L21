@@ -260,13 +260,13 @@
                                    Margin="50 10 0 0"
                                    FontWeight="Bold"
                            TextAlignment="Center"
-                           VerticalAlignment="Center">
-                    Nguyễn Ngọc Quỳnh Giang
+                           VerticalAlignment="Center"
+                                   Text="{Binding Staff.TenNguoiDung, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         </TextBlock>
                         <TextBlock FontSize="18"
                                    HorizontalAlignment="Center"
-                           Margin="10 ">
-                    Nhân viên
+                           Margin="10 "
+                                   Text="{Binding Staff.NHOMNGUOIDUNG.TenNhom , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         </TextBlock>
                     </StackPanel>
                     <Image 

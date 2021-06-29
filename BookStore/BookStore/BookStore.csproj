@@ -181,6 +181,7 @@
     <Compile Include="Model\THELOAI.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\User.cs" />
     <Compile Include="Pages\BCCNpage.xaml.cs">
       <DependentUpon>BCCNpage.xaml</DependentUpon>
     </Compile>
