@@ -14,7 +14,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         DataContext="{StaticResource LoginVM}"
-        Title="signInWindow" Height="500" Width="500" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        Title="signInWindow" Height="500" Width="600" Background="{x:Null}" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen"
         Name="signInWindow">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -24,20 +24,23 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <Rectangle Fill="#FF95959C" HorizontalAlignment="Left" Height="349.068" Margin="77.991,52.132,0,0" Stroke="Black" VerticalAlignment="Top" Width="330" RadiusY="10.941" RadiusX="10.941"/>
+        <Rectangle Fill="#FF95959C" HorizontalAlignment="Left" Height="349" Margin="202,52,0,0" Stroke="Black" VerticalAlignment="Top" Width="330" RadiusY="10.941" RadiusX="10.941"/>
 
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="349" Margin="69.411,66.432,0,0" Stroke="Black" VerticalAlignment="Top" Width="350" RadiusY="16.661" RadiusX="16.661"/>
-        <Rectangle x:Name="rectangle" Fill="#FF6634A2" HorizontalAlignment="Left" Height="46" Margin="392,111,0,0" RadiusY="9.035" RadiusX="9.035" Stroke="{x:Null}" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5">
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="349" Margin="193,66,0,0" Stroke="Black" VerticalAlignment="Top" Width="350" RadiusY="16.661" RadiusX="16.661"/>
+        <StackPanel >
+            <Image Source="/Source/Image/loginn.png" Height="403" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="295" />
+        </StackPanel>
+        <Rectangle x:Name="rectangle" Fill="#3366FF" HorizontalAlignment="Left" Height="46" Margin="516,111,0,0" RadiusY="9.035" RadiusX="9.035" Stroke="{x:Null}" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5">
         </Rectangle>
-        <Button Height="46" Margin="392,109,58,345" Content="x" FontSize="27" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Background="{x:Null}" BorderThickness="0" 
+        <Button Height="46" Margin="516,111,34,343" Content="x" FontSize="27" VerticalAlignment="Center" HorizontalAlignment="Center" Width="50" Background="{x:Null}" BorderThickness="0" 
                 Command="{Binding ExitCommand}"
                     CommandParameter="{Binding ElementName=signInWindow}"></Button>
-        <Grid x:Name="LOGIN" Margin="69.411,111.241,130.225,92.254">
-            <Rectangle Fill="#FF6634A2" HorizontalAlignment="Left" Height="50" Stroke="Black" VerticalAlignment="Top" Width="8.58"/>
-            <TextBlock HorizontalAlignment="Left" Height="50" Margin="29,0,0,0" TextWrapping="Wrap" Text="Đăng nhập" VerticalAlignment="Top" Width="163" FontSize="30" FontWeight="Bold" Foreground="#FF6634A2"/>
-            <Path Data="M116.12712,240.90254 L368.77542,240.90254" Fill="#FF6634A2" HorizontalAlignment="Left" Height="4.414" Margin="46.716,130.248,0,0" Stretch="Fill" Stroke="#FF6634A2" VerticalAlignment="Top" Width="249.92"/>
-            <Path Data="M116.12712,240.90254 L368.77542,240.90254" Fill="#FF6634A2" HorizontalAlignment="Left" Height="5" Margin="46.716,193.539,0,0" Stretch="Fill" Stroke="#FF6634A2" VerticalAlignment="Top" Width="253.648"/>
-            <Rectangle x:Name="Login" Fill="#FF6634A2" HorizontalAlignment="Left" Height="36.228" Margin="71.505,224.048,0,0" RadiusY="16.661" RadiusX="16.661" Stroke="Black" VerticalAlignment="Top" Width="195.445"/>
+        <Grid x:Name="LOGIN" Margin="193,111,107,92">
+            <Rectangle Fill="#3366FF" HorizontalAlignment="Left" Height="50" Stroke="Black" VerticalAlignment="Top" Width="8.58"/>
+            <TextBlock HorizontalAlignment="Left" Height="50" Margin="29,0,0,0" TextWrapping="Wrap" Text="Đăng nhập" VerticalAlignment="Top" Width="163" FontSize="30" FontWeight="Bold" Foreground="#3366FF"/>
+            <Path Data="M116.12712,240.90254 L368.77542,240.90254" Fill="#3366FF" HorizontalAlignment="Left" Height="4.414" Margin="46.716,130.248,0,0" Stretch="Fill" Stroke="#3366FF" VerticalAlignment="Top" Width="249.92"/>
+            <Path Data="M116.12712,240.90254 L368.77542,240.90254" Fill="#3366FF" HorizontalAlignment="Left" Height="5" Margin="46.716,193.539,0,0" Stretch="Fill" Stroke="#3366FF" VerticalAlignment="Top" Width="253.648"/>
+            <Rectangle x:Name="Login" Fill="#3366FF" HorizontalAlignment="Left" Height="36.228" Margin="71.505,224.048,0,0" RadiusY="16.661" RadiusX="16.661" Stroke="Black" VerticalAlignment="Top" Width="195.445"/>
             <TextBox
                         x:Name="UserNameTextBox"
                         FontSize="15"

@@ -296,24 +296,6 @@ namespace BookStore.ViewModel
             tmpPg.Grid.Effect = null;
         }
 
-        private void IsAllowedInput(TextCompositionEventArgs e)
-        {
-
-            if (SelectedOption == "Tên sách" || SelectedOption == "Thể loại" || SelectedOption == "Tác giả")
-            {
-               
-            }
-            else if (SelectedOption == "Đơn giá")
-            {
-                e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);
-            }
-        }
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
 
 
         public ICollectionView ListBooksCollectionView { get; set; }
