@@ -21,8 +21,9 @@
 
     <Grid x:Name="grid" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="410*"/>
-            <RowDefinition Height="209*"/>
+            <RowDefinition Height="403*"/>
+            <RowDefinition Height="424*"/>
+            <RowDefinition Height="422*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -30,7 +31,7 @@
         </Grid.ColumnDefinitions>
 
         <!--slideer here-->
-        <Grid x:Name="leftMenu"  HorizontalAlignment="Left" Grid.RowSpan="2">
+        <Grid x:Name="leftMenu" Background="White" HorizontalAlignment="Left" Grid.RowSpan="3">
             <StackPanel >
                 <Image Margin="50 20 50 0" Source="/BookStore;component/Source/Image/bookstore.jpg" />
                 <TextBlock Text="BOOK STORE" 
@@ -38,7 +39,9 @@
                            HorizontalAlignment="Center" FontSize="37" Foreground="#6485FF" 
                            Margin="0 10"/>
                 <Separator Margin="30 5 30 0" Background="#ededed" />
-                <ListView Foreground="#c112de" Margin="5 1" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                <ListView Foreground="#c112de" Margin="5 1" HorizontalAlignment="Center" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
 
                     <ListViewItem Height="80" Padding="0">
@@ -96,36 +99,105 @@
                         </Button>
                     </ListViewItem>
 
-                    <ListViewItem Height="80" Padding="0">
+                    <ListViewItem MinHeight="80" Padding="10 0 0 0">
                         <ListViewItem.Style>
                             <Style TargetType="{x:Type ListViewItem}">
-                                <Style.Triggers>
+                                <Style.Triggers >
 
                                     <Trigger Property="IsFocused" Value="True">
-                                        <Setter Property="Foreground" Value="Beige" />
-                                        <Setter Property="Background" Value="Olive" />
+                                        <Setter Property="Foreground" Value="#036652" />
+                                        <Setter Property="Background" Value="Red" />
+                                    </Trigger>
+                                    <Trigger Property="IsMouseCaptureWithin" Value="True">
+                                        <Setter Property="Foreground" Value="#036652" />
+                                        <Setter Property="Background" Value="Red" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
                         </ListViewItem.Style>
 
-                        <Button 
-                              CommandParameter="{Binding ElementName=NewHomeWD}"
-                            Command="{Binding SearchBookCommand}"
-                            BorderBrush="Transparent"  BorderThickness="0"  Height="auto" 
+                        <Grid 
+                              Height="auto" 
                                 Background="Transparent"
                                 >
 
-                            <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 
+                            <StackPanel Width="300" MinHeight="80" Orientation="Horizontal" Margin="0 0" 
                                     >
-                                <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />
-                                <TextBlock Text="Tra cứu sách" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
+                              
+                              
+                                <Expander x:Name="ExpanderMenu"  IsExpanded="False" Foreground="Red"
+                  Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" Background="{x:Null}">
+
+                                    <Expander.Header>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="0 0" />
+                                            <TextBlock Text="Tra cứu sách" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                       
+                                    </Expander.Header>
+                                    <ListView x:Name="ListViewMenu" FontSize="22"  Margin="0 0 0 0"
+                      Foreground="#969696" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                                        <ListViewItem>
+                                            <Button
+                              CommandParameter="{Binding ElementName=NewHomeWD}"
+                            BorderBrush="Transparent"  BorderThickness="0" Command="{Binding SearchBookCommand}" Height="auto" 
+                                Background="Transparent"
+                                >
+
+                                                <StackPanel Width="300" Height="40" Orientation="Vertical" Margin="0 0" 
+                                    >
+                                                    <!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />-->
+                                                    <TextBlock Text="Đầu sách" Foreground="#969696" FontSize="18" Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="230"/>
+
+                                                </StackPanel>
+                                            </Button>
+
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Button 
+                              CommandParameter="{Binding ElementName=NewHomeWD}"
+                            BorderBrush="Transparent"  BorderThickness="0" Command="{Binding AuthorCommand}" Height="auto" 
+                                Background="Transparent"
+                                >
+
+                                                <StackPanel Width="300" Height="40" Orientation="Vertical" Margin="0 0" 
+                                    >
+                                                    <!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />-->
+                                                    <TextBlock Text="Tác giả" Foreground="#969696" FontSize="18" Margin="70 10 0 0" VerticalAlignment="Center"/>
+
+                                                </StackPanel>
+                                            </Button>
+
+                                        </ListViewItem>
+
+                                        <ListViewItem>
+                                            <Button
+                              CommandParameter="{Binding ElementName=NewHomeWD}"
+                            BorderBrush="Transparent"  BorderThickness="0" Command="{Binding TypeBookCommand}" Height="auto" 
+                                Background="Transparent"
+                                >
+
+                                                <StackPanel Width="300" Height="40" Orientation="Vertical" Margin="0 0" 
+                                    >
+                                                    <!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />-->
+                                                    <TextBlock Text="Thể loại sách" Foreground="#969696" FontSize="18" Margin="70 10 0 0" VerticalAlignment="Center"/>
+
+                                                </StackPanel>
+                                            </Button>
+
+                                        </ListViewItem>
+
+
+                                    </ListView>
+                                </Expander>
+
 
                             </StackPanel>
-                        </Button>
+                        </Grid>
                     </ListViewItem>
 
-                    <ListViewItem Height="50" Padding="0">
+                    <!--<ListViewItem Height="50" Padding="0">
                         <ListViewItem.Style>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Style.Triggers>
@@ -146,7 +218,7 @@
 
                             <StackPanel Width="300" Height="40" Orientation="Vertical" Margin="10 0" 
                                     >
-                                <!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />-->
+                                --><!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />--><!--
                                 <TextBlock Text="Đầu sách" Foreground="#969696" FontSize="18" Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="230"/>
 
                             </StackPanel>
@@ -173,7 +245,7 @@
 
                             <StackPanel Width="300" Height="40" Orientation="Vertical" Margin="10 0" 
                                     >
-                                <!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />-->
+                                --><!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />--><!--
                                 <TextBlock Text="Tác giả" Foreground="#969696" FontSize="18" Margin="70 10 0 0" VerticalAlignment="Center"/>
 
                             </StackPanel>
@@ -200,12 +272,12 @@
 
                             <StackPanel Width="300" Height="40" Orientation="Vertical" Margin="10 0" 
                                     >
-                                <!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />-->
+                                --><!--<materialDesign:PackIcon Foreground="#6485FF" Width="40" Height="40" Kind="ClipboardSearchOutline"  VerticalAlignment="Center" Margin="10 0" />--><!--
                                 <TextBlock Text="Thể loại sách" Foreground="#969696" FontSize="18" Margin="70 10 0 0" VerticalAlignment="Center"/>
 
                             </StackPanel>
                         </Button>
-                    </ListViewItem>
+                    </ListViewItem>-->
 
                     <ListViewItem Height="80" Padding="0">
                         <ListViewItem.Style>
@@ -230,6 +302,34 @@
                                     >
                                 <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="Import"  VerticalAlignment="Center" Margin="10 0" />
                                 <TextBlock Text="Danh sách phiếu nhập" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
+
+                            </StackPanel>
+                        </Button>
+                    </ListViewItem>
+
+                    <ListViewItem Height="80" Padding="0">
+                        <ListViewItem.Style>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Style.Triggers>
+
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Foreground" Value="Beige" />
+                                        <Setter Property="Background" Value="Olive" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListViewItem.Style>
+
+                        <Button
+                              CommandParameter="{Binding ElementName=NewHomeWD}"
+                            Command="{Binding ListCustomerCommand}"
+                            BorderBrush="Transparent"  BorderThickness="0" Height="auto" 
+                                Background="Transparent">
+
+                            <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 
+                                    >
+                                <materialDesign:PackIcon Foreground="#6485FF" Width="35" Height="35" Kind="AccountGroupOutline"  VerticalAlignment="Center" Margin="10 0" />
+                                <TextBlock Text="Danh sách khách hàng" Foreground="#036652" FontSize="18" Margin="10" VerticalAlignment="Center"/>
 
                             </StackPanel>
                         </Button>
@@ -276,7 +376,7 @@
                             </Style>
                         </ListViewItem.Style>
 
-                        <Button BorderBrush="Transparent"  BorderThickness="0" Command="{Binding BtnInvoiceCommand}" Height="auto" 
+                        <Button BorderBrush="Transparent"  BorderThickness="0" Command="{Binding BtnReportCommand}" Height="auto" 
                                 Background="Transparent">
 
                             <StackPanel Width="300" Height="80" Orientation="Horizontal" Margin="10 0" 
@@ -288,7 +388,7 @@
                         </Button>
                     </ListViewItem>
 
-                   
+
 
                     <ListViewItem Height="80" Padding="0">
                         <ListViewItem.Style>
@@ -318,7 +418,7 @@
                         </Button>
                     </ListViewItem>
 
- <ListViewItem Height="80" Padding="0">
+                    <ListViewItem Height="80" Padding="0">
                         <ListViewItem.Style>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Style.Triggers>
@@ -346,7 +446,7 @@
                         </Button>
                     </ListViewItem>
 
- <ListViewItem Height="80" Padding="0">
+                    <ListViewItem Height="80" Padding="0">
                         <ListViewItem.Style>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Style.Triggers>
@@ -382,7 +482,7 @@
             </StackPanel>
 
         </Grid>
-        <Grid Grid.Column="1" Grid.RowSpan="2" >
+        <Grid Grid.Column="1" Grid.RowSpan="3" >
             <materialDesign:Card
                       Background="White"
                       Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
@@ -407,7 +507,7 @@
                     
                 />
             </DockPanel>
-           
+
             <Frame
                 Margin="0 100 0 0"
                 
@@ -416,6 +516,8 @@
             Grid.ColumnSpan="2" />
         </Grid>
         <!--frame for pages-->
-        <Frame Grid.Column="1" NavigationUIVisibility="Hidden" Grid.RowSpan="2"/>
+        <Frame Grid.Column="1"  NavigationUIVisibility="Hidden" Panel.ZIndex="1"  Grid.RowSpan="3">
+
+        </Frame>
     </Grid>
 </Window>

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="BookStore.DesignControls.UserControlMenuItem"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" >
+    <Grid MinHeight="80">
+        <materialDesign:PackIcon Kind="{Binding Path=Icon}" Width="25" Height="25" Margin="20 16" 
+                                 Foreground="#6485FF"/>
+        <ListBoxItem x:Name="ListViewItemMenu" Content="{Binding Path=Header}"  Width="260" Cursor="Hand"
+                     Padding="20 15" FontWeight="Bold" FontSize="22" Foreground="#6485FF" HorizontalAlignment="Right"
+                     />
+        <Expander x:Name="ExpanderMenu"  IsExpanded="False"
+                  Width="260" HorizontalAlignment="Right" Background="{x:Null}">
+            <Expander.Header>
+                <TextBlock Text="{Binding Path=Header}" FontWeight="Bold" FontSize="22"  Foreground="#6485FF"/>
+            </Expander.Header>
+           
+            <ListView x:Name="ListViewMenu" ItemsSource="{Binding Path=SubItems}" FontSize="22" 
+                      Foreground="#969696" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}" FontSize="18" Padding="15 5"/>
+                    </DataTemplate>
+                    
+                </ListView.ItemTemplate>
+               
+            </ListView>
+        </Expander>
+    </Grid>
+</UserControl>

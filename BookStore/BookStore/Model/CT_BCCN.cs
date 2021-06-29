@@ -18,8 +18,9 @@ namespace BookStore.Model
         public int MaBaoCaoCongNo { get; set; }
         public int MaKhachHang { get; set; }
         public Nullable<decimal> NoDau { get; set; }
-        public Nullable<decimal> PhatSinh { get; set; }
         public Nullable<decimal> NoCuoi { get; set; }
+        public Nullable<decimal> NoMoi { get; set; }
+        public Nullable<decimal> DaThu { get; set; }
     
         public virtual BAOCAOCONGNO BAOCAOCONGNO { get; set; }
         public virtual KHACHHANG KHACHHANG { get; set; }

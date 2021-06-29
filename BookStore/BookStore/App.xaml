@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:BookStore"
 
 
-             StartupUri="/View/InvoiceWindow.xaml">
+             StartupUri="/View/NewMainWindow.xaml">
 
 
     <Application.Resources>

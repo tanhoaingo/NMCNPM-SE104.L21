@@ -83,13 +83,13 @@ namespace BookStore.ViewModel
                 foreach (var ct in ct_BCT)
                 {
                     var tenSach = dauSach.Where(x => x.MaDauSach == ct.MaDauSach).Select(x => x.TenSach).First();
-                    list.Add(new ChiTietBaoCaoTon()
+                 /*   list.Add(new ChiTietBaoCaoTon()
                     {
                         Sach = tenSach,
                         tonDau = ct.TonDau,
                         tonCuoi = ct.TonCuoi,
                         phatSinh = ct.PhatSinh
-                    });
+                    });*/
                 }
             }
             BaoCaoTonSource = list;
@@ -109,14 +109,14 @@ namespace BookStore.ViewModel
                 foreach (var ct in ct_BCCN)
                 {
                     var tenKH = khacHang.Where(x => x.MaKhachHang == ct.MaKhachHang).Select(x => x.HoTenKhachHang).First();
-                    list.Add(new ChiTietBaoCaoCongNo()
+                   /* list.Add(new ChiTietBaoCaoCongNo()
                     {
                         maKH = ct.MaKhachHang,
                         khachHang = tenKH,
                         noDau = ct.NoDau,
                         noCuoi = ct.NoCuoi,
                         phatSinh = ct.PhatSinh
-                    });
+                    });*/
                 }
             }
             BaoCaoCongNoSource = list;
