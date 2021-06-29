@@ -55,6 +55,7 @@
 
                 </Grid.ColumnDefinitions>
                 <TextBox
+                    Text ="{Binding ListBooksFiller, UpdateSourceTrigger=PropertyChanged}"
                     Margin="30,18,10,18"
                     Grid.Column="0"
                     x:Name="SearchTextBox"
@@ -64,8 +65,16 @@
                     VerticalContentAlignment="Center"
                     FontSize="25"
                     BorderBrush="Black"
-                    BorderThickness="2" Height="52"/>
+                    BorderThickness="2" Height="52">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged" >
+                            <i:InvokeCommandAction Command="{Binding SearchTextChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <ComboBox
+                    ItemsSource="{Binding ListOptionsSearch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    SelectedItem="{Binding SelectedOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Margin="10,18,0,18"
                     Grid.Column="1"
                     materialDesign:HintAssist.Hint="Tìm theo"
@@ -74,7 +83,17 @@
                     VerticalAlignment="Center"
                     BorderBrush="Black"
                     BorderThickness="2"
-                    Padding="30,0,30,0" Height="52"/>
+                    Padding="30,0,30,0" Height="52">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewTextInput" >
+                            <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding OptionsSearchSelectionChangedCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
                 <Button 
                     Grid.Column="2" 
                     Height="Auto"
@@ -148,7 +167,6 @@
                         VerticalAlignment="Center" Height="50" >
                     </Button>
                 </Grid>
-
             </Grid>
         </materialDesign:Card>
         <Border BorderBrush="LightGray" BorderThickness="5"
