@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 
 namespace BookStore.ViewModel
 {
-    public class AddBookViewModel: BaseViewModel
+    public class AddBookViewModel : BaseViewModel
     {
 
         public AddBookViewModel()
@@ -26,16 +26,15 @@ namespace BookStore.ViewModel
             ListSelectedAuthor = new List<string>();
             ListSelectedType = new List<string>();
             FlagIsSaved = false;
+            BookImage = new BitmapImage(new Uri(@"/BookStore;component/Source/Image/bookInsert.jpg", UriKind.Relative));
 
             LoadListTypes();
             LoadListAuthor();
-
-
             createListAuthor();
 
 
             CloseWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { this.CleanUpData(); });
-            ConfirmButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ConfirmAddBook(p); });
+            ConfirmButtonClickCommand = new RelayCommand<Window>((p) => { return ConfirmNeed(); }, (p) => { ConfirmAddBook(p); });
             BookNameTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { BookNameChanged(p); });
             TypeTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { HiddenErrorTextBlock(p); TextListBookTypesChanged(); });
             AuthorTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { HiddenErrorTextBlock(p); TextListBookAuthorsChanged(); });
@@ -47,10 +46,33 @@ namespace BookStore.ViewModel
             ItemAuthorUnChekedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { ItemAuthorChecked(p); });
             AddListClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddToList(p); });
             AddPictureCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { AddPicture(p); });
-
-            BookImage = new BitmapImage(new Uri(@"/BookStore;component/Source/Image/bookInsert.jpg", UriKind.Relative));
-
             CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { CancelAddBook(p); });
+            LoadWindowCommand = new RelayCommand<AddBookWindow>((p) => { return true; }, (p) => { LoadWindow(p); });
+        }
+
+        private bool ConfirmNeed()
+        {
+            //return true;
+            if (FlagIntent == 0)
+                return true;
+            return (BookName != EditBook.TenSach) || (SelectAuthor != EditBook.TACGIAs.FirstOrDefault().TenTacGia) || (SelectCategory != EditBook.THELOAIs.FirstOrDefault().TenTheLoai);
+        }
+
+        private void LoadWindow(AddBookWindow p)
+        {
+            if(FlagIntent == 0)
+            {
+                p.TitleBookItent.Text = "Thêm đầu sách mới";
+                
+            }
+            else if(FlagIntent == 1)
+            {
+                p.TitleBookItent.Text = "Chỉnh sửa đầu sách";
+                BookName = EditBook.TenSach;
+                SelectAuthor = EditBook.TACGIAs.FirstOrDefault().TenTacGia;
+                SelectCategory = EditBook.THELOAIs.FirstOrDefault().TenTheLoai;
+                BookImage = ByteArrayToBitmapImage(EditBook.HinhAnhSach);
+            }
         }
 
         void createListAuthor()
@@ -265,57 +287,86 @@ namespace BookStore.ViewModel
         private void ConfirmAddBook(Window p)
         {
             var tmpWD = p as AddBookWindow;
-            /*  if (string.IsNullOrEmpty(BookName)||string.IsNullOrEmpty(Type)||string.IsNullOrEmpty(Author)||BookImage == null)
-              {
-                  tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
-                  return;
-              }
-  */
+/*            if (string.IsNullOrEmpty(BookName) || string.IsNullOrEmpty(Type) || string.IsNullOrEmpty(Author) || BookImage == null)
+            {
+                tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
+                return;
+            }*/
+
             if (string.IsNullOrEmpty(BookName) || BookImage == null)
             {
                 tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
                 return;
             }
 
-            var tmpBook = new DAUSACH() { TenSach = BookName, LuongTon = 0 };
-            var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == SelectAuthor);
-            tmpBook.TACGIAs.Add(tmpAuthor);
-
-            var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == SelectCategory);
-            tmpBook.THELOAIs.Add(tmpType);
-            /*  foreach (var v in tmpWD.exListBookAuthors.SelectedItems)
-              {
-                  var tmpName = (v as Item_ListCheckedBoxAuthor).Name;
-                  var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == tmpName);
-                  tmpBook.TACGIAs.Add(tmpAuthor);
-              }
-              foreach (var v in tmpWD.exListBookTypes.SelectedItems)
-              {
-                  var tmpName = (v as Item_ListCheckedBoxType).Type;
-                  var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == tmpName);
-                  tmpBook.THELOAIs.Add(tmpType);
-              }*/
-
-            if (!IsBookExist(tmpBook))
+            if (FlagIntent == 0)
             {
-                tmpBook.HinhAnhSach = BitmapSourceToByteArray(BookImage);
+                var tmpBook = new DAUSACH() { TenSach = BookName, LuongTon = 0 };
+                var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == SelectAuthor);
+                tmpBook.TACGIAs.Add(tmpAuthor);
 
-                DataProvider.Ins.DB.DAUSACHes.Add(tmpBook);
-                DataProvider.Ins.DB.SaveChanges();
+                var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == SelectCategory);
+                tmpBook.THELOAIs.Add(tmpType);
+                /*  foreach (var v in tmpWD.exListBookAuthors.SelectedItems)
+                  {
+                      var tmpName = (v as Item_ListCheckedBoxAuthor).Name;
+                      var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == tmpName);
+                      tmpBook.TACGIAs.Add(tmpAuthor);
+                  }
+                  foreach (var v in tmpWD.exListBookTypes.SelectedItems)
+                  {
+                      var tmpName = (v as Item_ListCheckedBoxType).Type;
+                      var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == tmpName);
+                      tmpBook.THELOAIs.Add(tmpType);
+                  }*/
 
-                tmpWD.ErrorAddBook.Text = "Thêm sách thành công!";
-                tmpWD.ErrorAddBook.Foreground = Brushes.Green;
-                tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
-                FlagIsSaved = true;
+                if (!IsBookExist(tmpBook))
+                {
+                    tmpBook.HinhAnhSach = BitmapSourceToByteArray(BookImage);
+
+                    DataProvider.Ins.DB.DAUSACHes.Add(tmpBook);
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    tmpWD.ErrorAddBook.Text = "Thêm sách thành công!";
+                    tmpWD.ErrorAddBook.Foreground = Brushes.Green;
+                    tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
+                    FlagIsSaved = true;
+                }
+                else
+                {
+                    tmpWD.ErrorAddBook.Text = "Sách đã tồn tại!";
+                    tmpWD.ErrorAddBook.Foreground = Brushes.Red;
+                    tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
+                }
             }
-            else
+            else if (FlagIntent == 1)
             {
-                tmpWD.ErrorAddBook.Text = "Sách đã tồn tại!";
-                tmpWD.ErrorAddBook.Foreground = Brushes.Red;
-                tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
-            }
+                var tmpBook = new DAUSACH() { TenSach = BookName, LuongTon = 0 };
+                var tmpAuthor = DataProvider.Ins.DB.TACGIAs.FirstOrDefault(x => x.TenTacGia == SelectAuthor);
+                tmpBook.TACGIAs.Add(tmpAuthor);
 
-            
+                var tmpType = DataProvider.Ins.DB.THELOAIs.FirstOrDefault(x => x.TenTheLoai == SelectCategory);
+                tmpBook.THELOAIs.Add(tmpType);
+                if(!IsBookExist(tmpBook))
+                {
+                    var tmpEdit = DataProvider.Ins.DB.DAUSACHes.Where(x => x.MaDauSach == EditBook.MaDauSach).FirstOrDefault();
+                    tmpEdit.TenSach = tmpBook.TenSach;
+                    tmpEdit.TACGIAs = tmpBook.TACGIAs;
+                    tmpEdit.THELOAIs = tmpBook.THELOAIs;
+                    tmpEdit.HinhAnhSach = BitmapSourceToByteArray(BookImage);
+                    tmpWD.ErrorAddBook.Text = "Sửa thông tin sách thành công!";
+                    tmpWD.ErrorAddBook.Foreground = Brushes.Green;
+                    tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
+                    FlagIsSaved = true;
+                }
+                else
+                {
+                    tmpWD.ErrorAddBook.Text = "Sách đã tồn tại!";
+                    tmpWD.ErrorAddBook.Foreground = Brushes.Red;
+                    tmpWD.ErrorAddBook.Visibility = Visibility.Visible;
+                }
+                
+            }
         }
 
         private bool IsBookExist(DAUSACH tmpBook)
@@ -358,6 +409,19 @@ namespace BookStore.ViewModel
             return data;
         }
 
+        public BitmapImage ByteArrayToBitmapImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad; // here
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
+
         public override void CleanUpData()
         {
             base.CleanUpData();
@@ -387,6 +451,7 @@ namespace BookStore.ViewModel
         public ICommand AddListClickCommand { get; set; }
         public ICommand AddPictureCommand { get; set; }
         public ICommand CancelButtonClickCommand { get; set; }
+        public ICommand LoadWindowCommand { get; set; }
 
 
         private string _BookName;
@@ -403,6 +468,8 @@ namespace BookStore.ViewModel
         private ObservableCollection<string> _listCategory;
         private string _selectAuthor;
         private string _selectCategory;
+        private int _FlagIntent;
+        private DAUSACH _EditBook;
 
         public string SelectAuthor { get => _selectAuthor; set { _selectAuthor = value; OnPropertyChanged(); } }
         public string SelectCategory { get => _selectCategory; set { _selectCategory = value; OnPropertyChanged(); } }
@@ -412,7 +479,6 @@ namespace BookStore.ViewModel
         public string Type { get => _Type; set { _Type = value; OnPropertyChanged(); } }
         public string Author { get => _Author; set { _Author = value; OnPropertyChanged(); } }
         public ObservableCollection<Item_ListCheckedBoxType> ListTypes { get => _ListTypes; set { _ListTypes = value; OnPropertyChanged(); } }
-
         public ObservableCollection<Item_ListCheckedBoxAuthor> ListAuthors { get => _ListAuthors; set { _ListAuthors = value; OnPropertyChanged(); } }
         public List<string> ListSelectedType { get => _ListSelectedType; set => _ListSelectedType = value; }
         public List<string> ListSelectedAuthor { get => _ListSelectedAuthor; set => _ListSelectedAuthor = value; }
@@ -420,5 +486,7 @@ namespace BookStore.ViewModel
         public BitmapImage BookImage { get => _BookImage; set { _BookImage = value; OnPropertyChanged(); } }
 
         public bool FlagIsSaved { get => _FlagIsSaved; set => _FlagIsSaved = value; }
+        public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
+        public DAUSACH EditBook { get => _EditBook; set => _EditBook = value; }
     }
 }

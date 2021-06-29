@@ -79,6 +79,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
@@ -191,6 +192,15 @@
     </Compile>
     <Compile Include="Pages\ListInvoiceBillPage.xaml.cs">
       <DependentUpon>ListInvoiceBillPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ListUserPage.xaml.cs">
+      <DependentUpon>ListUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProfitPage.xaml.cs">
+      <DependentUpon>ProfitPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReportPage.xaml.cs">
+      <DependentUpon>ReportPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\RulePage.xaml.cs">
       <DependentUpon>RulePage.xaml</DependentUpon>
@@ -326,6 +336,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\InvoicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ListUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ProfitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
