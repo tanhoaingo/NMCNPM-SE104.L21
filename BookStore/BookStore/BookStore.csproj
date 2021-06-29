@@ -187,6 +187,15 @@
     <Compile Include="Pages\BCTpage.xaml.cs">
       <DependentUpon>BCTpage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BookEntryPage.xaml.cs">
+      <DependentUpon>BookEntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BookPage.xaml.cs">
+      <DependentUpon>BookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InvoicePage.xaml.cs">
+      <DependentUpon>InvoicePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ListBookEntryPage.xaml.cs">
       <DependentUpon>ListBookEntryPage.xaml</DependentUpon>
     </Compile>
@@ -260,6 +269,9 @@
     </Compile>
     <Compile Include="View\ChangeRulesWindow.xaml.cs">
       <DependentUpon>ChangeRulesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CustomerWindow.xaml.cs">
+      <DependentUpon>CustomerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InvoiceWindow.xaml.cs">
       <DependentUpon>InvoiceWindow.xaml</DependentUpon>
@@ -415,6 +427,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ChangeRulesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

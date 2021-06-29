@@ -106,6 +106,7 @@
                                 <DataGridTextColumn Binding="{Binding nhapVao}" Header="Nhập vào"/>
                                 <DataGridTextColumn Binding="{Binding banRa}" Header="Bán ra"/>
                                 <DataGridTextColumn Binding="{Binding tonCuoi}" Header="Tồn cuối"/>
+                                <DataGridTextColumn Binding="{Binding thang}" Header="Ngày lập"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -113,7 +114,7 @@
                 <Border Margin="40,619,40,10" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
                     <Grid>
 
-                        <DataGrid ItemsSource="{Binding BaoCaoCongNoSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" FontSize="18"  >
+                        <DataGrid ItemsSource="{Binding BaoCaoCongNoSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="180" CanUserReorderColumns="False" IsReadOnly="True" FontSize="18"  >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding maKH}" Header="Mã khách hàng"/>
                                 <DataGridTextColumn Binding="{Binding khachHang}" Header="Tên khách hàng" Width="250"/>
@@ -121,6 +122,7 @@
                                 <DataGridTextColumn Binding="{Binding noMoi}" Header="Nợ mới"/>
                                 <DataGridTextColumn Binding="{Binding daThu}" Header="Đã thu"/>
                                 <DataGridTextColumn Binding="{Binding noCuoi}" Header="Nợ cuối"/>
+                                <DataGridTextColumn Binding="{Binding ngayLap}" Header="Ngày lập" Width="220"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -144,6 +146,40 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <ComboBox
+                    x:Name="BCCNMonthCombobox_Copy"
+                    materialDesign:HintAssist.Hint="Năm" 
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    IsEditable="True"                        
+                    ItemsSource="{Binding YearItemSource}"
+                    SelectedItem="{Binding SelectedYearBCCN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="15"
+                    VerticalAlignment="Top" Width="150"
+                    Margin="255,500,1073,0" Height="40">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding BCCNSelectionChangedCommand}"
+                                CommandParameter="{Binding ElementName=BCCNMonthCombobox_Copy}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <ComboBox
+                    x:Name="BCTMonthCombobox_Copy"
+                    materialDesign:HintAssist.Hint="Năm" 
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                    IsEditable="True"                        
+                    ItemsSource="{Binding YearItemSource}"
+                    SelectedItem="{Binding SelectedYearBCT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    FontSize="15"
+                    VerticalAlignment="Top" Width="150"
+                    Margin="255,18,1073,0" Height="40">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding BCTSelectionChangedCommand}"
+                                CommandParameter="{Binding ElementName=BCTMonthCombobox_Copy}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
             </Grid>
         </Border>
     </Grid>

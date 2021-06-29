@@ -1,4 +1,5 @@
 ﻿using BookStore.Model;
+using BookStore.Pages;
 using BookStore.View;
 using System;
 using System.Collections.Generic;
@@ -85,20 +86,25 @@ namespace BookStore.ViewModel
             {
                 return;
             }    
-            BookEntryWindow bookEntryWindow = new BookEntryWindow();
-            (bookEntryWindow.DataContext as BookEntryViewModel).FlagIntent = 1;
-            (bookEntryWindow.DataContext as BookEntryViewModel).Editor = SelectedEntryBook;
-            (bookEntryWindow.DataContext as BookEntryViewModel).LoadData();
-            bookEntryWindow.AddDetailButton.IsEnabled = false;
-            bookEntryWindow.EditDetailButton.IsEnabled = false;
-            bookEntryWindow.BookNameComboBox.IsEnabled = false;
-            bookEntryWindow.BookTypeTextBox.IsEnabled = false;
-            bookEntryWindow.BookAuthorTextBox.IsEnabled = false;
-            bookEntryWindow.AmountTextBox.IsEnabled = false;
-            bookEntryWindow.InputPriceTextBox.IsEnabled = false;
-            bookEntryWindow.IntoMoneyTextBox.IsEnabled = false;
-            bookEntryWindow.ShowDialog();
+            BookEntryWindow tmpWD = new BookEntryWindow();
+            var tmpVM = tmpWD.DataContext as BookEntryViewModel;
+            var tmpPg = tmpWD.PEPage as BookEntryPage;
+
+
+            tmpVM.FlagIntent = 1;
+            tmpVM.Editor = SelectedEntryBook;
+            tmpVM.LoadData();
+            tmpPg.AddDetailButton.IsEnabled = false;
+            tmpPg.EditDetailButton.IsEnabled = false;
+            tmpPg.BookNameComboBox.IsEnabled = false;
+            tmpPg.BookTypeTextBox.IsEnabled = false;
+            tmpPg.BookAuthorTextBox.IsEnabled = false;
+            tmpPg.AmountTextBox.IsEnabled = false;
+            tmpPg.InputPriceTextBox.IsEnabled = false;
+            tmpPg.IntoMoneyTextBox.IsEnabled = false;
+            tmpWD.ShowDialog();
             loadDetail();
+            LoadData();
             
         }
 

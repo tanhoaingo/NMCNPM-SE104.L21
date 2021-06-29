@@ -99,6 +99,7 @@ namespace BookStore.ViewModel
                     window.btnDauSach.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
                     window.btnDauSach.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
 
+
                     
                     tmpWd.MainFrame.Navigate(new Uri("../Pages/BookPage.xaml", UriKind.Relative));
                     tmpWd.MainTitle.Text = "Tìm kiếm sách";
@@ -133,6 +134,7 @@ namespace BookStore.ViewModel
                     window.BtnDsPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
 
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListBookEntryPage.xaml", UriKind.Relative));
+
             tmpWd.MainTitle.Text = "Danh sách phiếu nhập sách";
                     break;
 
@@ -174,6 +176,7 @@ namespace BookStore.ViewModel
 
 
             }
+
         }
 
         void Hover(Button btn)
