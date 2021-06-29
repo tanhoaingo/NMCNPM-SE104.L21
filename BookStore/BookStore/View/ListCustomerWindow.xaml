@@ -113,18 +113,34 @@
         <Border Grid.Row="1" Margin="30" BorderBrush="Black" BorderThickness="1">
             <Grid >
                 <TextBox
+                    Text ="{Binding ListCustomersFiller, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                     materialDesign:HintAssist.Hint="Tìm kiếm"
                     FontSize="30"
                     BorderBrush="Black"
                     BorderThickness="1"
-                    Height="50" Margin="75,10,653,390"/>
-                <Button Height="Auto" Margin="916,10,530,390">
-                    <materialDesign:PackIcon
-                        Kind="Search"
-                        Height="50"
-                        Width="50">
-                    </materialDesign:PackIcon>
-                </Button>
+                    Height="50" Margin="75,10,772,390"/>
+                <ComboBox
+                    ItemsSource="{Binding ListOptionsSearch, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    SelectedItem="{Binding SelectedOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    materialDesign:HintAssist.Hint="Tìm theo"
+                    FontSize ="25"
+                    VerticalContentAlignment="Center"
+                    VerticalAlignment="Center"
+                    BorderBrush="Black"
+                    BorderThickness="2"
+                    Padding="30,0,30,0" Height="50" Margin="783,10,484,390" RenderTransformOrigin="0.456,-1.971">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewTextInput" >
+                            <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding OptionsSearchSelectionChangedCommand}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+
                 <Border BorderBrush="Black" BorderThickness="1" Margin="75,100,0,10" HorizontalAlignment="Left" Width="1163">
                     <DataGrid ItemsSource="{Binding ListCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" 
                               CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True"

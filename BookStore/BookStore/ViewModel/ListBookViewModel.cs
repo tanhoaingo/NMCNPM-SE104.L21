@@ -378,6 +378,7 @@ namespace BookStore.ViewModel
             Temp = null;
         }
 
+
         public ICollectionView ListBooksCollectionView { get; set; }
         public ICommand OptionsSearchSelectionChangedCommand { get; set; }
         public ICommand AddBookButtonClickCommand { get; set; }
