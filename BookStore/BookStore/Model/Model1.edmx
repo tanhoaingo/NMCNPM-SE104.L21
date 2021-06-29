@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MYDATABASEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="MYDATABASEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BAOCAOCONGNO">
           <Key>
             <PropertyRef Name="MaBaoCaoCongNo" />
@@ -540,8 +540,7 @@
             <End Role="TT_TL" EntitySet="TT_TL" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MYDATABASEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -679,6 +678,7 @@
           <NavigationProperty Name="HOADONs" Relationship="Self.FK_HOADON_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="HOADON" />
           <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="Self.FK_NGUOIDUNG_NHOMNGUOIDUNG" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
           <NavigationProperty Name="PHIEUNHAPSACHes" Relationship="Self.FK_PHIEUNHAPSACH_NGUOIDUNG" FromRole="NGUOIDUNG" ToRole="PHIEUNHAPSACH" />
+          <Property Name="trangthai" Type="Int32" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -1134,6 +1134,7 @@
           <EntitySetMapping Name="NGUOIDUNGs">
             <EntityTypeMapping TypeName="MYDATABASEModel.NGUOIDUNG">
               <MappingFragment StoreEntitySet="NGUOIDUNG">
+                <ScalarProperty Name="trangthai" ColumnName="trangthai" />
                 <ScalarProperty Name="MaNguoiDung" ColumnName="MaNguoiDung" />
                 <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
                 <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />

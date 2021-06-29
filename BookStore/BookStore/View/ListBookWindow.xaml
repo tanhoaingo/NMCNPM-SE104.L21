@@ -22,11 +22,6 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource ListBookVM}"
         Title="Tra Cứu Sách" Height="1000" Width="1400">
-    <Grid x:Name="Grid" >
-        <Frame x:Name="frame" Grid.Column="1" 
-               Source="../Pages/BookPage.xaml"
-               NavigationUIVisibility="Hidden" Panel.ZIndex="1"  Grid.RowSpan="3">
-            
-        </Frame>
-    </Grid>
+    <Frame x:Name="Main"
+           Source="../Pages/BookPage.xaml"/>
 </Window>

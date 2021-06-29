@@ -69,6 +69,18 @@ namespace BookStore.ViewModel
             EditBookButtonClickCommand = new RelayCommand<Page>((p) => { return EditBookNeed(); }, (p) => { EditBook(p); });
             DeleteBookButtonClickCommand = new RelayCommand<Page>((p) => { return DeleteBookNeed(); }, (p) => { DeleteBook(p); });
             SearchTextChangedCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { Refresh(p); });
+            SelectBookCommand = new RelayCommand<Page>((p) => { return SelectedMBook != null; }, (p) => { AfterSelectedBook(p); });
+            ExitSelectCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { CloseWindow(); });
+        }
+
+        private void CloseWindow()
+        {
+            LBWD.Close();
+        }
+
+        private void AfterSelectedBook(Page p)
+        {
+            LBWD.Close();
         }
 
         private void Refresh(Page p)
@@ -125,7 +137,7 @@ namespace BookStore.ViewModel
 
         public void LoadListBooks()
         {
-            ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0));
+            ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.TrangThai == 0));
         }
 
         public void LoadPage(BookPage p)
@@ -314,7 +326,13 @@ namespace BookStore.ViewModel
             e.Handled = regex.IsMatch(e.Text);
         }
 
-
+        public override void CleanUpData()
+        {
+            base.CleanUpData();
+            SelectedMBook = null;
+            LBWD = null;
+            Temp = null;
+        }
 
         public ICollectionView ListBooksCollectionView { get; set; }
         public ICommand OptionsSearchSelectionChangedCommand { get; set; }
@@ -322,6 +340,8 @@ namespace BookStore.ViewModel
         public ICommand EditBookButtonClickCommand { get; set; }
         public ICommand DeleteBookButtonClickCommand { get; set; }
         public ICommand SearchTextChangedCommand { get; set; }
+        public ICommand SelectBookCommand { get; set; }
+        public ICommand ExitSelectCommand { get; set; }
 
         private string _ListBooksFiller = string.Empty;
         private string _SelectedOption;
@@ -330,6 +350,7 @@ namespace BookStore.ViewModel
         private ObservableCollection<string> _Temp;
         private int _FlagIntent;
         private DAUSACH _SelectedMBook;
+        private ListBookWindow _LBWD;
 
 
         public string ListBooksFiller { get => _ListBooksFiller; set{ _ListBooksFiller = value; OnPropertyChanged(nameof(ListBooksFiller)); ListBooksCollectionView.Refresh(); } }
@@ -340,5 +361,6 @@ namespace BookStore.ViewModel
         public ObservableCollection<string> Temp { get => _Temp; set { _Temp = value; OnPropertyChanged(); } }
         public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
         public DAUSACH SelectedMBook { get => _SelectedMBook; set => _SelectedMBook = value; }
+        public ListBookWindow LBWD { get => _LBWD; set => _LBWD = value; }
     }
 }

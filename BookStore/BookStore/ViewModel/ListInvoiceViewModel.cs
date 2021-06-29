@@ -52,11 +52,12 @@ namespace BookStore.ViewModel
             {
                 return;
             }
-            InvoiceWindow invoiceWindow = new InvoiceWindow();
-            (invoiceWindow.DataContext as InvoiceViewModel).FlagIntent = 1;
-            (invoiceWindow.DataContext as InvoiceViewModel).Editor = SelectedInvoice;
-            (invoiceWindow.DataContext as InvoiceViewModel).LoadData();
-            invoiceWindow.ShowDialog();
+            InvoiceWindow tmpWD = new InvoiceWindow();
+            var tmVM = tmpWD.DataContext as InvoiceViewModel;
+            tmVM.FlagIntent = 1;
+            tmVM.Editor = SelectedInvoice;
+            tmVM.LoadData();
+            tmpWD.ShowDialog();
         }
 
         public ICommand SelectionChangedCommand { get; set; }
@@ -67,7 +68,7 @@ namespace BookStore.ViewModel
         private ObservableCollection<CT_HD> _Detail;
         private HOADON _SelectedInvoice;
 
-        public ObservableCollection<HOADON> ListInvoice { get => _ListInvoice; set => _ListInvoice = value; }
+        public ObservableCollection<HOADON> ListInvoice { get => _ListInvoice; set { _ListInvoice = value; OnPropertyChanged(); } }
         public ObservableCollection<CT_HD> Detail { get => _Detail; set { _Detail = value; OnPropertyChanged(); } }
         public HOADON SelectedInvoice { get => _SelectedInvoice; set { _SelectedInvoice = value; OnPropertyChanged(); } }
     }
