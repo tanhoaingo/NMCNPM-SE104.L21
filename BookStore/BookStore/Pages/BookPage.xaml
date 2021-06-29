@@ -48,10 +48,10 @@
         <materialDesign:Card Margin="30,10,30,0" Grid.Row="1">
             <Grid Margin="0,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="272*"></ColumnDefinition>
-                    <ColumnDefinition Width="113*"></ColumnDefinition>
+                    <ColumnDefinition Width="212*"></ColumnDefinition>
+                    <ColumnDefinition Width="90*"></ColumnDefinition>
                     <ColumnDefinition Width="52*"></ColumnDefinition>
-                    <ColumnDefinition Width="333*"></ColumnDefinition>
+                    <ColumnDefinition Width="433*"></ColumnDefinition>
 
                 </Grid.ColumnDefinitions>
                 <TextBox
@@ -133,6 +133,7 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button
                         FontSize="25"
@@ -163,6 +164,17 @@
                         Content="Xóa" 
                         Margin="10,20,10,20" 
                         Command="{Binding DeleteBookButtonClickCommand}"
+                        CommandParameter="{Binding ElementName=BookPg}"
+                        VerticalAlignment="Center" Height="50" >
+                    </Button>
+
+                    <Button
+                        FontSize="25"
+                        Grid.Column="3"
+                        Content="Xem sách" 
+                        Margin="10,20,10,20" 
+                        Background="#6485FF"
+                        Command="{Binding SeeDetailCommand}"
                         CommandParameter="{Binding ElementName=BookPg}"
                         VerticalAlignment="Center" Height="50" >
                     </Button>
@@ -202,11 +214,12 @@
                                         </TextBlock>
                                         <TextBlock
                                             Grid.Row="2"
-                                            Height="50"
+                                            Height="10"
                                             Width="170"
                                             TextAlignment="Center"
                                             FontSize="22">
                                         </TextBlock>
+                                        
                                     </Grid>
                                 </materialDesign:Card>
                             </Border>

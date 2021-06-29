@@ -69,11 +69,17 @@ namespace BookStore.ViewModel
             EditBookButtonClickCommand = new RelayCommand<Page>((p) => { return EditBookNeed(); }, (p) => { EditBook(p); });
             DeleteBookButtonClickCommand = new RelayCommand<Page>((p) => { return DeleteBookNeed(); }, (p) => { DeleteBook(p); });
             SearchTextChangedCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { Refresh(p); });
+            SeeDetailCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { SeeDetail(p); });
         }
 
         private void Refresh(Page p)
         {
             CollectionViewSource.GetDefaultView(ListBooks).Refresh();
+        }
+        private void test1()
+        {
+            MessageBox.Show("hong");
+          
         }
 
         private bool DeleteBookNeed()
@@ -275,7 +281,42 @@ namespace BookStore.ViewModel
             tmpPg.Grid.Effect = null;
         }
 
-        private void EditBook(Page p)
+        private void SeeDetail(Page p)
+        {
+            if(SelectedMBook == null)
+            {
+                MessageBox.Show("Chọn chi tiết hóa đơn trước");
+                return;
+            }
+            var tmpPg = p as BookPage;
+
+            tmpPg.Grid.Effect = new BlurEffect();
+
+            // Splash.Visibility = Visibility.Visible;
+
+            var tmp = new BookDetailWindow();
+            var tmpVM = tmp.DataContext as BookDetailViewModel;
+
+            foreach (var s in DataProvider.Ins.DB.SACHes)
+            {
+                if (s.MaDauSach == SelectedMBook.MaDauSach)
+                {
+                    Sach = s;
+                    break;
+                }
+            }
+
+            tmpVM.EditBook = SelectedMBook;
+            tmpVM.EditBookInfor = Sach;
+            tmpVM.LoadData();
+            tmp.ShowDialog();
+
+            LoadListBooks();
+
+            // Splash.Visibility = Visibility.Collapsed;
+            tmpPg.Grid.Effect = null;
+        }
+        private void  EditBook(Page p)
         {
             var tmpPg = p as BookPage;
 
@@ -322,6 +363,8 @@ namespace BookStore.ViewModel
         public ICommand EditBookButtonClickCommand { get; set; }
         public ICommand DeleteBookButtonClickCommand { get; set; }
         public ICommand SearchTextChangedCommand { get; set; }
+        public ICommand SeeDetailCommand { get; set; }
+         
 
         private string _ListBooksFiller = string.Empty;
         private string _SelectedOption;
@@ -330,6 +373,7 @@ namespace BookStore.ViewModel
         private ObservableCollection<string> _Temp;
         private int _FlagIntent;
         private DAUSACH _SelectedMBook;
+        private SACH _sach;
 
 
         public string ListBooksFiller { get => _ListBooksFiller; set{ _ListBooksFiller = value; OnPropertyChanged(nameof(ListBooksFiller)); ListBooksCollectionView.Refresh(); } }
@@ -340,5 +384,6 @@ namespace BookStore.ViewModel
         public ObservableCollection<string> Temp { get => _Temp; set { _Temp = value; OnPropertyChanged(); } }
         public int FlagIntent { get => _FlagIntent; set => _FlagIntent = value; }
         public DAUSACH SelectedMBook { get => _SelectedMBook; set => _SelectedMBook = value; }
+        public SACH Sach { get => _sach; set => _sach = value; }
     }
 }

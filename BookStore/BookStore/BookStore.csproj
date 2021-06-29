@@ -214,6 +214,7 @@
     <Compile Include="ViewModel\AddUserViewModel.cs" />
     <Compile Include="ViewModel\BCCNViewModel.cs" />
     <Compile Include="ViewModel\BCTViewModel.cs" />
+    <Compile Include="ViewModel\BookDetailViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
     <Compile Include="ViewModel\ItemMenu.cs" />
@@ -251,6 +252,9 @@
       <DependentUpon>BillWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\RowToIndexConverter.cs" />
+    <Compile Include="View\BookDetailWindow.xaml.cs">
+      <DependentUpon>BookDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BookEntryWindow.xaml.cs">
       <DependentUpon>BookEntryWindow.xaml</DependentUpon>
     </Compile>
@@ -302,6 +306,9 @@
     </Compile>
     <Compile Include="View\NewMainWindow.xaml.cs">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OfficialMainWindow.xaml.cs">
+      <DependentUpon>OfficialMainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="DesignControls\menuControls.xaml">
       <SubType>Designer</SubType>
@@ -399,6 +406,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BookDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BookEntryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -476,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NewMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OfficialMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
