@@ -106,7 +106,7 @@
                                 <DataGridTextColumn Binding="{Binding nhapVao}" Header="Nhập vào"/>
                                 <DataGridTextColumn Binding="{Binding banRa}" Header="Bán ra"/>
                                 <DataGridTextColumn Binding="{Binding tonCuoi}" Header="Tồn cuối"/>
-                                <DataGridTextColumn Binding="{Binding thang}" Header="Ngày lập"/>
+                                <DataGridTextColumn Binding="{Binding ngayLap}" Header="Ngày lập"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

@@ -558,6 +558,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Source\Image\loginn.png" />
     <Resource Include="Source\Image\icon.png" />
     <Resource Include="Source\Image\as1.png" />
     <Resource Include="Source\Image\bookInsert.jpg" />

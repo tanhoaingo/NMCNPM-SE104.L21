@@ -28,7 +28,7 @@
 
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="349" Margin="193,66,0,0" Stroke="Black" VerticalAlignment="Top" Width="350" RadiusY="16.661" RadiusX="16.661"/>
         <StackPanel >
-            <Image Source="/Source/Image/loginn.png" Height="403" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="295" />
+            <Image Source="../../Source/Image/loginn.png" Height="403" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="295" />
         </StackPanel>
         <Rectangle x:Name="rectangle" Fill="#3366FF" HorizontalAlignment="Left" Height="46" Margin="516,111,0,0" RadiusY="9.035" RadiusX="9.035" Stroke="{x:Null}" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5">
         </Rectangle>
