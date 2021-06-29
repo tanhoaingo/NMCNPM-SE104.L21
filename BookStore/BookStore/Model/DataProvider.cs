@@ -16,10 +16,10 @@
                 _ins = value;
             }
         }
-        public MYDATABASEEntities3 DB { get; set; }
+        public MYDATABASEEntities DB { get; set; }
         private DataProvider()
         {
-            DB = new MYDATABASEEntities3();
+            DB = new MYDATABASEEntities();
         }
     }
 }

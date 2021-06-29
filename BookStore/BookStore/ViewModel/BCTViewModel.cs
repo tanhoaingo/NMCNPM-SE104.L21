@@ -75,7 +75,7 @@ namespace BookStore.ViewModel
 
             }
             DataProvider.Ins.DB.SaveChanges();
-            if (MessageBox.Show("Bạn muốn thoát khỏi ứng dụng ?", "Thông báo", MessageBoxButton.OK) == MessageBoxResult.OK)
+            if (MessageBox.Show("Lập báo cáo thành công", "Thông báo", MessageBoxButton.OK) == MessageBoxResult.OK)
             {
                 Grid grid1 = p.Parent as Grid;
                 Border border1 = grid1.Parent as Border;

@@ -17,12 +17,14 @@ namespace BookStore.ViewModel
         public ListUserViewModel()
         {
             ListUser = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
-            SelectedUser = ListUser[0];
             GroupUser = new List<int>();
             foreach (var item in DataProvider.Ins.DB.NHOMNGUOIDUNGs)
             {
                 GroupUser.Add(item.MaNhom);
             }
+            if (ListUser != null)
+                SelectedUser = ListUser[0];
+           
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Edit(); });
             ButtonDeleteClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Delete(); });
             ButtonAddClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Add(); });
@@ -43,10 +45,43 @@ namespace BookStore.ViewModel
         }
         public void Delete()
         {
-            var nguoidung = SelectedUser;
-            ListUser.Remove(nguoidung);
-            DataProvider.Ins.DB.NGUOIDUNGs.Remove(nguoidung);
-            SelectedUser = ListUser[0];
+            bool delete = true;
+            var phieuNhapSach = new ObservableCollection<PHIEUNHAPSACH>(DataProvider.Ins.DB.PHIEUNHAPSACHes);
+            var hoaDon = new ObservableCollection<HOADON>(DataProvider.Ins.DB.HOADONs);
+            foreach (var item in hoaDon)
+            {
+                if (SelectedUser.MaNguoiDung == item.MaNguoiLap)
+                    delete = false;
+            }
+            foreach (var item in phieuNhapSach)
+            {
+                if (SelectedUser.MaNguoiDung == item.MaNguoiLap)
+                    delete = false;
+            }
+
+            if(!delete)
+            {
+                SelectedUser.trangthai = 1;
+                ListUser = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
+                GroupUser = new List<int>();
+                foreach (var item in DataProvider.Ins.DB.NHOMNGUOIDUNGs)
+                {
+                    GroupUser.Add(item.MaNhom);
+                }
+                if(ListUser != null)
+                SelectedUser = ListUser[0];
+
+                MessageBox.Show("Không thể xóa người dùng, đã vô hiệu hóa tài khoản");
+
+            }
+            else if (MessageBox.Show("Bạn có muốn xóa người dùng", "Thông báo", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                var nguoidung = SelectedUser;
+                ListUser.Remove(nguoidung);
+                DataProvider.Ins.DB.NGUOIDUNGs.Remove(nguoidung);
+                if(ListUser != null)
+                    SelectedUser = ListUser[0];
+            }
         }
         public void Add()
         {
@@ -64,12 +99,13 @@ namespace BookStore.ViewModel
         {
             base.CleanUpData();
             ListUser = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
-            SelectedUser = ListUser[0];
             GroupUser = new List<int>();
             foreach (var item in DataProvider.Ins.DB.NHOMNGUOIDUNGs)
             {
                 GroupUser.Add(item.MaNhom);
             }
+            if (ListUser != null)
+                SelectedUser = ListUser[0];
         }
 
         public ICommand CloseWindowCommand { get; set; }

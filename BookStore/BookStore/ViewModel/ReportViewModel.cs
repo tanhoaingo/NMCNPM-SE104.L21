@@ -23,18 +23,25 @@ namespace BookStore.ViewModel
             {
                 "Tất cả", DateTime.Now.Year.ToString(),(DateTime.Now.Year-1).ToString(),(DateTime.Now.Year-2).ToString(),(DateTime.Now.Year-3).ToString(),(DateTime.Now.Year-4).ToString()
             };
+            YearItemSource2 = new string[]
+            {
+                DateTime.Now.Year.ToString(),(DateTime.Now.Year-1).ToString(),(DateTime.Now.Year-2).ToString(),(DateTime.Now.Year-3).ToString(),(DateTime.Now.Year-4).ToString()
+            };
             SelectedMonth = "Tất cả";
             SelectedYear = "Tất cả";
             SelectedMonthBCT = "Tất cả";
             SelectedMonthBCCN = "Tất cả";
-
+            SelectedYearBCT = "Tất cả";
+            SelectedYearBCCN = "Tất cả";
+            SelectedYear2 = DateTime.Now.Year.ToString();
             loadStatistic("Tất cả", "Tất cả");
-            loadBaoCaoTon("Tất cả");
-            loadBaoCaoCongNo("Tất cả");
-            loadProfit();
+            loadBaoCaoTon("Tất cả", "Tất cả");
+            loadBaoCaoCongNo("Tất cả","Tất cả");
+            loadProfit(DateTime.Now.Year.ToString());
+            YearSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => loadProfit(SelectedYear2));
             SelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => loadStatistic(SelectedMonth, SelectedYear));
-            BCTSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => loadBaoCaoTon(SelectedMonthBCT));
-            BCCNSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => loadBaoCaoCongNo(SelectedMonthBCCN));
+            BCTSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => loadBaoCaoTon(SelectedMonthBCT,SelectedYearBCT));
+            BCCNSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => loadBaoCaoCongNo(SelectedMonthBCCN, SelectedYearBCCN));
             ButtonBCCNClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadBCCN(); });
             ButtonBCTClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadBCT(); });
         }
@@ -45,8 +52,10 @@ namespace BookStore.ViewModel
             bCCNWindow.ShowDialog();
             SelectedMonthBCT = "Tất cả";
             SelectedMonthBCCN = "Tất cả";
-            loadBaoCaoTon("Tất cả");
-            loadBaoCaoCongNo("Tất cả");
+            SelectedYearBCT = "Tất cả";
+            SelectedYearBCCN = "Tất cả";
+            loadBaoCaoTon("Tất cả", "Tất cả");
+            loadBaoCaoCongNo("Tất cả", "Tất cả");
         }
         public void loadBCT()
         {
@@ -54,8 +63,10 @@ namespace BookStore.ViewModel
             bCTWindow.ShowDialog();
             SelectedMonthBCT = "Tất cả";
             SelectedMonthBCCN = "Tất cả";
-            loadBaoCaoTon("Tất cả");
-            loadBaoCaoCongNo("Tất cả");
+            SelectedYearBCT = "Tất cả";
+            SelectedYearBCCN = "Tất cả";
+            loadBaoCaoTon("Tất cả", "Tất cả");
+            loadBaoCaoCongNo("Tất cả", "Tất cả");
         }
 
         public void loadStatistic(String month, String year)
@@ -89,15 +100,15 @@ namespace BookStore.ViewModel
         }
 
 
-        public void loadBaoCaoTon(string month)
+        public void loadBaoCaoTon(string month, string year)
         {
             var chiTiet = new ObservableCollection<CT_BCT>(DataProvider.Ins.DB.CT_BCT);
             var baoCaoTon = new ObservableCollection<BAOCAOTON>(DataProvider.Ins.DB.BAOCAOTONs);
             var sach = new ObservableCollection<SACH>(DataProvider.Ins.DB.SACHes);
             var dauSach = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
-
+            //(month == "Tất cả" && year == "Tất cả") ? true : (month == "Tất cả" ? x.NgayLapHoaDon.Value.Year.ToString() == year : (year == "Tất cả" ? x.NgayLapHoaDon.Value.Month.ToString() == month : x.NgayLapHoaDon.Value.Month.ToString() == month && x.NgayLapHoaDon.Value.Year.ToString() == year))
             List<ChiTietBaoCaoTon> list = new List<ChiTietBaoCaoTon>();
-            var maBCT = baoCaoTon.Where(x => (month == "Tất cả" ? true : x.Thang.Value.Month.ToString() == month)).Select(x => x.MaBaoCaoTon);
+            var maBCT = baoCaoTon.Where(x => (month == "Tất cả" && year == "Tất cả") ? true : (month == "Tất cả" ? x.Thang.Value.Year.ToString() == year : (year == "Tất cả" ? x.Thang.Value.Month.ToString() == month : x.Thang.Value.Month.ToString() == month && x.Thang.Value.Year.ToString() == year))).Select(x => x.MaBaoCaoTon);
             foreach (var item in maBCT)
             {
                 var ct_BCT = chiTiet.Where(x => x.MaBaoCaoTon == item);
@@ -111,13 +122,14 @@ namespace BookStore.ViewModel
                         tonDau = ct.TonDau,
                         tonCuoi = ct.TonCuoi,
                         nhapVao = ct.NhapVao,
-                        banRa = ct.BanRa
+                        banRa = ct.BanRa,
+                        ngayLap = baoCaoTon.Where(x => x.MaBaoCaoTon == item).Select(x => x.Thang).First()
                     });
                 }
             }
             BaoCaoTonSource = list;
         }
-        public void loadBaoCaoCongNo(string month)
+        public void loadBaoCaoCongNo(string month,string year)
         {
             var chiTiet = new ObservableCollection<CT_BCCN>(DataProvider.Ins.DB.CT_BCCN);
             var baoCaoCongNo = new ObservableCollection<BAOCAOCONGNO>(DataProvider.Ins.DB.BAOCAOCONGNOes);
@@ -125,7 +137,7 @@ namespace BookStore.ViewModel
 
 
             List<ChiTietBaoCaoCongNo> list = new List<ChiTietBaoCaoCongNo>();
-            var maBCCN = baoCaoCongNo.Where(x => (month == "Tất cả" ? true : x.Thang.Value.Month.ToString() == month) && (x.Thang.Value.Year == DateTime.Now.Year)).Select(x => x.MaBaoCaoCongNo);
+            var maBCCN = baoCaoCongNo.Where(x => (month == "Tất cả" && year == "Tất cả") ? true : (month == "Tất cả" ? x.Thang.Value.Year.ToString() == year : (year == "Tất cả" ? x.Thang.Value.Month.ToString() == month : x.Thang.Value.Month.ToString() == month && x.Thang.Value.Year.ToString() == year))).Select(x => x.MaBaoCaoCongNo);
             foreach (var item in maBCCN)
             {
                 var ct_BCCN = chiTiet.Where(x => x.MaBaoCaoCongNo == item);
@@ -139,23 +151,24 @@ namespace BookStore.ViewModel
                         noDau = ct.NoDau,
                         noCuoi = ct.NoCuoi,
                         noMoi = ct.NoMoi,
-                        daThu = ct.DaThu
-                    });
+                        daThu = ct.DaThu,
+                        ngayLap = baoCaoCongNo.Where(x => x.MaBaoCaoCongNo == item).Select(x => x.Thang).First()
+                    }) ;
                 }
             }
             BaoCaoCongNoSource = list;
         }
-        public void loadProfit()
+        public void loadProfit(String year)
         {
-            profitItemSource = new List<Profit>();
+            List<Profit> profit = new List<Profit>();
 
             for (int i = 0; i < 12; i++)
             {
                 var hoaDon = new ObservableCollection<HOADON>(DataProvider.Ins.DB.HOADONs);
-                var tien = hoaDon.Where(x => (x.NgayLapHoaDon.Value.Month == (i + 1) && x.NgayLapHoaDon.Value.Year == DateTime.Now.Year)).Sum(x => x.TongTien);
-                profitItemSource.Add(new Profit() { Money = tien, Month = i + 1 });
+                var tien = hoaDon.Where(x => (x.NgayLapHoaDon.Value.Month == (i + 1) && x.NgayLapHoaDon.Value.Year.ToString() == year)).Sum(x => x.TongTien);
+                profit.Add(new Profit() { Money = tien, Month = i + 1 });
             }
-
+            profitItemSource = new List<Profit>(profit);
         }
         public class Statistic
         {
@@ -176,6 +189,7 @@ namespace BookStore.ViewModel
             public int? nhapVao { get; set; }
             public int? banRa { get; set; }
             public int? tonCuoi { get; set; }
+            public DateTime? ngayLap { get; set; }
         }
         public class ChiTietBaoCaoCongNo
         {
@@ -185,8 +199,9 @@ namespace BookStore.ViewModel
             public decimal? noMoi { get; set; }
             public decimal? daThu { get; set; }
             public decimal? noCuoi { get; set; }
+            public DateTime? ngayLap { get; set; }
         }
-
+        public ICommand YearSelectionChangedCommand { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand BCTSelectionChangedCommand { get; set; }
         public ICommand BCCNSelectionChangedCommand { get; set; }
@@ -198,7 +213,11 @@ namespace BookStore.ViewModel
         private List<Statistic> _itemSource;
         private List<Profit> _profitItemSource;
         private string _SelectedYear;
+        private string _SelectedYearBCT;
+        private string _SelectedYearBCCN;
         private string[] _YearItemSource;
+        private string _SelectedYear2;
+        private string[] _YearItemSource2;
         private string _SelectedMonth;
         private string[] _MonthItemSource;
         private string _SelectedMonthBCT;
@@ -210,10 +229,14 @@ namespace BookStore.ViewModel
         public List<Profit> profitItemSource { get => _profitItemSource; set { _profitItemSource = value; OnPropertyChanged(); } }
         public string SelectedYear { get => _SelectedYear; set { _SelectedYear = value; OnPropertyChanged(); } }
         public string[] YearItemSource { get => _YearItemSource; set => _YearItemSource = value; }
+        public string SelectedYear2 { get => _SelectedYear2; set { _SelectedYear2 = value; OnPropertyChanged(); } }
+        public string[] YearItemSource2 { get => _YearItemSource2; set => _YearItemSource2 = value; }
         public string SelectedMonth { get => _SelectedMonth; set { _SelectedMonth = value; OnPropertyChanged(); } }
         public string[] MonthItemSource { get => _MonthItemSource; set => _MonthItemSource = value; }
         public string SelectedMonthBCT { get => _SelectedMonthBCT; set { _SelectedMonthBCT = value; OnPropertyChanged(); } }
         public string SelectedMonthBCCN { get => _SelectedMonthBCCN; set { _SelectedMonthBCCN = value; OnPropertyChanged(); } }
+        public string SelectedYearBCT { get => _SelectedYearBCT; set { _SelectedYearBCT = value; OnPropertyChanged(); } }
+        public string SelectedYearBCCN { get => _SelectedYearBCCN; set { _SelectedYearBCCN = value; OnPropertyChanged(); } }
         public List<ChiTietBaoCaoTon> BaoCaoTonSource { get => _BaoCaoTonSource; set { _BaoCaoTonSource = value; OnPropertyChanged(); } }
         public List<ChiTietBaoCaoCongNo> BaoCaoCongNoSource { get => _BaoCaoCongNoSource; set { _BaoCaoCongNoSource = value; OnPropertyChanged(); } }
     }

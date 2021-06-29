@@ -98,7 +98,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.RemoveBackEntry();
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/BookPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListUserPage.xaml", UriKind.Relative));
             tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Tìm kiếm sách";
         }
