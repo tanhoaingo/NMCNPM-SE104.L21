@@ -62,6 +62,10 @@ namespace BookStore.ViewModel
             {
                 Btn_listcustomer(p);
             });
+            ReportCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                Btn_Report(p);
+            });
 
 
         }
@@ -110,7 +114,18 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.Navigate(new Uri("../Pages/BookCategory.xaml", UriKind.Relative));
             tmpWd.MainTitle.Text = "Danh sách dữ liệu loại sách";
         }
-         private void Btn_QuyDinh(Window p)
+
+        private void Btn_Report(Window p)
+        {
+            var tmpWd = p as NewMainWindow;
+            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/ReportPage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Báo cáo tháng";
+        }
+
+        private void Btn_QuyDinh(Window p)
         {
             var tmpWd = p as NewMainWindow;
             tmpWd.MainFrame.NavigationService.RemoveBackEntry();
@@ -179,6 +194,7 @@ namespace BookStore.ViewModel
         public ICommand BCCNCommand { get; set; }
         public ICommand BCTCommand { get; set; }
         public ICommand mainSource { get; set; }
+        public ICommand ReportCommand { get; set; }
 
 
         private void navigator()
