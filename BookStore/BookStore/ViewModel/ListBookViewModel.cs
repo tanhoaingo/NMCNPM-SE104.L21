@@ -300,7 +300,7 @@ namespace BookStore.ViewModel
         {
             if(SelectedMBook == null)
             {
-                MessageBox.Show("Chọn chi tiết hóa đơn trước");
+                MessageBox.Show("Chọn sách trước");
                 return;
             }
             var tmpPg = p as BookPage;
@@ -311,6 +311,7 @@ namespace BookStore.ViewModel
 
             var tmp = new BookDetailWindow();
             var tmpVM = tmp.DataContext as BookDetailViewModel;
+           
 
             foreach (var s in DataProvider.Ins.DB.SACHes)
             {
