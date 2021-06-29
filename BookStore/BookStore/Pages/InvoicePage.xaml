@@ -150,7 +150,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         IsEditable="True"
                         DisplayMemberPath="HoTenKhachHang"
-                        ItemsSource="{Binding ListCustomer}"
+                        ItemsSource="{Binding ListCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SelectedCustomer,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         FontSize="25"
                         VerticalAlignment="Center"
@@ -169,7 +169,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         IsEditable="True"
                         DisplayMemberPath="DienThoai"
-                        ItemsSource="{Binding ListCustomer}"
+                        ItemsSource="{Binding ListCustomer ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         SelectedItem="{Binding SelectedCustomer,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         FontSize="25"
                         VerticalAlignment="Center"
@@ -497,6 +497,7 @@
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -521,10 +522,18 @@
                         Grid.Row="2" 
                             Foreground="#DD2D39A8"
                         VerticalAlignment="Center"
-                        Text="Còn lại: " FontSize="25" 
+                        Text="Tiền thừa: " FontSize="25" 
                         FontWeight="Bold"
                         Width="150" Height="33">
                         </TextBlock>
+                        <TextBlock
+                        TextAlignment="Right"
+                        Grid.Row="3" 
+                            Foreground="#DD2D39A8"
+                        VerticalAlignment="Center"
+                        Text="Tiền nợ: " FontSize="25" 
+                        FontWeight="Bold"
+                        Width="150" Height="33"></TextBlock>
                         <TextBlock
                         IsEnabled="False"
                         TextAlignment="Left"
@@ -563,6 +572,15 @@
                         IsEnabled="False"
                         TextAlignment="Left"
                         Grid.Row="2" Grid.Column="1" 
+                            FontWeight="Bold"
+                        VerticalAlignment="Center"
+                        Text="{Binding RightAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
+                        Width="150" >
+                        </TextBlock>
+                        <TextBlock
+                        IsEnabled="False"
+                        TextAlignment="Left"
+                        Grid.Row="3" Grid.Column="1" 
                             FontWeight="Bold"
                         VerticalAlignment="Center"
                         Text="{Binding LeftAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" 
@@ -607,7 +625,7 @@
                             Margin="20 10"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             IsEditable="True"
-                            ItemsSource="{Binding ListBook, Mode=OneWay}"
+                            ItemsSource="{Binding ListBook, Mode=TwoWay}"
                             DisplayMemberPath="TenSach"
                             SelectedItem="{Binding SelectedBook,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="20"

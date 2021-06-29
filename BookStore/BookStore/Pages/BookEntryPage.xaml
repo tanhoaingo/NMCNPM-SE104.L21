@@ -312,6 +312,7 @@
                         </Grid.ColumnDefinitions>
                         <WrapPanel >
                             <ComboBox
+                                x:Name="BookNameComboBox"
                             materialDesign:HintAssist.Hint="Tên sách"
                             Margin="20"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -333,7 +334,9 @@
 
 
                             <TextBox
-                            Text="{Binding InputPrice, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                x:Name="InputPriceTextBox"
+                                Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                            Text="{Binding InputPrice,StringFormat={}{0:N0}, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Đơn Giá Nhập"
                             Margin="30 20 20 20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -353,6 +356,8 @@
                             </TextBox>
 
                             <TextBox
+                                x:Name="AmountTextBox"
+                                 Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                             Text="{Binding Amount,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Số lượng"
                             Margin="30 20 20 20"
@@ -366,7 +371,7 @@
                                         <ei:CallMethodAction TargetObject="{Binding }" MethodName="NumberValidationTextBox" />
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="TextChanged">
-                                        <i:InvokeCommandAction Command="{Binding IntoMoneyNeedChangedCommand}">
+                                        <i:InvokeCommandAction Command="{Binding AmountTextChangedCommand}">
                                         </i:InvokeCommandAction>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
@@ -374,6 +379,7 @@
                             <TextBlock Width="200" />
 
                             <TextBox
+                                x:Name="BookTypeTextBox"
                             Text="{Binding Types, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thể loại"
                             Margin="20"
@@ -384,6 +390,7 @@
                             IsReadOnly="True"
                             VerticalAlignment="Center" />
                             <TextBox
+                                x:Name="BookAuthorTextBox"
                             Text="{Binding Authors, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Tác Giả"
                             Margin="20"
@@ -395,7 +402,9 @@
                             IsReadOnly="True"
                             VerticalAlignment="Center" />
                             <TextBox
-                            Text="{Binding IntoMoney,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                x:Name="IntoMoneyTextBox"
+                                 Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
+                            Text="{Binding IntoMoney,StringFormat={}{0:N0},UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                             materialDesign:HintAssist.Hint="Thành tiền"
                             Margin="20,20,0,20"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -417,11 +426,13 @@
                                         Content="Thêm" Margin="20 10 10 10" Width="100">
                                 </Button>
                                 <Button
+                                    x:Name="EditDetailButton"
                                         Command="{Binding EditDetailClickCommand}"
                                          Background="White"
                                         Foreground="#6432a8"
                                         Content="Sửa" Margin="20 10 10 10" Width="100"></Button>
                                 <Button
+                                    x:Name="DeleteDetailButton"
                                          Background="White"
                                         Foreground="#6432a8"
                                         Command="{Binding DeleteDetailClickCommand}"
@@ -447,7 +458,7 @@
                           Margin="20,0,0,0"
                           Grid.Column="0"
                           BorderBrush="Transparent"
-                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                          SelectedItem="{Binding SelectedDetail, Mode=TwoWay}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="DataContextChanged" >
                                 <ei:CallMethodAction TargetObject="{Binding }" MethodName="ListViewChanged" />
@@ -553,11 +564,12 @@
                         Width="150" Height="34">
                             </TextBlock>
                             <TextBlock
+                                 Validation.ErrorTemplate="{StaticResource textBoxErrorTemplate}"
                         IsEnabled="False"
                         TextAlignment="Left"
                         Grid.Row="1" 
                         VerticalAlignment="Center"
-                        Text="{Binding SumAmount, Mode=TwoWay}" FontSize="30" 
+                        Text="{Binding SumAmount, Mode=TwoWay,StringFormat={}{0:N0}}" FontSize="30" 
                         Width="150" >
                             </TextBlock>
                         </Grid>

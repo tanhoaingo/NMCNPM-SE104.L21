@@ -9,10 +9,11 @@
 
 namespace BookStore.Model
 {
+    using BookStore.ViewModel;
     using System;
     using System.Collections.Generic;
     
-    public partial class KHACHHANG
+    public partial class KHACHHANG :BaseViewModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KHACHHANG()
@@ -23,7 +24,7 @@ namespace BookStore.Model
         }
     
         public int MaKhachHang { get; set; }
-        public string HoTenKhachHang { get; set; }
+        private string _HoTenKhachHang;
         public Nullable<decimal> SoNo { get; set; }
         public string DiaChi { get; set; }
         public string DienThoai { get; set; }
@@ -36,5 +37,6 @@ namespace BookStore.Model
         public virtual ICollection<HOADON> HOADONs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PHIEUTHUTIEN> PHIEUTHUTIENs { get; set; }
+        public string HoTenKhachHang { get => _HoTenKhachHang; set { _HoTenKhachHang = value; OnPropertyChanged(); } }
     }
 }
