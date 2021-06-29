@@ -22,6 +22,13 @@ namespace BookStore
         public ListBookWindow()
         {
             InitializeComponent();
+
+         /*   tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCTpage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Thay đổi quy định";
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;*/
         }
     }
 }

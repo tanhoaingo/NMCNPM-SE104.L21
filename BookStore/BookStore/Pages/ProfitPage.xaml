@@ -54,7 +54,7 @@
                             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                             Text="             1               2               3               4               5                6               7               8               9              10             11             12" VerticalAlignment="Center" HorizontalAlignment="Center"
                             FontSize="25"
-                            Foreground="#DD000000" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Arial" Margin="10,335,0,10" Width="1468"/>
+                            Foreground="#FF0952BB" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Arial" Margin="10,335,0,10" Width="1468"/>
                 <chart1:ClusteredColumnChart        
                     FontFamily="Sitka Subheading" 
                     ChartTitle="" Grid.Row="2"

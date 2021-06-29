@@ -36,8 +36,8 @@ namespace BookStore.ViewModel
             AddDetailClickCommand = new RelayCommand<object>((p) => { return AddDetailButtonNeed(); }, (p) => { AddDetail(); UpdateResultAMount(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailButtonNeed(); }, (p) => { EditDetail(); UpdateResultAMount(); });
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailButtonNeed(); }, (p) => { DeleteDetail(); UpdateResultAMount(); });
-            CancelButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => CloseInvoice(p));
-            SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook());
+            CancelButtonClickCommand = new RelayCommand<Page>((p) => { return true; }, (p) => CloseInvoice(p));
+            SearchButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => SearchBook(p));
             ExitButtonClickCommand = new RelayCommand<Window>((p) => { return true; }, (p) => ExitWindow(p));
             PaidAmountTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { UpdateResultAMount(); });
         }
@@ -73,16 +73,17 @@ namespace BookStore.ViewModel
             p.Close();
         }
 
-        private void SearchBook()
+        private void SearchBook(Window p)
         {
             var tmp = new ListBookWindow { };
             tmp.ShowDialog();
             var res_tmp = tmp.DataContext as ListBookViewModel;
         }
 
-        private void CloseInvoice(Window p)
+        private void CloseInvoice(Page p)
         {
-            p.Close();
+            (p.DataContext as InvoiceViewModel).CleanUpData();
+        //    p.Close();
         }
 
 

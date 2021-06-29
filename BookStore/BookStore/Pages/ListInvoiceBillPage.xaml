@@ -52,7 +52,7 @@
                     <TextBlock
                             TextWrapping="Wrap"
                             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                            Text="Danh sách phiếu nhập sách" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Text="Danh sách hóa đơn" VerticalAlignment="Center" HorizontalAlignment="Center"
                             FontSize="25"
                             Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
                 </Grid>
@@ -149,7 +149,7 @@
                     <TextBlock
                         TextWrapping="Wrap"
                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                        Text="Chi tiết phiếu nhập sách" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Text="Chi tiết hóa đơn" VerticalAlignment="Center" HorizontalAlignment="Center"
                         FontSize="25"
                         Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
 

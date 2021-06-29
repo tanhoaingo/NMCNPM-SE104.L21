@@ -24,7 +24,7 @@ namespace BookStore.ViewModel
             CloseWindowCommand = new RelayCommand<BCTWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
 
             ButtonSaveClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Save(p); });
-            ButtonExportClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Export(); });
+           // ButtonExportClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Export(); });
 
         }
         public class ChiTietBaoCaoTon

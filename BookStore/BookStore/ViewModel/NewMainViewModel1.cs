@@ -159,7 +159,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.RemoveBackEntry();
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/ListUserPage.xaml", UriKind.Relative));
             tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
@@ -179,7 +179,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.RemoveBackEntry();
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
-            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCCNpage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/ProfitPage.xaml", UriKind.Relative));
             tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
