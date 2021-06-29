@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace BookStore.View
         public InvoiceWindow()
         {
             InitializeComponent();
+            IPage = new InvoicePage();
+            this.Main.Content = IPage;
         }
+        private InvoicePage _IPage;
+
+        public InvoicePage IPage { get => _IPage; set => _IPage = value; }
     }
 }

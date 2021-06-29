@@ -22,6 +22,7 @@ namespace BookStore.ViewModel
 
             ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes);
             Items = new ObservableCollection<Item_CT_PNS>();
+            EntryBookDate = DateTime.Now;
 
             CloseWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) => { this.CleanUpData(); });
             InputPriceTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateIntoMoney(); });
@@ -31,6 +32,7 @@ namespace BookStore.ViewModel
             ItemListDetailSelectionChangedCommand = new RelayCommand<object> ((p) => { return true; }, (p) => { LoadFromDetail(); });
             EditDetailClickCommand = new RelayCommand<object>((p) => { return EditDetailNeed(); }, (p) => { EditDetail(); });
             DeleteDetailClickCommand = new RelayCommand<object>((p) => { return DeleteDetailNeed(); }, (p) => { DeleteDetail(); });
+            AmountTextChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) => { UpdateIntoMoney(); });
         }
 
         private bool DeleteDetailNeed()
@@ -47,6 +49,7 @@ namespace BookStore.ViewModel
             {
                 v.ID = Items.IndexOf(v) + 1;
             }
+            UpdateSumAmount();
         }
 
         private bool EditDetailNeed()
@@ -58,8 +61,9 @@ namespace BookStore.ViewModel
         {
             SelectedDetail.Book = SelectedBook;
             SelectedDetail.Amount = Amount;
-            SelectedDetail.InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice);
+            SelectedDetail.InputPrice = InputPrice;
             SelectedDetail.IntoMoney = IntoMoney;
+            UpdateSumAmount();
         }
 
         private void LoadFromDetail()
@@ -72,13 +76,13 @@ namespace BookStore.ViewModel
             Authors = GetAuthorsString(SelectedDetail.Book.TACGIAs);
             Types = GetTypesString(SelectedDetail.Book.THELOAIs);
             Amount = SelectedDetail.Amount;
-            InputPrice = Rules.Instance.ConvertDecimal_nullToInt64(SelectedDetail.InputPrice).ToString();
-            IntoMoney = SelectedDetail.IntoMoney;
+            InputPrice = InputPrice;
+            IntoMoney = SelectedDetail.IntoMoney ?? 0;
         }
 
         private void SaveBookEntry()
         {
-            if (Items.Count() == 0 || EntryBookDate == null)
+            if ((Items.Count() == 0 && FlagIntent == 0) || EntryBookDate == null)
             {
                 MessageBox.Show("Vui lòng hoàn thành phiếu!", "Thông Báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -91,14 +95,14 @@ namespace BookStore.ViewModel
 
                 foreach (var v in Items)
                 {
-                    var tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = int.Parse(v.Amount) };
+                    var tmpBook = new SACH() { MaDauSach = v.Book.MaDauSach, LuongTon = Amount };
                     DataProvider.Ins.DB.SACHes.Add(tmpBook);
                     DataProvider.Ins.DB.SaveChanges();
 
                     var tmpMBook = DataProvider.Ins.DB.DAUSACHes.First(x => x.MaDauSach == tmpBook.MaDauSach);
-                    tmpMBook.LuongTon += int.Parse(v.Amount);
+                    tmpMBook.LuongTon += Amount;
                     
-                    var tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = v.InputPrice, MaSach = tmpBook.MaSach, SoLuong = int.Parse(v.Amount) };
+                    var tmpCT_PN = new CT_PNS() { MaPhieuNhapSach = tmpPN.MaPhieuNhapSach, DonGiaNhap = v.InputPrice, MaSach = tmpBook.MaSach, SoLuong = Amount };
                     DataProvider.Ins.DB.CT_PNS.Add(tmpCT_PN);
                     DataProvider.Ins.DB.SaveChanges();
                 }
@@ -123,6 +127,10 @@ namespace BookStore.ViewModel
                         DataProvider.Ins.DB.SACHes.Remove(tmpSach);
                         DataProvider.Ins.DB.CT_PNS.Remove(tmpCT_PN);
                     }
+                }
+                if(Items.Count==0)
+                {
+                    DataProvider.Ins.DB.PHIEUNHAPSACHes.Remove(DataProvider.Ins.DB.PHIEUNHAPSACHes.Where(x => x.MaPhieuNhapSach == Editor.MaPhieuNhapSach).FirstOrDefault());
                 }
                 DataProvider.Ins.DB.SaveChanges();
                 DeletedCT_PN = null;
@@ -178,16 +186,15 @@ namespace BookStore.ViewModel
                         Authors = GetAuthorsString(tmpMBook.TACGIAs),
                         Types = GetTypesString(tmpMBook.THELOAIs),
                         InputPrice = v.DonGiaNhap,
-                        Amount = v.SoLuong.ToString(),
+                        Amount = v.SoLuong??0,
                         IntoMoney = Rules.Instance.ConvertDecimal_nullToInt64(v.DonGiaNhap) * Rules.Instance.ConvertInt_nullToInt64(v.SoLuong),
                         MaSachInNeed = v.MaSach, 
                         MaCTPNSInNeed = v.MaCT_PNS
-                        
                     });
                 }
                 foreach(var v in Items)
                 {
-                    SumAmount += v.IntoMoney;
+                    SumAmount += v.IntoMoney ?? 0;
                 }
                 return;
             }
@@ -195,7 +202,7 @@ namespace BookStore.ViewModel
 
         private bool AddDetailNeed()
         {
-            if (SelectedBook == null || string.IsNullOrEmpty(Amount) || InputPrice == null)
+            if (SelectedBook == null || Amount ==0 || InputPrice == 0 )
             {
                 return false;
 
@@ -223,7 +230,7 @@ namespace BookStore.ViewModel
             {
                 minAmount = DataProvider.Ins.DB.THAMSOes.ToList().Last().LuongNhapToiThieu ?? 0;
             }
-            if (int.Parse(Amount) < minAmount)
+            if (Amount < minAmount)
             {
                 MessageBox.Show(string.Format("Lượng nhập tối thiểu là: {0} ", minAmount), "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -236,11 +243,21 @@ namespace BookStore.ViewModel
                 ID = Items.Count() + 1,
                 Authors = Authors,
                 Types = Types,
-                InputPrice = Rules.Instance.ConvertStringAmountToInt64(InputPrice),
+                InputPrice = InputPrice,
                 IntoMoney = IntoMoney
             };
             Items.Add(tmp);
-            SumAmount += IntoMoney;
+
+            UpdateSumAmount();
+        }
+
+        private void UpdateSumAmount()
+        {
+            SumAmount = 0;
+            foreach (var v in Items)
+            {
+                SumAmount += v.IntoMoney ?? 0;
+            }
         }
 
         private void UpdateIntoMoney()
@@ -249,7 +266,7 @@ namespace BookStore.ViewModel
             {
                 return;
             }
-            IntoMoney = Rules.Instance.ConvertStringAmountToInt64(Amount) * Rules.Instance.ConvertStringAmountToInt64(InputPrice);
+            IntoMoney = Amount * InputPrice;
 
         }
 
@@ -261,8 +278,8 @@ namespace BookStore.ViewModel
             Types = string.Empty;
             Authors = string.Empty;
             IntoMoney = 0;
-            Amount = string.Empty;
-            InputPrice = string.Empty;
+            Amount = 0;
+            InputPrice = 0;
             EntryBookDate = null;
             Items = null;
             ListBook = null;
@@ -281,20 +298,21 @@ namespace BookStore.ViewModel
         public ICommand ItemListDetailSelectionChangedCommand { get; set; }
         public ICommand EditDetailClickCommand { get; set; }
         public ICommand DeleteDetailClickCommand { get; set; }
+        public ICommand AmountTextChangedCommand { get; set; }
 
         private int _FlagIntent;
         private DAUSACH _SelectedBook;
         private string _Types;
         private string _Authors;
-        private Int64 _IntoMoney;
-        private string _Amount;
-        private string _InputPrice;
+        private Decimal _IntoMoney;
+        private int _Amount;
+        private Decimal _InputPrice;
         private DateTime? _EntryBookDate;
         private ObservableCollection<Item_CT_PNS> _Items;
         private ObservableCollection<DAUSACH> _ListBook;
         private NGUOIDUNG _Staff;
         private PHIEUNHAPSACH _Editor;
-        private long _SumAmount;
+        private decimal _SumAmount;
         private Item_CT_PNS _SelectedDetail;
         private List<int> _DeletedCT_PN;
 
@@ -302,18 +320,18 @@ namespace BookStore.ViewModel
         public DAUSACH SelectedBook { get => _SelectedBook; set { _SelectedBook = value; OnPropertyChanged(); } }
         public string Types { get => _Types; set { _Types = value; OnPropertyChanged(); } }
         public string Authors { get => _Authors; set { _Authors = value; OnPropertyChanged(); } }
-        public long IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
-        public string Amount { get => _Amount; set { _Amount = value; OnPropertyChanged(); } }
+        public Decimal IntoMoney  { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
+        public int Amount { get => _Amount; set { _Amount = value; OnPropertyChanged(); } }
         public DateTime? EntryBookDate { get => _EntryBookDate; set { _EntryBookDate = value; OnPropertyChanged(); } }
-        public string InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
         public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; OnPropertyChanged(); } }
         public ObservableCollection<Item_CT_PNS> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
         public NGUOIDUNG Staff { get => _Staff; set { _Staff = value; OnPropertyChanged(); } }
         public PHIEUNHAPSACH Editor { get => _Editor; set => _Editor = value; }
-        public long SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
+        public decimal SumAmount { get => _SumAmount; set { _SumAmount = value; OnPropertyChanged(); } }
 
         public Item_CT_PNS SelectedDetail { get => _SelectedDetail; set { _SelectedDetail = value; OnPropertyChanged(); } }
 
         public List<int> DeletedCT_PN { get => _DeletedCT_PN; set => _DeletedCT_PN = value; }
+        public decimal InputPrice { get => _InputPrice; set { _InputPrice = value; OnPropertyChanged(); } }
     }
 }

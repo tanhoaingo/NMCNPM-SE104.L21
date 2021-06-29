@@ -43,7 +43,7 @@
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding ButtonEditClickCommand}"
-                                   CommandParameter="{Binding ElementName=BtnLoadDetail}">
+                                   CommandParameter="{Binding ElementName=BtnEdit}">
                             </i:InvokeCommandAction>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
