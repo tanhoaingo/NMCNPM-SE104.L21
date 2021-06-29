@@ -4,6 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
+
       <Diagram DiagramId="49359b48dda445c699e08ebbcd776e4c" Name="Diagram1" ZoomLevel="97" >
 
         <EntityTypeShape EntityType="MYDATABASEModel.BAOCAOCONGNO" Width="1.5" PointX="3.75" PointY="21.75" />
@@ -24,6 +25,7 @@
         <EntityTypeShape EntityType="MYDATABASEModel.TACGIA" Width="1.5" PointX="3" PointY="4.875" />
         <EntityTypeShape EntityType="MYDATABASEModel.THAMSO" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="MYDATABASEModel.THELOAI" Width="1.5" PointX="3" PointY="10.75" />
+
         <AssociationConnector Association="MYDATABASEModel.FK_CT_BCCN_BAOCAOCONGNO" />
         <AssociationConnector Association="MYDATABASEModel.FK_CT_BCT_BAOCAOTON" />
         <AssociationConnector Association="MYDATABASEModel.FK_CT_BCCN_KHACHHANG" />

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Excel = Microsoft.Office.Interop.Excel;
+//using Excel = Microsoft.Office.Interop.Excel;
 namespace BookStore.ViewModel
 {
     public class BCTViewModel : BaseViewModel
@@ -22,8 +22,10 @@ namespace BookStore.ViewModel
             if (BaoCaoTonSource[0] != null)
                 Selected = BaoCaoTonSource[0];
             CloseWindowCommand = new RelayCommand<BCTWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
+
             ButtonSaveClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Save(p); });
             ButtonExportClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { Export(); });
+
         }
         public class ChiTietBaoCaoTon
         {
@@ -68,7 +70,9 @@ namespace BookStore.ViewModel
             var BCT = new ObservableCollection<BAOCAOTON>(DataProvider.Ins.DB.BAOCAOTONs);
             foreach (var item in BaoCaoTonSource)
             {
+
                 DataProvider.Ins.DB.CT_BCT.Add(new CT_BCT() { MaBaoCaoTon = BCT.Last().MaBaoCaoTon, MaDauSach = item.maDauSach, TonDau = item.tonDau, TonCuoi = item.tonCuoi, NhapVao = item.nhapVao, BanRa = item.banRa });
+
             }
             DataProvider.Ins.DB.SaveChanges();
             if (MessageBox.Show("Bạn muốn thoát khỏi ứng dụng ?", "Thông báo", MessageBoxButton.OK) == MessageBoxResult.OK)
@@ -81,7 +85,7 @@ namespace BookStore.ViewModel
                 window.Close();
             }
         }
-        void Export()
+       /* void Export()
         {
             Excel.Application excel = new Excel.Application();
             excel.Visible = true; //www.yazilimkodlama.com
@@ -175,7 +179,7 @@ namespace BookStore.ViewModel
                         break;
                 }
             }
-        }
+        }*/
         public ICommand CloseWindowCommand { get; set; }
         public ICommand ButtonSaveClickCommand { get; set; }
         public ICommand ButtonExportClickCommand { get; set; }

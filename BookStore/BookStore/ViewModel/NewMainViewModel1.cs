@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using System.Windows.Navigation;
 
 namespace BookStore.ViewModel
 {
@@ -62,9 +62,11 @@ namespace BookStore.ViewModel
             {
                 Btn_listcustomer(p);
             });
+
             ReportCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 Btn_Report(p);
+
             });
 
 
@@ -76,6 +78,8 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/BookEntryPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+
             tmpWd.MainTitle.Text = "Phiếu nhập sách";
         }
         private void Btn_hoaDon(Window p)
@@ -85,6 +89,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/InvoicePage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Hóa đơn bán sách";
         }
         private void Btn_NhapSach(Window p)
@@ -94,6 +99,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/BookPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Tìm kiếm sách";
         }
         private void Btn_TacGia(Window p)
@@ -103,6 +109,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/AuthorPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Danh sách dữ liệu tác giả";
         }
         private void Btn_LoaiSach(Window p)
@@ -112,6 +119,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/BookCategory.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Danh sách dữ liệu loại sách";
         }
 
@@ -132,6 +140,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/RulePage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
           private void Btn_DanhSachPhieuNhap(Window p)
@@ -141,6 +150,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListBookEntryPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
           private void Btn_DanhsachHoaDon(Window p)
@@ -150,6 +160,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
            private void Btn_listcustomer(Window p)
@@ -159,6 +170,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/ListCustomerPage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
            private void btn_bccn(Window p)
@@ -168,6 +180,7 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.NavigationService.Refresh();
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/BCCNpage.xaml", UriKind.Relative));
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             tmpWd.MainTitle.Text = "Thay đổi quy định";
         }
            private void Btn_bbt(Window p)
@@ -178,11 +191,23 @@ namespace BookStore.ViewModel
             tmpWd.MainFrame.DataContext = null;
             tmpWd.MainFrame.Navigate(new Uri("../Pages/BCTpage.xaml", UriKind.Relative));
             tmpWd.MainTitle.Text = "Thay đổi quy định";
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+        }
+         private void Btn_report(Window p)
+        {
+            /*var tmpWd = p as NewMainWindow;
+            tmpWd.MainFrame.NavigationService.RemoveBackEntry();
+            tmpWd.MainFrame.NavigationService.Refresh();
+            tmpWd.MainFrame.DataContext = null;
+            tmpWd.MainFrame.Navigate(new Uri("../Pages/BCTpage.xaml", UriKind.Relative));
+            tmpWd.MainTitle.Text = "Thay đổi quy định";
+            tmpWd.MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;*/
         }
 
 
         //IECommand
         public ICommand BtnInvoiceCommand { get; set; }
+        public ICommand BtnReportCommand { get; set; }
         public ICommand BookEntryCommand { get; set; }
         public ICommand SearchBookCommand { get; set; }
         public ICommand AuthorCommand { get; set; }

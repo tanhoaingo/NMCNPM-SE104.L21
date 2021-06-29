@@ -104,15 +104,11 @@ namespace BookStore.ViewModel
                 foreach (var ct in ct_BCT)
                 {
                     var tenSach = dauSach.Where(x => x.MaDauSach == ct.MaDauSach).Select(x => x.TenSach).First();
-                    list.Add(new ChiTietBaoCaoTon()
-                    {
-                        maDauSach = ct.MaDauSach,
-                        Sach = tenSach,
-                        tonDau = ct.TonDau,
-                        tonCuoi = ct.TonCuoi,
+              
                         nhapVao = ct.NhapVao,
                         banRa = ct.BanRa
                     });
+
                 }
             }
             BaoCaoTonSource = list;
@@ -131,16 +127,20 @@ namespace BookStore.ViewModel
                 var ct_BCCN = chiTiet.Where(x => x.MaBaoCaoCongNo == item);
                 foreach (var ct in ct_BCCN)
                 {
+
                     var tenKH = khachHang.Where(x => x.MaKhachHang == ct.MaKhachHang).Select(x => x.HoTenKhachHang).First();
                     list.Add(new ChiTietBaoCaoCongNo()
+
                     {
                         maKH = ct.MaKhachHang,
                         khachHang = tenKH,
                         noDau = ct.NoDau,
                         noCuoi = ct.NoCuoi,
+
                         noMoi = ct.NoMoi,
                         daThu = ct.DaThu
                     });
+
                 }
             }
             BaoCaoCongNoSource = list;

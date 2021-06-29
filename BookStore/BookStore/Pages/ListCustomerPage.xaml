@@ -23,84 +23,155 @@
       Title="ListCustomerPage">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="821*"/>
+            <ColumnDefinition Width="779*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="199*"></RowDefinition>
             <RowDefinition Height="256*"></RowDefinition>
         </Grid.RowDefinitions>
-        <materialDesign:Card Margin="30,30,30,10">
+        <materialDesign:Card UniformCornerRadius="10" Margin="30,32,30,10" Grid.ColumnSpan="2">
             <Grid>
 
-                <TextBox
+                <StackPanel  Margin="58,82,782,33" Orientation="Vertical" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox
+                        Margin="10"
+                    Height="60"
                     materialDesign:HintAssist.Hint="Mã khách hàng"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalContentAlignment="Center"
-                    FontSize="25" Margin="72,10,1210,282"
+                    FontSize="18"
                     Text="{Binding SelectedItem.MaKhachHang}"
                     IsReadOnly="True"/>
 
-                <TextBox
+                        <TextBox
+                            Width="510"
+                        Margin="10"
+                      Height="60"
                     materialDesign:HintAssist.Hint="Tên khách hàng"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalContentAlignment="Center"
-                    FontSize="25" Margin="72,86,1110,206"
+                    FontSize="18"
                     Text="{Binding SelectedItem.HoTenKhachHang}"
                     IsReadOnly="True"/>
-
-                <TextBox
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBox
+                            Width="250"
+                        Margin="10"
+                      Height="60"
                     materialDesign:HintAssist.Hint="Số điện thoại"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalContentAlignment="Center"
-                    FontSize="25" Margin="427,86,772,206"
+                    FontSize="18"
                     Text="{Binding SelectedItem.DienThoai}"
                     IsReadOnly="True"/>
 
-                <TextBox
-                    materialDesign:HintAssist.Hint="Địa chỉ"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    VerticalContentAlignment="Center"
-                    FontSize="25" Margin="72,160,772,130"
-                    Text="{Binding SelectedItem.DiaChi}"
-                    IsReadOnly="True"/>
-
-                <TextBox
+                        <TextBox
+                            Width="410"
+                        Margin="10"
+                      Height="60"
                     materialDesign:HintAssist.Hint="Email"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalContentAlignment="Center"
-                    FontSize="25" Margin="72,235,772,60"
+                    FontSize="18"
                     Text="{Binding SelectedItem.Email}"
                     IsReadOnly="True"/>
+                    </StackPanel>
 
-                <TextBox
+                    <TextBox
+                        Margin="10"
+                      Height="60"
+                    materialDesign:HintAssist.Hint="Địa chỉ"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalContentAlignment="Center"
+                    FontSize="18"
+                    Text="{Binding SelectedItem.DiaChi}"
+                    IsReadOnly="True"/>
+
+
+                </StackPanel>
+                <materialDesign:Card Margin="842,82,88,145"
+                                    BorderBrush="WhiteSmoke" UniformCornerRadius="15"
+                                     BorderThickness="0.5"
+                                     >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Width="250"
+                            Height="65"
+                       materialDesign:TextFieldAssist.TextFieldCornerRadius="5"
+                    BorderBrush="#6485FF"
                     materialDesign:HintAssist.Hint="Số tiền nợ"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalContentAlignment="Center"
-                    FontSize="35" Margin="850,72,472,198"
+                    FontSize="25"
                     Text="{Binding SelectedItem.SoNo, StringFormat={}{0:#.##}}"
                     IsReadOnly="True"/>
 
-                <Button 
-                    Margin="1132,92,186,212" Height="Auto"
+                        <Button 
+                            Grid.Column="1"
+                       materialDesign:ButtonAssist.CornerRadius="25"
+                    Background="#6485FF" Foreground="White"
+                    BorderBrush="#6485FF"
+                        Height="65" Width="250"
                     Content="Thanh toán nợ"
                     FontSize="25"
-                    Command="{Binding CreateBillButtonClickCommand}">
-                </Button>
+                    Command="{Binding CreateBillButtonClickCommand}" />
+
+                    </Grid>
+
+                </materialDesign:Card>
+
+                <TextBlock Text="Thanh toán nợ" Margin="842,19,88,296"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="#6485FF" Height="58"
+                           />
+
+                <TextBlock Text="Thông tin khách hàng" Margin="72,19,858,296"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           Foreground="#6485FF" Height="58"
+                           />
+
+
+
 
                 <Button 
-                    Margin="814,220,566,60" Height="Auto"
+                    BorderBrush="#6485FF"
+                       materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="White" Foreground="#6485FF"
+                    Margin="842,253,538,67" Height="Auto"
                     Content="Thêm "
                     FontSize="25"
-                    Command="{Binding AddCustomerButtonClickCommand}">
+                    Command="{Binding AddCustomerButtonClickCommand}" RenderTransformOrigin="0.525,-0.125">
                 </Button>
 
                 <Button 
-                    Margin="1016,220,364,60" Height="Auto"
+                        BorderBrush="#6485FF"
+                     materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="White" Foreground="#6485FF"
+                    Margin="1067,253,313,67" Height="Auto"
                     Content="Sửa "
                     FontSize="25"
                     Command="{Binding EditCustomerButtonClickCommand}">
                 </Button>
 
                 <Button 
-                    Margin="1220,220,160,60" Height="Auto"
+                        BorderBrush="#6485FF"
+                     materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="White" Foreground="#6485FF"
+                    Margin="1292,253,88,67" Height="Auto"
                     Content="Xóa "
                     FontSize="25"
                     Command="{Binding DeleteCustomerButtonClickCommand}">
@@ -108,36 +179,104 @@
 
             </Grid>
         </materialDesign:Card>
-        <Border Grid.Row="1" Margin="30" BorderBrush="Black" BorderThickness="1">
+        <materialDesign:Card  UniformCornerRadius="10" Padding="15"  Grid.Row="1" Margin="30,10,30,-32" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2">
             <Grid >
-                <TextBox
+                <materialDesign:Card Margin="75,10,653,443" Padding="14 7" UniformCornerRadius="10">
+                    <TextBox                  
+                    Background="White"
                     materialDesign:HintAssist.Hint="Tìm kiếm"
-                    FontSize="30"
+                    FontSize="24"
                     BorderBrush="Black"
-                    BorderThickness="1"
-                    Height="50" Margin="75,10,653,390"/>
-                <Button Height="Auto" Margin="916,10,530,390">
+                    BorderThickness="0"
+                    Height="50" />
+                </materialDesign:Card>
+
+                <Button 
+                        Background="#6485FF"
+                        BorderBrush="#6485FF"
+                       materialDesign:ButtonAssist.CornerRadius="5"
+                    Height="Auto" Margin="916,10,514,443">
                     <materialDesign:PackIcon
                         Kind="Search"
-                        Height="50"
-                        Width="50">
+                        Height="40"
+                        Width="40">
                     </materialDesign:PackIcon>
                 </Button>
-                <Border BorderBrush="Black" BorderThickness="1" Margin="75,100,0,10" HorizontalAlignment="Left" Width="1163">
-                    <DataGrid ItemsSource="{Binding ListCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" 
+                <materialDesign:Card  UniformCornerRadius="10" Padding="15"  BorderBrush="Black" BorderThickness="1" Margin="75,110,0,83" HorizontalAlignment="Left" Width="1361">
+                    <DataGrid Background="White" ItemsSource="{Binding ListCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" 
                               CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True"
                               SelectedItem="{Binding SelectedItem}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding MaKhachHang}" Header="Mã khách hàng"/>
-                            <DataGridTextColumn Binding="{Binding HoTenKhachHang}" Header="Tên khách hàng"/>
-                            <DataGridTextColumn Binding="{Binding DienThoai}" Header="Số điện thoại"/>
-                            <DataGridTextColumn Binding="{Binding DiaChi}" Header="Địa chỉ"/>
-                            <DataGridTextColumn Binding="{Binding Email}" Header="Email"/>
-                            <DataGridTextColumn Binding="{Binding SoNo, StringFormat={}{0:#.##}}" Header="Tiền nợ"/>
+                            <DataGridTextColumn Binding="{Binding MaKhachHang}" Header="Mã khách hàng"
+                                                 FontSize="18" Width="220">
+                                <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                </DataGridColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding HoTenKhachHang}" Header="Tên khách hàng"
+                                                FontSize="18" Width="220">
+                                <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                </DataGridColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DienThoai}" Header="Số điện thoại"
+                                                FontSize="18" Width="200">
+                                <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                </DataGridColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DiaChi}" Header="Địa chỉ"
+                                                FontSize="18" Width="220">
+                                <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                </DataGridColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Email}" Header="Email"
+                                                FontSize="18" Width="200">
+                                <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                </DataGridColumn.HeaderStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding SoNo, StringFormat={}{0:#.##}}" Header="Tiền nợ"
+                                                FontSize="18" Width="180">
+                                <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                </DataGridColumn.HeaderStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                </Border>
+                </materialDesign:Card>
             </Grid>
-        </Border>
+        </materialDesign:Card>
     </Grid>
 </Page>

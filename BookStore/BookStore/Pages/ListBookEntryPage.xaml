@@ -31,6 +31,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+
     <Grid>
         <Border Margin="60,60,60,90" BorderThickness="1" Background="#FF8F8787">
             <Grid Background="White">
@@ -60,6 +61,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding MaPhieuNhapSach}" Header="Mã PNS" Width="100"/>
                                 <DataGridTextColumn Binding="{Binding NgayNhap}" Header="Ngày nhập"/>
+
                             </DataGrid.Columns>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
@@ -68,19 +70,67 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </DataGrid>
+
                     </Grid>
                 </Border>
                 <Border Margin="440,160,30,90" BorderThickness="1" Background="White" BorderBrush="#FF6496C8">
                     <Grid>
                         <DataGrid ItemsSource="{Binding Detail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" ColumnWidth="200" CanUserReorderColumns="False" IsReadOnly="True" Background="{x:Null}" BorderBrush="#FF6496C8" FontSize="18" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding MaCT_PNS}" Header="Mã CT_PNS"/>
-                                <DataGridTextColumn Binding="{Binding MaPhieuNhapSach}" Header="Mã PNS"/>
-                                <DataGridTextColumn Binding="{Binding MaSach}" Header="Mã sách"/>
-                                <DataGridTextColumn Binding="{Binding SoLuong}" Header="Số lượng"/>
-                                <DataGridTextColumn Binding="{Binding DonGiaNhap, StringFormat={}{0:#.##}}" Header="Đơn giá nhập"/>
+                                <DataGridTextColumn FontSize="18" Width="170" Binding="{Binding MaCT_PNS}" Header="Mã CT_PNS">
+                                    <DataGridColumn.HeaderStyle>
+                                    <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="FontWeight" Value="Normal"/>
+                                        <Setter Property="FontSize" Value="20"/>
+                                    </Style>
+                                    </DataGridColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn FontSize="18" Width="170" Binding="{Binding MaPhieuNhapSach}" Header="Mã PNS">
+                                    <DataGridColumn.HeaderStyle>
+                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Setter Property="FontSize" Value="20"/>
+                                        </Style>
+                                    </DataGridColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn FontSize="18" Width="170" Binding="{Binding MaSach}" Header="Mã sách">
+                                    <DataGridColumn.HeaderStyle>
+                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Setter Property="FontSize" Value="20"/>
+                                        </Style>
+                                    </DataGridColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn FontSize="18" Width="170" Binding="{Binding SoLuong}" Header="Số lượng">
+                                    <DataGridColumn.HeaderStyle>
+                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Setter Property="FontSize" Value="20"/>
+                                        </Style>
+                                    </DataGridColumn.HeaderStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn FontSize="18" Width="250" Binding="{Binding DonGiaNhap, StringFormat={}{0:#.##}}" Header="Đơn giá nhập">
+                                    <DataGridColumn.HeaderStyle>
+                                        <Style   TargetType="{x:Type DataGridColumnHeader}"
+                                           BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="FontWeight" Value="Normal"/>
+                                            <Setter Property="FontSize" Value="20"/>
+                                        </Style>
+                                    </DataGridColumn.HeaderStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
+
 
                     </Grid>
                 </Border>
@@ -91,6 +141,7 @@
                         Text="Chi tiết phiếu nhập sách" VerticalAlignment="Center" HorizontalAlignment="Center"
                         FontSize="25"
                         Foreground="#DDFFFFFF" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" FontFamily="Corbel"/>
+
                 </Grid>
             </Grid>
         </Border>

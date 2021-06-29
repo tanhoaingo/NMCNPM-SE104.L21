@@ -105,6 +105,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\MoneyConverter.cs" />
+    <Compile Include="DesignControls\UserControlMenuItem.xaml.cs">
+      <DependentUpon>UserControlMenuItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\BAOCAOCONGNO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -213,6 +216,7 @@
     <Compile Include="ViewModel\BCTViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\ChangeRulesViewModel.cs" />
+    <Compile Include="ViewModel\ItemMenu.cs" />
     <Compile Include="ViewModel\ListBillViewModel.cs" />
     <Compile Include="ViewModel\ListBookEntryViewModel.cs" />
     <Compile Include="ViewModel\ListCustomerViewModel.cs" />
@@ -220,6 +224,7 @@
     <Compile Include="ViewModel\ListUserViewModel.cs" />
     <Compile Include="ViewModel\NewMainViewModel1.cs" />
     <Compile Include="ViewModel\ReportViewModel.cs" />
+    <Compile Include="ViewModel\SubItem.cs" />
     <Compile Include="View\AddAuthorWindow.xaml.cs">
       <DependentUpon>AddAuthorWindow.xaml</DependentUpon>
     </Compile>
@@ -292,10 +297,17 @@
     <Compile Include="ViewModel\ListBookViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\NewMainViewWindowOF.xaml.cs">
+      <DependentUpon>NewMainViewWindowOF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NewMainWindow.xaml.cs">
       <DependentUpon>NewMainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="DesignControls\menuControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DesignControls\UserControlMenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -458,6 +470,10 @@
     <Page Include="Themes\Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\NewMainViewWindowOF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NewMainWindow.xaml">
       <SubType>Designer</SubType>
