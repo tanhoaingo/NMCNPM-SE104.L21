@@ -17,9 +17,10 @@ namespace BookStore.Model
         public int MaCT_BCT { get; set; }
         public int MaBaoCaoTon { get; set; }
         public Nullable<int> TonDau { get; set; }
-        public Nullable<int> PhatSinh { get; set; }
         public Nullable<int> TonCuoi { get; set; }
         public int MaDauSach { get; set; }
+        public Nullable<int> NhapVao { get; set; }
+        public Nullable<int> BanRa { get; set; }
     
         public virtual BAOCAOTON BAOCAOTON { get; set; }
         public virtual DAUSACH DAUSACH { get; set; }
