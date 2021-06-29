@@ -13,7 +13,7 @@ namespace BookStore.Model
         private DAUSACH _DauSach;
         private int _ID;
         private string _Amount;
-        private Int64 _IntoMoney;
+        private decimal _IntoMoney;
         private int _IDinDataBase;
         private CT_PNS _CTPNS;
         private string _BookTypes;
@@ -29,7 +29,7 @@ namespace BookStore.Model
         public string BookTypes { get => _BookTypes; set { _BookTypes = value; OnPropertyChanged(); } }
         public int ID { get => _ID; set { _ID = value; OnPropertyChanged(); } }
         public string Amount { get => _Amount; set { _Amount = value; OnPropertyChanged(); } }
-        public Int64 IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
+        public decimal IntoMoney { get => _IntoMoney; set { _IntoMoney = value; OnPropertyChanged(); } }
         public int IDinDataBase { get => _IDinDataBase; set { _IDinDataBase = value; OnPropertyChanged(); } }
         public DAUSACH DauSach { get => _DauSach; set { _DauSach = value; OnPropertyChanged(); } }
         public CT_PNS CTPNS { get => _CTPNS; set { _CTPNS = value; OnPropertyChanged(); } }

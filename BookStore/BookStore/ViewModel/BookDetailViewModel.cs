@@ -13,14 +13,10 @@ namespace BookStore.ViewModel
 
         public DAUSACH EditBook { get => _EditBook; set => _EditBook = value; }
         private DAUSACH _EditBook;
-        public SACH EditBookInfor { get => _EditBookInfor; set => _EditBookInfor = value; }
-        private SACH _EditBookInfor;
 
         public BookDetailViewModel()
         {
-            
 
-            
         }
 
         public void LoadData()
@@ -29,9 +25,8 @@ namespace BookStore.ViewModel
             Author = EditBook.TACGIAs.FirstOrDefault().TenTacGia;
             Type = EditBook.THELOAIs.FirstOrDefault().TenTheLoai;
             BookImage = ByteArrayToBitmapImage(EditBook.HinhAnhSach);
-            LuongTon = EditBookInfor.LuongTon.ToString();
-            MaDauSach = EditBookInfor.MaDauSach.ToString();
-
+            LuongTon = EditBook.LuongTon ?? 0;
+            MaDauSach = EditBook.MaDauSach.ToString();
             return;
         }
         public BitmapImage ByteArrayToBitmapImage(byte[] array)
@@ -48,8 +43,8 @@ namespace BookStore.ViewModel
         }
         public string BookName { get => _bookName; set { _bookName = value; OnPropertyChanged(); } }
         private string _bookName;
-        public string LuongTon { get => _luongton; set { _luongton = value; OnPropertyChanged(); } }
-        private string _luongton;
+        public int LuongTon { get => _luongton; set { _luongton = value; OnPropertyChanged(); } }
+        private int _luongton;
         public string MaDauSach { get => _madausach; set { _madausach = value; OnPropertyChanged(); } }
         private string _madausach;
         public string Type { get => _Type; set { _Type = value; OnPropertyChanged(); } }
@@ -58,5 +53,6 @@ namespace BookStore.ViewModel
         private string _Type;
         private string _Author;
         private BitmapImage _bookImage;
+
     }
 }

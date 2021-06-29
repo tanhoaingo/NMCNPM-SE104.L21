@@ -30,8 +30,12 @@
             </i:InvokeCommandAction>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    <Border
+        BorderBrush="#6485FF"
+        BorderThickness="2">
 
-    <Grid>
+
+        <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="59*"></RowDefinition>
             <RowDefinition Height="59*"></RowDefinition>
@@ -153,4 +157,5 @@
             VerticalAlignment="Center"
             Height="24" Margin="10" Grid.ColumnSpan="2"/>
     </Grid>
+    </Border>
 </Window>

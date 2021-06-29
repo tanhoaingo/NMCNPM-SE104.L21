@@ -196,6 +196,9 @@
     <Compile Include="Pages\InvoicePage.xaml.cs">
       <DependentUpon>InvoicePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ListBillPage.xaml.cs">
+      <DependentUpon>ListBillPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ListBookEntryPage.xaml.cs">
       <DependentUpon>ListBookEntryPage.xaml</DependentUpon>
     </Compile>
@@ -335,6 +338,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\BCTpage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ListBillPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

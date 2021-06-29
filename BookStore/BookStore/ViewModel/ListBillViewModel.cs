@@ -29,12 +29,26 @@ namespace BookStore.ViewModel
                 SelectedBill = ListBill[0];
             }
             ButtonEditClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadEdit(); });
+            ButtonKHClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { loadKH(); });
             CloseWindowCommand = new RelayCommand<ListBillWindow>((p) => { return true; }, (p) => { this.CleanUpData(); });
         }
         public class OldPay
         {
             public int? maPTT { get; set; }
             public decimal? soTienThu { get; set; }
+        }
+
+        public void loadKH()
+        {
+            if (SelectedBill == null)
+                return;
+            else
+            {
+                var khachHang = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs);
+                var kh = khachHang.Where(x => x.MaKhachHang == SelectedBill.MaKhachHang).First();
+                CustomerWindow window = new CustomerWindow(kh);
+                window.ShowDialog();
+            }
         }
         public void loadEdit()
         {
@@ -84,6 +98,7 @@ namespace BookStore.ViewModel
 
         public ICommand CloseWindowCommand { get; set; }
         public ICommand ButtonEditClickCommand { get; set; }
+        public ICommand ButtonKHClickCommand { get; set; }
 
         private ObservableCollection<PHIEUTHUTIEN> _ListBill;
         private List<OldPay> _oldPays;

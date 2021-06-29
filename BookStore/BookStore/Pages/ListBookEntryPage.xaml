@@ -135,7 +135,7 @@
                                         </Style>
                                     </DataGridColumn.HeaderStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn FontSize="18" Width="250" Binding="{Binding DonGiaNhap, StringFormat={}{0:#.##}}" Header="Đơn giá nhập">
+                                <DataGridTextColumn FontSize="18" Width="250" Binding="{Binding DonGiaNhap, StringFormat={}{0:N0}}" Header="Đơn giá nhập">
                                     <DataGridColumn.HeaderStyle>
                                         <Style   TargetType="{x:Type DataGridColumnHeader}"
                                            BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">

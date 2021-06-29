@@ -71,7 +71,6 @@ namespace BookStore.ViewModel
             var tmpVM = tmp.DataContext as BookDetailViewModel;
 
             tmpVM.EditBook = Cdata;
-            tmpVM.EditBookInfor = Sach;
             tmpVM.LoadData();
             tmp.ShowDialog();
 

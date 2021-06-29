@@ -111,7 +111,7 @@
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalContentAlignment="Center"
                     FontSize="25"
-                    Text="{Binding SelectedItem.SoNo, StringFormat={}{0:#.##}}"
+                    Text="{Binding SelectedItem.SoNo, StringFormat={}{0:N0}}"
                     IsReadOnly="True"/>
 
                         <Button 
@@ -262,7 +262,7 @@
                                     </Style>
                                 </DataGridColumn.HeaderStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding SoNo, StringFormat={}{0:#.##}}" Header="Tiền nợ"
+                            <DataGridTextColumn Binding="{Binding SoNo, StringFormat={}{0:N0}}" Header="Tiền nợ"
                                                 FontSize="18" Width="180">
                                 <DataGridColumn.HeaderStyle>
                                     <Style   TargetType="{x:Type DataGridColumnHeader}"
