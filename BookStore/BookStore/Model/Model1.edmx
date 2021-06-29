@@ -927,7 +927,7 @@
           <End Role="DAUSACH" Type="Self.DAUSACH" Multiplicity="*" />
           <End Role="THELOAI" Type="Self.THELOAI" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="MYDATABASEEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MYDATABASEEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BAOCAOCONGNOes" EntityType="Self.BAOCAOCONGNO" />
           <EntitySet Name="BAOCAOTONs" EntityType="Self.BAOCAOTON" />
           <EntitySet Name="CHUCNANGs" EntityType="Self.CHUCNANG" />
@@ -1020,7 +1020,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MYDATABASEModelStoreContainer" CdmEntityContainer="MYDATABASEEntities">
+        <EntityContainerMapping StorageEntityContainer="MYDATABASEModelStoreContainer" CdmEntityContainer="MYDATABASEEntities1">
           <EntitySetMapping Name="BAOCAOCONGNOes">
             <EntityTypeMapping TypeName="MYDATABASEModel.BAOCAOCONGNO">
               <MappingFragment StoreEntitySet="BAOCAOCONGNO">

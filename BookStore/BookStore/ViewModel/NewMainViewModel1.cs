@@ -55,6 +55,8 @@ namespace BookStore.ViewModel
             window.btnDoanhThu.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
             window.btnQuyDinh.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
             window.btnBaoCaoTon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnDSHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
+            window.btnDSPhieuThu.Foreground = (Brush)new BrushConverter().ConvertFrom(foreground);
 
             window.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(background);
             window.btnPhieuNhap.Background = (Brush)new BrushConverter().ConvertFrom(background);
@@ -67,6 +69,8 @@ namespace BookStore.ViewModel
             window.btnDoanhThu.Background = (Brush)new BrushConverter().ConvertFrom(background);
             window.btnQuyDinh.Background = (Brush)new BrushConverter().ConvertFrom(background);
             window.btnBaoCaoTon.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnDSHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(background);
+            window.btnDSPhieuThu.Background = (Brush)new BrushConverter().ConvertFrom(background);
 
             var tmpWd = window as OfficialMainWindow;
             tmpWd.MainFrame.NavigationService.RemoveBackEntry();
@@ -80,11 +84,9 @@ namespace BookStore.ViewModel
 
                     window.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
                     window.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
-                    break;
-
-                   
                     tmpWd.MainFrame.Navigate(new Uri("../Pages/InvoicePage.xaml", UriKind.Relative));
                     tmpWd.MainTitle.Text = "Hóa đơn bán sách";
+                    break;
 
                 case 1:
                     window.btnPhieuNhap.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
@@ -170,6 +172,26 @@ namespace BookStore.ViewModel
 
                     tmpWd.MainFrame.Navigate(new Uri("../Pages/ReportPage.xaml", UriKind.Relative));
                     tmpWd.MainTitle.Text = "Báo cáo tồn và công nợ";
+                    break;
+
+
+                case 15:
+
+                    window.btnDSHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnDSHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Danh sách hóa đơn";
+                    break;
+
+
+                case 16:
+
+                    window.btnDSPhieuThu.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    window.btnDSPhieuThu.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+
+                    tmpWd.MainFrame.Navigate(new Uri("../Pages/ListInvoiceBillPage.xaml", UriKind.Relative));
+                    tmpWd.MainTitle.Text = "Danh sách phiếu thu";
                     break;
                 default:
                     break;

@@ -64,6 +64,7 @@ namespace BookStore.ViewModel
         private void UpdateEditDB()
         {
             var author = DataProvider.Ins.DB.TACGIAs.Where(x => x.MaTacGia.ToString() == SelectedItem.ID).SingleOrDefault();
+            
             author.TenTacGia = AuthorName;
             DataProvider.Ins.DB.SaveChanges();
         }

@@ -218,8 +218,8 @@
                                 <Button
                                    materialDesign:ShadowAssist.ShadowDepth="Depth0"
                                       Style="{StaticResource MaterialDesignRaisedButton}"
-                                     Height="80" Margin="5 0"
-                                     Background="White" Width="280" HorizontalAlignment="Left"
+                                     Height="80" Margin="-62 0"
+                                     Background="White" Width="400" HorizontalAlignment="Left"
                                       Foreground="#6485FF" BorderBrush="White" BorderThickness="0"
                                       x:Name="btnDSKhachHang"
                                        Uid="5"
@@ -238,11 +238,35 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
+
                                 <Button
                                    materialDesign:ShadowAssist.ShadowDepth="Depth0"
                                       Style="{StaticResource MaterialDesignRaisedButton}"
-                                     Height="80" Margin="4 0"
-                                     Background="White" Width="280" HorizontalAlignment="Left"
+                                     Height="80" Margin="-61 0"
+                                     Background="White" Width="400" HorizontalAlignment="Left"
+                                      Foreground="#6485FF" BorderBrush="White" BorderThickness="0"
+                                      x:Name="btnDShoaDon"
+                                       Uid="7"
+                                      Command="{Binding BtnCommand}"
+                                     CommandParameter="{Binding ElementName=NewHomeWD}" FontSize="18"
+                                      Content="Người dùng" >
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseMove">
+                                            <i:InvokeCommandAction Command="{Binding GetUidCommand}"
+                                                               CommandParameter="{Binding ElementName=btnDShoaDon}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseLeave">
+                                            <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}"
+                                                               CommandParameter="{Binding ElementName=btnDShoaDon}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button
+                                   materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                      Style="{StaticResource MaterialDesignRaisedButton}"
+                                     Height="80" Margin="-61 0"
+                                     Background="White" Width="400" HorizontalAlignment="Left"
                                       Foreground="#6485FF" BorderBrush="White" BorderThickness="0"
                                       x:Name="BtnDsPhieuNhap"
                                        Uid="6"
@@ -261,14 +285,15 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
+
                                 <Button
                                    materialDesign:ShadowAssist.ShadowDepth="Depth0"
                                       Style="{StaticResource MaterialDesignRaisedButton}"
-                                     Height="80" Margin="-11 0"
-                                     Background="White" Width="280" HorizontalAlignment="Left"
+                                      Height="80" Margin="-70 0"
+                                      Background="White" Width="400" HorizontalAlignment="Left"
                                       Foreground="#6485FF" BorderBrush="White" BorderThickness="0"
-                                      x:Name="btnDShoaDon"
-                                       Uid="7"
+                                      x:Name="btnDSHoaDon"
+                                       Uid="15"
                                       Command="{Binding BtnCommand}"
                                      CommandParameter="{Binding ElementName=NewHomeWD}" FontSize="18"
                                       Content="Hóa đơn" >
@@ -276,14 +301,38 @@
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseMove">
                                             <i:InvokeCommandAction Command="{Binding GetUidCommand}"
-                                                               CommandParameter="{Binding ElementName=btnDShoaDon}"/>
+                                                               CommandParameter="{Binding ElementName=btnDSHoaDon}"/>
                                         </i:EventTrigger>
                                         <i:EventTrigger EventName="MouseLeave">
                                             <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}"
-                                                               CommandParameter="{Binding ElementName=btnDShoaDon}"/>
+                                                               CommandParameter="{Binding ElementName=btnDSHoaDon}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
+                                <Button
+                                   materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                      Style="{StaticResource MaterialDesignRaisedButton}"
+                                     Height="80" Margin="-67 0"
+                                     Background="White" Width="400" HorizontalAlignment="Left"
+                                      Foreground="#6485FF" BorderBrush="White" BorderThickness="0"
+                                      x:Name="btnDSPhieuThu"
+                                       Uid="16"
+                                      Command="{Binding BtnCommand}"
+                                     CommandParameter="{Binding ElementName=NewHomeWD}" FontSize="18"
+                                      Content="Phiếu thu" >
+
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseMove">
+                                            <i:InvokeCommandAction Command="{Binding GetUidCommand}"
+                                                               CommandParameter="{Binding ElementName=btnDSPhieuThu}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="MouseLeave">
+                                            <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}"
+                                                               CommandParameter="{Binding ElementName=btnDSPhieuThu}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+
                             </StackPanel>
                         </Expander>
 
