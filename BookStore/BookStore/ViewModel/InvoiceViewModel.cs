@@ -18,7 +18,7 @@ namespace BookStore.ViewModel
         {
             _cardVisible = Visibility.Hidden;
             InvoiceDate = DateTime.Now;
-            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0 && x.TrangThai == 0));
+            LoadListBook();
             Items = CreateData();
             LoadKhachHang();
             SaveButtonClickCommand = new RelayCommand<Button>((p) => { return true; }, (p) => { SaveInvoice(); });
@@ -40,6 +40,10 @@ namespace BookStore.ViewModel
             PaidAmountTextChangedCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { UpdateResultAMount(); });
         }
 
+        public void LoadListBook()
+        {
+            ListBook = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.LuongTon > 0 && x.TrangThai == 0));
+        }
         private void LoadKhachHang()
         {
             ListCustomer = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs.Where(x => x.TrangThai == 0));
@@ -870,7 +874,7 @@ namespace BookStore.ViewModel
 
         public ObservableCollection<Item_CT_HD> Items { get => _Items; set { _Items = value; OnPropertyChanged(); } }
 
-        public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; } }
+        public ObservableCollection<DAUSACH> ListBook { get => _ListBook; set { _ListBook = value; OnPropertyChanged(); } }
 
         public ObservableCollection<KHACHHANG> ListCustomer { get => _ListCustomer; set { _ListCustomer = value; OnPropertyChanged(); } }
 

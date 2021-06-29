@@ -162,9 +162,10 @@ namespace BookStore.ViewModel
                     var tmpP = new InvoicePage();
                     window.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
                     window.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+                    (tmpP.DataContext as InvoiceViewModel).LoadListBook();
+                    (tmpP.DataContext as InvoiceViewModel).Staff = User.Ins.nguoiDung;
                     tmpWd.MainFrame.Content = tmpP;
                     tmpWd.MainTitle.Text = "Hóa đơn bán sách";
-                    (tmpP.DataContext as InvoiceViewModel).Staff = User.Ins.nguoiDung;
                     break;
 
                 case 1:
