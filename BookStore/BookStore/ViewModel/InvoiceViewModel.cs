@@ -84,6 +84,7 @@ namespace BookStore.ViewModel
             var tmpVM = tmp.DataContext as ListBookViewModel;
             tmpVM.LBWD = tmp;
             tmpVM.FlagIntent = 1;
+            tmpVM.LoadListBooks();
             tmpVM.LoadPage(tmp.BPage);
             tmp.ShowDialog();
             SelectedBook = tmpVM.SelectedMBook;
@@ -531,9 +532,6 @@ namespace BookStore.ViewModel
 
         private void UpdateResultAMount()
         {
-
-            if (FlagIntent==0)
-            {
                 SumAmount = 0;
                 if (Items == null)
                 {
@@ -543,7 +541,7 @@ namespace BookStore.ViewModel
                 {
                     SumAmount += v.IntoMoney;
                 }
-                LeftAmount = PaidAmount;
+                LeftAmount = SumAmount - PaidAmount;
                 if(LeftAmount <0 )
                 {
                     LeftAmount = 0;
@@ -553,8 +551,6 @@ namespace BookStore.ViewModel
                 {
                     RightAmount = 0;
                 }
-            }
-
         }
 
         private void AddDetail()
@@ -755,8 +751,8 @@ namespace BookStore.ViewModel
             InvoiceDate = null;
             //Items = null;
             Items.Clear();
-            ListBook = null;
-            ListCustomer = null;
+            //ListBook = null;
+            //ListCustomer = null;
             Staff = null;
             Editor = null;
             SumAmount = 0;

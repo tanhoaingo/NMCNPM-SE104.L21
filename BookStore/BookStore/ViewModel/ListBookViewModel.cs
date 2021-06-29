@@ -146,7 +146,14 @@ namespace BookStore.ViewModel
 
         public void LoadListBooks()
         {
-            ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.TrangThai == 0));
+            if (FlagIntent == 0)
+            {
+                ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.TrangThai == 0));
+            }
+            else
+            {
+                ListBooks = new ObservableCollection<DAUSACH>(DataProvider.Ins.DB.DAUSACHes.Where(x => x.TrangThai == 0 && x.LuongTon > 0));
+            }
         }
 
         public void LoadPage(BookPage p)
