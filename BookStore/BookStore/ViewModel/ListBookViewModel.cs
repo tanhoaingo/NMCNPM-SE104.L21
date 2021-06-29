@@ -61,13 +61,19 @@ namespace BookStore.ViewModel
             SelectedOption = "Tất cả";
 
 
-            ListBooksCollectionView = CollectionViewSource.GetDefaultView(ListBooks);
+            ListBooksCollectionView = (CollectionView)CollectionViewSource.GetDefaultView(ListBooks);
             ListBooksCollectionView.Filter = FillerListBooks;
 
-            OptionsSearchSelectionChangedCommand = new RelayCommand<ComboBox>((p) => { return true; }, (p) => { });
+            OptionsSearchSelectionChangedCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { Refresh(p); });
             AddBookButtonClickCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { AddNewBook(p); });
             EditBookButtonClickCommand = new RelayCommand<Page>((p) => { return EditBookNeed(); }, (p) => { EditBook(p); });
             DeleteBookButtonClickCommand = new RelayCommand<Page>((p) => { return DeleteBookNeed(); }, (p) => { DeleteBook(p); });
+            SearchTextChangedCommand = new RelayCommand<Page>((p) => { return true; }, (p) => { Refresh(p); });
+        }
+
+        private void Refresh(Page p)
+        {
+            CollectionViewSource.GetDefaultView(ListBooks).Refresh();
         }
 
         private bool DeleteBookNeed()
@@ -160,18 +166,46 @@ namespace BookStore.ViewModel
 
         public decimal ConvertStringToDecimal(string intput)
         {
-            decimal tmp = 0;
+            decimal tmp = -100000;
             if (intput == null || intput == "")
             {
-                return 0;
+                return -100000;
             }
-            
-            decimal.TryParse(intput,out tmp);
-            return tmp;
+
+            if (decimal.TryParse(intput, out tmp))
+            {
+                return tmp;
+            }
+            return -1000000;
+        }
+
+        public string NonUnicode(string text)
+        {
+            string s = text.ToLower();
+            string[] arr1 = new string[] { "á", "à", "ả", "ã", "ạ", "â", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ă", "ắ", "ằ", "ẳ", "ẵ", "ặ",
+    "đ",
+    "é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ",
+    "í","ì","ỉ","ĩ","ị",
+    "ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ",
+    "ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự",
+    "ý","ỳ","ỷ","ỹ","ỵ"};
+            string[] arr2 = new string[] { "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
+    "d",
+    "e","e","e","e","e","e","e","e","e","e","e",
+    "i","i","i","i","i",
+    "o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o",
+    "u","u","u","u","u","u","u","u","u","u","u",
+    "y","y","y","y","y"};
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                s = s.Replace(arr1[i], arr2[i]);
+            }
+            return s;
         }
 
         private bool FillerListBooks(object obj)
         {
+
             if (String.IsNullOrEmpty(ListBooksFiller))
             {
                 return true;
@@ -187,23 +221,22 @@ namespace BookStore.ViewModel
                     {
                         if ((v.DonGiaNhap*105/100 <= tmpInput + 20000) && (v.DonGiaNhap * 105 / 100 >= tmpInput - 20000))
                         {
-                            return dAUSACH.TenSach.IndexOf(v.SACH.DAUSACH.TenSach, StringComparison.OrdinalIgnoreCase) >= 0;
+                            return NonUnicode(dAUSACH.TenSach).IndexOf(NonUnicode(v.SACH.DAUSACH.TenSach), StringComparison.OrdinalIgnoreCase) >= 0;
                         }
                     }
                 }
-                else if (SelectedOption == "Tên sách") return dAUSACH.TenSach.IndexOf(ListBooksFiller, StringComparison.OrdinalIgnoreCase) >= 0;
-                else if (SelectedOption == "Thể loại") return GetTypesString(dAUSACH.THELOAIs).IndexOf(ListBooksFiller, StringComparison.OrdinalIgnoreCase) >= 0;
-                else if (SelectedOption == "Tác giả") return GetAuthorsString(dAUSACH.TACGIAs).IndexOf(ListBooksFiller, StringComparison.OrdinalIgnoreCase) >= 0;
+                else if (SelectedOption == "Tên sách") return NonUnicode( dAUSACH.TenSach).IndexOf(NonUnicode(ListBooksFiller), StringComparison.OrdinalIgnoreCase) >= 0;
+                else if (SelectedOption == "Thể loại") return NonUnicode(GetTypesString(dAUSACH.THELOAIs)).IndexOf(NonUnicode( ListBooksFiller), StringComparison.OrdinalIgnoreCase) >= 0;
+                else if (SelectedOption == "Tác giả") return  NonUnicode(GetAuthorsString(dAUSACH.TACGIAs)).IndexOf(NonUnicode(ListBooksFiller) , StringComparison.OrdinalIgnoreCase) >= 0;
                 else
                 {
-                    return dAUSACH.TenSach.IndexOf(ListBooksFiller, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                        GetAuthorsString(dAUSACH.TACGIAs).IndexOf(ListBooksFiller, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                         GetTypesString(dAUSACH.THELOAIs).IndexOf(ListBooksFiller, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    return NonUnicode(dAUSACH.TenSach).IndexOf(NonUnicode(ListBooksFiller), StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        NonUnicode(GetAuthorsString(dAUSACH.TACGIAs)).IndexOf(NonUnicode(ListBooksFiller), StringComparison.OrdinalIgnoreCase) >= 0 ||
+                         NonUnicode(GetTypesString(dAUSACH.THELOAIs)).IndexOf(NonUnicode(ListBooksFiller), StringComparison.OrdinalIgnoreCase) >= 0 ||
                          FindByPrice(dAUSACH);
                 }
 
             }
-
             return false;
         }
 
@@ -215,7 +248,7 @@ namespace BookStore.ViewModel
             {
                 if ((v.DonGiaNhap * 105 / 100 <= tmpInput + 20000) && (v.DonGiaNhap * 105 / 100 >= tmpInput - 20000))
                 {
-                    return dAUSACH.TenSach.IndexOf(v.SACH.DAUSACH.TenSach, StringComparison.OrdinalIgnoreCase) >= 0;
+                    return NonUnicode(dAUSACH.TenSach).IndexOf(NonUnicode(v.SACH.DAUSACH.TenSach), StringComparison.OrdinalIgnoreCase) >= 0;
                 }
             }
             return false;
@@ -288,6 +321,7 @@ namespace BookStore.ViewModel
         public ICommand AddBookButtonClickCommand { get; set; }
         public ICommand EditBookButtonClickCommand { get; set; }
         public ICommand DeleteBookButtonClickCommand { get; set; }
+        public ICommand SearchTextChangedCommand { get; set; }
 
         private string _ListBooksFiller = string.Empty;
         private string _SelectedOption;
