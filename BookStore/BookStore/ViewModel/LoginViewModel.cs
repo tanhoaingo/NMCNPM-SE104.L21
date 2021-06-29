@@ -1,4 +1,5 @@
 ﻿using BookStore.Model;
+using BookStore.View;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace BookStore.ViewModel
         public ICommand PassWordChangedCommand { get; set; }
         public ICommand LoadedCommand { get; set; }
         public ICommand UserNameChangedCommand { get; set; }
+        public ICommand ExitCommand { get; set; }
 
         public LoginViewModel()
         {
@@ -27,6 +29,7 @@ namespace BookStore.ViewModel
             PassWordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; ErrorLogin.Visibility = Visibility.Hidden; });
             LoadedCommand = new RelayCommand<TextBlock>((p) => { return true; }, (p) => { ErrorLogin = (TextBlock)p; });
             UserNameChangedCommand = new RelayCommand<TextBox>((p) => { return true; }, (p) => { ErrorLogin.Visibility = Visibility.Hidden; });
+            ExitCommand = new RelayCommand<LoginWindow>((p) => { return true; }, (p) => { p.Close(); });
         }
 
         private void doLogin(Window p)

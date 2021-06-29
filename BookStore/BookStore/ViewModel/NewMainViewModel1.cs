@@ -18,8 +18,42 @@ namespace BookStore.ViewModel
     {
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
         public NewMainViewModel1()
         {
+
+            LogoutCommand = new RelayCommand<OfficialMainWindow>(p => true, p => {
+                Isloaded = false;
+                p.Hide();
+                LoginWindow loginWindow = new LoginWindow();
+                var loginVM = loginWindow.DataContext as LoginViewModel;
+                loginVM.IsLogin = false;
+                loginWindow.ShowDialog();
+                if (loginVM.IsLogin)
+                {
+                    p.Show();
+                    string foreFocus = "#FFFFFF";
+                    string backFocus = "#6485FF";
+                    var tmpP = new InvoicePage();
+                    p.btnHoaDon.Foreground = (Brush)new BrushConverter().ConvertFrom(foreFocus);
+                    p.btnHoaDon.Background = (Brush)new BrushConverter().ConvertFrom(backFocus);
+                    p.MainFrame.Content = tmpP;
+                    p.MainTitle.Text = "Hóa đơn bán sách";
+                    (tmpP.DataContext as InvoiceViewModel).Staff = User.Ins.nguoiDung;
+
+                    if (User.Ins.nguoiDung.NHOMNGUOIDUNG.TenNhom == "Nhân Viên")
+                    {
+                        p.btnQuyDinh.IsEnabled = false;
+                        p.btnDShoaDon.IsEnabled = false;
+
+                    }
+                }
+                else
+                {
+
+                    p.Close();
+                }
+            });
 
             LoadedWindowCommand = new RelayCommand<OfficialMainWindow>((p) => { return true; }, (p) =>
             {

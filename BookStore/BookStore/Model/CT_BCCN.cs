@@ -23,6 +23,5 @@ namespace BookStore.Model
         public Nullable<decimal> DaThu { get; set; }
     
         public virtual BAOCAOCONGNO BAOCAOCONGNO { get; set; }
-        public virtual KHACHHANG KHACHHANG { get; set; }
     }
 }

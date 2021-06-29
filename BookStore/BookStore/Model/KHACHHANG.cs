@@ -17,7 +17,6 @@ namespace BookStore.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KHACHHANG()
         {
-            this.CT_BCCN = new HashSet<CT_BCCN>();
             this.HOADONs = new HashSet<HOADON>();
             this.PHIEUTHUTIENs = new HashSet<PHIEUTHUTIEN>();
         }
@@ -30,8 +29,6 @@ namespace BookStore.Model
         public string Email { get; set; }
         public Nullable<int> TrangThai { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CT_BCCN> CT_BCCN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOADON> HOADONs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
