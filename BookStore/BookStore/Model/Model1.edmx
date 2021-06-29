@@ -35,8 +35,9 @@
           <Property Name="MaBaoCaoCongNo" Type="int" Nullable="false" />
           <Property Name="MaKhachHang" Type="int" Nullable="false" />
           <Property Name="NoDau" Type="money" />
-          <Property Name="PhatSinh" Type="money" />
           <Property Name="NoCuoi" Type="money" />
+          <Property Name="NoMoi" Type="money" />
+          <Property Name="DaThu" Type="money" />
         </EntityType>
         <EntityType Name="CT_BCT">
           <Key>
@@ -45,9 +46,10 @@
           <Property Name="MaCT_BCT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaBaoCaoTon" Type="int" Nullable="false" />
           <Property Name="TonDau" Type="int" />
-          <Property Name="PhatSinh" Type="int" />
           <Property Name="TonCuoi" Type="int" />
           <Property Name="MaDauSach" Type="int" Nullable="false" />
+          <Property Name="NhapVao" Type="int" />
+          <Property Name="BanRa" Type="int" />
         </EntityType>
         <EntityType Name="CT_HD">
           <Key>
@@ -77,6 +79,7 @@
           <Property Name="TenSach" Type="nvarchar" MaxLength="50" />
           <Property Name="LuongTon" Type="int" />
           <Property Name="HinhAnhSach" Type="image" />
+          <Property Name="TrangThai" Type="int" />
         </EntityType>
         <EntityType Name="HOADON">
           <Key>
@@ -661,8 +664,9 @@
           <Property Name="MaBaoCaoCongNo" Type="Int32" Nullable="false" />
           <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
           <Property Name="NoDau" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="PhatSinh" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="NoCuoi" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="NoMoi" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DaThu" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="BAOCAOCONGNO" Relationship="MYDATABASEModel.FK_CT_BCCN_BAOCAOCONGNO" FromRole="CT_BCCN" ToRole="BAOCAOCONGNO" />
           <NavigationProperty Name="KHACHHANG" Relationship="MYDATABASEModel.FK_CT_BCCN_KHACHHANG" FromRole="CT_BCCN" ToRole="KHACHHANG" />
         </EntityType>
@@ -673,9 +677,10 @@
           <Property Name="MaCT_BCT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaBaoCaoTon" Type="Int32" Nullable="false" />
           <Property Name="TonDau" Type="Int32" />
-          <Property Name="PhatSinh" Type="Int32" />
           <Property Name="TonCuoi" Type="Int32" />
           <Property Name="MaDauSach" Type="Int32" Nullable="false" />
+          <Property Name="NhapVao" Type="Int32" />
+          <Property Name="BanRa" Type="Int32" />
           <NavigationProperty Name="BAOCAOTON" Relationship="MYDATABASEModel.FK_CT_BCT_BAOCAOTON" FromRole="CT_BCT" ToRole="BAOCAOTON" />
           <NavigationProperty Name="DAUSACH" Relationship="MYDATABASEModel.FK_CT_BCT_DAUSACH" FromRole="CT_BCT" ToRole="DAUSACH" />
         </EntityType>
@@ -711,6 +716,7 @@
           <Property Name="TenSach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LuongTon" Type="Int32" />
           <Property Name="HinhAnhSach" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="TrangThai" Type="Int32" />
           <NavigationProperty Name="CT_BCT" Relationship="MYDATABASEModel.FK_CT_BCT_DAUSACH" FromRole="DAUSACH" ToRole="CT_BCT" />
           <NavigationProperty Name="SACHes" Relationship="MYDATABASEModel.FK_SACH_DAUSACH" FromRole="DAUSACH" ToRole="SACH" />
           <NavigationProperty Name="TACGIAs" Relationship="MYDATABASEModel.TT_TG" FromRole="DAUSACH" ToRole="TACGIA" />
@@ -1040,8 +1046,9 @@
           <EntitySetMapping Name="CT_BCCN">
             <EntityTypeMapping TypeName="MYDATABASEModel.CT_BCCN">
               <MappingFragment StoreEntitySet="CT_BCCN">
+                <ScalarProperty Name="DaThu" ColumnName="DaThu" />
+                <ScalarProperty Name="NoMoi" ColumnName="NoMoi" />
                 <ScalarProperty Name="NoCuoi" ColumnName="NoCuoi" />
-                <ScalarProperty Name="PhatSinh" ColumnName="PhatSinh" />
                 <ScalarProperty Name="NoDau" ColumnName="NoDau" />
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
                 <ScalarProperty Name="MaBaoCaoCongNo" ColumnName="MaBaoCaoCongNo" />
@@ -1052,9 +1059,10 @@
           <EntitySetMapping Name="CT_BCT">
             <EntityTypeMapping TypeName="MYDATABASEModel.CT_BCT">
               <MappingFragment StoreEntitySet="CT_BCT">
+                <ScalarProperty Name="BanRa" ColumnName="BanRa" />
+                <ScalarProperty Name="NhapVao" ColumnName="NhapVao" />
                 <ScalarProperty Name="MaDauSach" ColumnName="MaDauSach" />
                 <ScalarProperty Name="TonCuoi" ColumnName="TonCuoi" />
-                <ScalarProperty Name="PhatSinh" ColumnName="PhatSinh" />
                 <ScalarProperty Name="TonDau" ColumnName="TonDau" />
                 <ScalarProperty Name="MaBaoCaoTon" ColumnName="MaBaoCaoTon" />
                 <ScalarProperty Name="MaCT_BCT" ColumnName="MaCT_BCT" />
@@ -1086,6 +1094,7 @@
           <EntitySetMapping Name="DAUSACHes">
             <EntityTypeMapping TypeName="MYDATABASEModel.DAUSACH">
               <MappingFragment StoreEntitySet="DAUSACH">
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
                 <ScalarProperty Name="HinhAnhSach" ColumnName="HinhAnhSach" />
                 <ScalarProperty Name="LuongTon" ColumnName="LuongTon" />
                 <ScalarProperty Name="TenSach" ColumnName="TenSach" />
